@@ -309,7 +309,7 @@
       margin: 10px auto 0;
     }
 
-    /* HERO SECTION */
+    /* HERO SECTION & INTENSIVE PARALLAX */
     #hero {
       min-height: 95vh;
       display: flex;
@@ -318,27 +318,103 @@
       justify-content: center;
       text-align: center;
       padding: 70px 20px 50px;
-      background: linear-gradient(180deg, rgba(250, 247, 242, 0.82) 0%, rgba(250, 247, 242, 0.98) 100%),
-                  url('bg.jpeg') center/cover no-repeat;
       position: relative;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    .hero-bg-parallax {
+      position: absolute;
+      inset: -35% -20%;
+      background: linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%),
+                  url('bg.jpeg') center/cover no-repeat;
+      z-index: 0;
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      transform: translate3d(0, 0, 0);
+      will-change: transform, opacity;
+    }
+
+    .hero-watermark-tl,
+    .hero-watermark-br {
+      position: absolute;
+      z-index: 1;
+      width: 145px;
+      opacity: 0.75;
+      pointer-events: none;
+      will-change: transform;
+      transition: transform 0.05s linear;
     }
 
     .hero-watermark-tl {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 140px;
-      opacity: 0.6;
-      pointer-events: none;
+      top: -15px;
+      left: -15px;
     }
 
     .hero-watermark-br {
+      bottom: -15px;
+      right: -15px;
+    }
+
+    /* Ambient Floating Parallax Bokeh Orbs */
+    .parallax-orb {
       position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 140px;
-      opacity: 0.6;
+      border-radius: 50%;
+      filter: blur(40px);
       pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+      will-change: transform;
+    }
+
+    .orb-1 {
+      top: 25%;
+      left: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(185, 139, 78, 0.35) 0%, transparent 70%);
+    }
+
+    .orb-2 {
+      top: 55%;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(47, 93, 98, 0.3) 0%, transparent 70%);
+    }
+
+    .orb-3 {
+      top: 80%;
+      left: 10%;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, transparent 70%);
+    }
+
+    /* Continuous Parallax Float on Cards */
+    .parallax-card {
+      will-change: transform;
+      transition: transform 0.12s cubic-bezier(0.1, 0.9, 0.2, 1);
+    }
+
+    /* Parallax & Scroll Reveal Animations */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(36px) scale(0.96);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-on-scroll.is-revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     .hero-couple-title {
@@ -879,6 +955,10 @@
 
   <!-- MAIN APP CONTAINER -->
   <div class="app-viewport">
+    <!-- Ambient Parallax Orbs -->
+    <div class="parallax-orb orb-1" data-speed="0.25"></div>
+    <div class="parallax-orb orb-2" data-speed="-0.3"></div>
+    <div class="parallax-orb orb-3" data-speed="0.2"></div>
     
     <!-- Floating Audio Button -->
     <button class="floating-audio-btn" id="audioToggleBtn" title="Play/Pause Musik" type="button">
@@ -895,30 +975,33 @@
 
     <!-- 1. HERO SECTION -->
     <section id="hero">
+      <div class="hero-bg-parallax"></div>
       <img src="corner-top-left.png" class="hero-watermark-tl" alt="ornament">
       <img src="corner-bottom-right.png" class="hero-watermark-br" alt="ornament">
 
-      <p style="font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);">Walimatul 'Urs</p>
-      <h1 class="hero-couple-title font-script" id="heroCoupleTitle">Silfi & Nuruddin</h1>
-      <div class="hero-date-badge" id="heroDateBadge">Ahad, 21 September 2026</div>
+      <div class="hero-content">
+        <p style="font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);">Walimatul 'Urs</p>
+        <h1 class="hero-couple-title font-script" id="heroCoupleTitle">Silfi & Nuruddin</h1>
+        <div class="hero-date-badge" id="heroDateBadge">Ahad, 21 September 2026</div>
 
-      <!-- Live Countdown -->
-      <div class="countdown-grid" id="countdownGrid">
-        <div class="countdown-box">
-          <div class="countdown-val font-serif" id="cdDays">00</div>
-          <div class="countdown-lbl">Hari</div>
-        </div>
-        <div class="countdown-box">
-          <div class="countdown-val font-serif" id="cdHours">00</div>
-          <div class="countdown-lbl">Jam</div>
-        </div>
-        <div class="countdown-box">
-          <div class="countdown-val font-serif" id="cdMinutes">00</div>
-          <div class="countdown-lbl">Menit</div>
-        </div>
-        <div class="countdown-box">
-          <div class="countdown-val font-serif" id="cdSeconds">00</div>
-          <div class="countdown-lbl">Detik</div>
+        <!-- Live Countdown -->
+        <div class="countdown-grid" id="countdownGrid">
+          <div class="countdown-box">
+            <div class="countdown-val font-serif" id="cdDays">00</div>
+            <div class="countdown-lbl">Hari</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-val font-serif" id="cdHours">00</div>
+            <div class="countdown-lbl">Jam</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-val font-serif" id="cdMinutes">00</div>
+            <div class="countdown-lbl">Menit</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-val font-serif" id="cdSeconds">00</div>
+            <div class="countdown-lbl">Detik</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1442,11 +1525,137 @@
         renderWishes();
       });
 
+      // Intensive 60FPS Parallax & Scroll Animation Engine
+      function initParallax() {
+        const heroBg = document.querySelector('.hero-bg-parallax');
+        const heroTitle = document.querySelector('.hero-couple-title');
+        const heroDate = document.querySelector('.hero-date-badge');
+        const countdownGrid = document.querySelector('.countdown-grid');
+        const watermarkTL = document.querySelector('.hero-watermark-tl');
+        const watermarkBR = document.querySelector('.hero-watermark-br');
+        const orbs = document.querySelectorAll('.parallax-orb');
+        const cards = document.querySelectorAll('.quote-card, .couple-card, .schedule-card, .rsvp-form-card, .wishes-container');
+        const avatarRings = document.querySelectorAll('.couple-avatar-ring');
+        const headings = document.querySelectorAll('.section-subtitle, .section-heading');
+
+        // Setup Card Parallax Classes
+        cards.forEach(c => {
+          c.classList.add('parallax-card', 'reveal-on-scroll');
+        });
+
+        // IntersectionObserver for initial entry reveals
+        if ('IntersectionObserver' in window) {
+          const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+              }
+            });
+          }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+          cards.forEach(el => revealObserver.observe(el));
+          document.querySelectorAll('.section-title-wrap').forEach(el => revealObserver.observe(el));
+        } else {
+          cards.forEach(el => el.classList.add('is-revealed'));
+        }
+
+        let ticking = false;
+
+        function updateParallaxMotion() {
+          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+          const vh = window.innerHeight;
+          const vCenter = scrollY + (vh / 2);
+
+          // 1. Hero Multi-Layer Parallax (Very pronounced)
+          if (scrollY <= vh * 1.3) {
+            if (heroBg) {
+              const bgMove = scrollY * 0.55;
+              const bgScale = 1 + (scrollY * 0.0003);
+              heroBg.style.transform = `translate3d(0, ${bgMove}px, 0) scale(${bgScale})`;
+            }
+
+            if (heroTitle) {
+              const titleMove = -scrollY * 0.28;
+              const titleFade = Math.max(0, 1 - (scrollY / (vh * 0.75)));
+              heroTitle.style.transform = `translate3d(0, ${titleMove}px, 0)`;
+              heroTitle.style.opacity = titleFade;
+            }
+
+            if (heroDate) {
+              heroDate.style.transform = `translate3d(0, ${-scrollY * 0.18}px, 0)`;
+            }
+
+            if (countdownGrid) {
+              countdownGrid.style.transform = `translate3d(0, ${-scrollY * 0.12}px, 0)`;
+            }
+
+            if (watermarkTL) {
+              const moveTL = scrollY * 0.35;
+              watermarkTL.style.transform = `translate3d(${-moveTL * 1.1}px, ${moveTL * 0.9}px, 0) rotate(${-scrollY * 0.08}deg)`;
+            }
+
+            if (watermarkBR) {
+              const moveBR = scrollY * 0.35;
+              watermarkBR.style.transform = `translate3d(${moveBR * 1.1}px, ${-moveBR * 0.9}px, 0) rotate(${scrollY * 0.08}deg)`;
+            }
+          }
+
+          // 2. Ambient Floating Background Orbs
+          orbs.forEach((orb) => {
+            const speed = parseFloat(orb.getAttribute('data-speed')) || 0.2;
+            const orbMove = scrollY * speed;
+            orb.style.transform = `translate3d(0, ${orbMove}px, 0)`;
+          });
+
+          // 3. Continuous Card Parallax Float
+          cards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = scrollY + rect.top + (rect.height / 2);
+            const diff = vCenter - cardCenter;
+            
+            // Only apply when close to viewport for performance
+            if (Math.abs(diff) < vh * 1.2) {
+              const floatOffset = diff * 0.06;
+              card.style.transform = `translate3d(0, ${floatOffset}px, 0)`;
+            }
+          });
+
+          // 4. Couple Avatar Ring Dynamic Spin on Scroll
+          avatarRings.forEach(ring => {
+            const rot = (scrollY * 0.2) % 360;
+            ring.style.transform = `rotate(${rot}deg)`;
+          });
+
+          // 5. Section Heading Subtle Pan
+          headings.forEach(h => {
+            const rect = h.getBoundingClientRect();
+            if (rect.top < vh && rect.bottom > 0) {
+              const diff = (vh / 2) - rect.top;
+              const pan = diff * 0.025;
+              h.style.transform = `translate3d(${pan}px, 0, 0)`;
+            }
+          });
+
+          ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(updateParallaxMotion);
+            ticking = true;
+          }
+        }, { passive: true });
+
+        // Initial tick
+        updateParallaxMotion();
+      }
+
       // Run Immediately
       renderWedding();
       startCountdown();
       renderWishes();
       refreshIcons();
+      initParallax();
       if (gateCover && gateCover.classList.contains('unlocked')) {
         resetIdleTimer();
       }
