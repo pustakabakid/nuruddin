@@ -545,15 +545,7 @@
     generateWhatsAppMessage(guest, weddingData, inviteUrl) {
       const couple = (weddingData && weddingData.couple) || {};
       const coupleName = couple.combinedTitle || 'Silfi & Nuruddin';
-      const groom = (couple.groom && couple.groom.name) || 'Nuruddin';
-      const bride = (couple.bride && couple.bride.name) || 'Silfiana';
-      const groomParents = (couple.groom && couple.groom.parents) || '';
-      const brideParents = (couple.bride && couple.bride.parents) || '';
       const dateFormatted = (weddingData && weddingData.formattedDate) || 'Ahad, 21 September 2026';
-      const schedule = (weddingData && weddingData.schedules && weddingData.schedules[0]) || {};
-      const venue = schedule.venue || 'Kediaman Mempelai Pria';
-      const time = schedule.time || '10:00 WIB s/d Selesai';
-      const address = schedule.address || 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang';
 
       const guestName = (guest && guest.name) ? guest.name.trim() : 'Bapak/Ibu/Saudara/i';
       const guestSeat = (guest && guest.table && guest.table !== '-') ? guest.table : '';
@@ -566,24 +558,14 @@ Bapak/Ibu/Saudara/i:
 ${seatInfo ? `_(${seatInfo})_\n` : ''}
 Assalamu’alaikum Warahmatullahi Wabarakatuh
 
-Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada momen bahagia pernikahan kami:
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia pernikahan kami:
 
 ✨ *The Wedding of ${coupleName}* ✨
+📅 *${dateFormatted}*
 
-🤵 *${groom}*
-${groomParents ? `_${groomParents}_\n` : ''}&
-👰 *${bride}*
-${brideParents ? `_${brideParents}_\n` : ''}
-━━━━━━━━━━━━━━━━━━━
-📅 *Hari/Tanggal:* ${dateFormatted}
-⏰ *Waktu:* ${time}
-📍 *Tempat:* ${venue}
-   ${address}
-━━━━━━━━━━━━━━━━━━━
+Untuk informasi detail acara, rute lokasi, dan konfirmasi kehadiran (RSVP), mohon buka tautan undangan digital khusus berikut:
 
-Untuk informasi detail acara, rute lokasi, dan konfirmasi kehadiran (RSVP), mohon klik tautan undangan digital khusus berikut:
-
-💌 *Buka Undangan Digital:*
+💌 *Buka Undangan:*
 ${inviteUrl}
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
@@ -592,7 +574,7 @@ Terima kasih.
 Wassalamu’alaikum Warahmatullahi Wabarakatuh.
 
 Kami yang berbahagia,
-*${coupleName}* & Keluarga Besar`;
+*${coupleName}*`;
     }
   };
 
