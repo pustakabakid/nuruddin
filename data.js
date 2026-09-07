@@ -543,27 +543,48 @@
     },
 
     generateWhatsAppMessage(guest, weddingData, inviteUrl) {
-      const coupleName = (weddingData.couple && weddingData.couple.combinedTitle) || 'Silfi & Nuruddin';
-      const dateFormatted = weddingData.formattedDate || 'Ahad, 21 September 2026';
-      const venue = weddingData.schedules && weddingData.schedules[0] ? weddingData.schedules[0].venue : 'Kediaman Mempelai Pria';
+      const couple = (weddingData && weddingData.couple) || {};
+      const coupleName = couple.combinedTitle || 'Silfi & Nuruddin';
+      const groom = (couple.groom && couple.groom.name) || 'Nuruddin';
+      const bride = (couple.bride && couple.bride.name) || 'Silfiana';
+      const groomParents = (couple.groom && couple.groom.parents) || '';
+      const brideParents = (couple.bride && couple.bride.parents) || '';
+      const dateFormatted = (weddingData && weddingData.formattedDate) || 'Ahad, 21 September 2026';
+      const schedule = (weddingData && weddingData.schedules && weddingData.schedules[0]) || {};
+      const venue = schedule.venue || 'Kediaman Mempelai Pria';
+      const time = schedule.time || '10:00 WIB s/d Selesai';
+      const address = schedule.address || 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang';
+
+      const guestName = (guest && guest.name) ? guest.name.trim() : 'Bapak/Ibu/Saudara/i';
+      const guestSeat = (guest && guest.table && guest.table !== '-') ? guest.table : '';
+      const guestPax = (guest && guest.pax) ? `${guest.pax} Pax` : '';
+      const seatInfo = [guestSeat, guestPax].filter(Boolean).join(' • ');
 
       return `Kepada Yth.
-*${guest.name}*
-${guest.table && guest.table !== '-' ? `(${guest.table})` : ''}
-
-Assalamu’alaikum Warahmatullahi Wabarakatuh / Salam Sejahtera,
+Bapak/Ibu/Saudara/i:
+*${guestName}*
+${seatInfo ? `_(${seatInfo})_\n` : ''}
+Assalamu’alaikum Warahmatullahi Wabarakatuh
 
 Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada momen bahagia pernikahan kami:
 
-💍 *${weddingData.couple.groom.name}*
-&
-💍 *${weddingData.couple.bride.name}*
+✨ *The Wedding of ${coupleName}* ✨
 
-🗓 *Hari/Tanggal:* ${dateFormatted}
+🤵 *${groom}*
+${groomParents ? `_${groomParents}_\n` : ''}&
+👰 *${bride}*
+${brideParents ? `_${brideParents}_\n` : ''}
+━━━━━━━━━━━━━━━━━━━
+📅 *Hari/Tanggal:* ${dateFormatted}
+⏰ *Waktu:* ${time}
 📍 *Tempat:* ${venue}
+   ${address}
+━━━━━━━━━━━━━━━━━━━
 
 Untuk informasi detail acara, rute lokasi, dan konfirmasi kehadiran (RSVP), mohon klik tautan undangan digital khusus berikut:
-👉 ${inviteUrl}
+
+💌 *Buka Undangan Digital:*
+${inviteUrl}
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
 
@@ -571,7 +592,7 @@ Terima kasih.
 Wassalamu’alaikum Warahmatullahi Wabarakatuh.
 
 Kami yang berbahagia,
-*${coupleName}* & Keluarga`;
+*${coupleName}* & Keluarga Besar`;
     }
   };
 
