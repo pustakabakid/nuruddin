@@ -328,9 +328,8 @@
       top: 0;
       left: 0;
       width: 140px;
-      opacity: 0.75;
+      opacity: 0.6;
       pointer-events: none;
-      z-index: 1;
     }
 
     .hero-watermark-br {
@@ -338,29 +337,8 @@
       bottom: 0;
       right: 0;
       width: 140px;
-      opacity: 0.75;
+      opacity: 0.6;
       pointer-events: none;
-      z-index: 1;
-    }
-
-    .section-ornament-tr {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 120px;
-      opacity: 0.65;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .section-ornament-bl {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 120px;
-      opacity: 0.65;
-      pointer-events: none;
-      z-index: 1;
     }
 
     .hero-couple-title {
@@ -877,6 +855,9 @@
 
   <!-- GATE / COVER SCREEN OVERLAY -->
   <div id="gateCover">
+    <img src="corner-top-left.png" class="hero-watermark-tl" alt="ornament" style="width: 120px; opacity: 0.55;">
+    <img src="corner-bottom-right.png" class="hero-watermark-br" alt="ornament" style="width: 120px; opacity: 0.55;">
+
     <div style="margin-top: 20px;">
       <span class="gate-badge">Undangan Pernikahan</span>
     </div>
@@ -959,11 +940,8 @@
     </section>
 
     <!-- 3. COUPLE PROFILE -->
-    <section id="couple" style="position: relative; overflow: hidden;">
-      <img src="watercolor-top-right.png" class="section-ornament-tr" alt="ornament">
-      <img src="watercolor-bottom-left.png" class="section-ornament-bl" alt="ornament">
-
-      <div class="section-title-wrap" style="position: relative; z-index: 2;">
+    <section id="couple">
+      <div class="section-title-wrap">
         <p class="section-subtitle">Kedua Mempelai</p>
         <h2 class="section-heading font-serif">Maha Suci Allah</h2>
         <div class="section-divider"></div>
@@ -1004,11 +982,8 @@
     </section>
 
     <!-- 4. SCHEDULE / ACARA -->
-    <section id="schedule" style="position: relative; overflow: hidden;">
-      <img src="corner-top-left.png" class="section-ornament-tr" alt="ornament" style="transform: scaleX(-1); width: 110px;">
-      <img src="corner-bottom-right.png" class="section-ornament-bl" alt="ornament" style="transform: scaleX(-1); width: 110px;">
-
-      <div class="section-title-wrap" style="position: relative; z-index: 2;">
+    <section id="schedule">
+      <div class="section-title-wrap">
         <p class="section-subtitle">Waktu & Tempat</p>
         <h2 class="section-heading font-serif">Rangkaian Acara</h2>
         <div class="section-divider"></div>
