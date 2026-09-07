@@ -241,14 +241,30 @@
   const WeddingStorage = {
     supabaseConfig: SUPABASE_CONFIG,
 
-    async supabaseRequest(endpoint, method = 'GET', body = null) {
+    normalizeCategory(cat) {
+      if (!cat) return 'Umum';
+      const c = String(cat).trim();
+      const valid = ['VIP', 'Keluarga', 'Sahabat', 'Rekan Kerja', 'Umum'];
+      const matched = valid.find(v => v.toLowerCase() === c.toLowerCase());
+      return matched || 'Umum';
+    },
+
+    normalizeStatus(st) {
+      if (!st) return 'pending';
+      const s = String(st).trim().toLowerCase();
+      const valid = ['pending', 'hadir', 'ragu', 'tidak_hadir'];
+      return valid.includes(s) ? s : 'pending';
+    },
+
+    async supabaseRequest(endpoint, method = 'GET', body = null, extraHeaders = {}) {
       try {
         if (!SUPABASE_CONFIG.url || !SUPABASE_CONFIG.key) return null;
         const headers = {
           'apikey': SUPABASE_CONFIG.key,
           'Authorization': `Bearer ${SUPABASE_CONFIG.key}`,
           'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
+          'Prefer': 'return=representation',
+          ...extraHeaders
         };
         const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/${endpoint}`, {
           method,
@@ -256,9 +272,10 @@
           body: body ? JSON.stringify(body) : null
         });
         if (!res.ok) {
-          console.warn('Supabase request non-ok status:', res.status);
+          console.warn('Supabase request non-ok status:', res.status, endpoint);
           return null;
         }
+        if (res.status === 204) return true;
         return await res.json();
       } catch (err) {
         console.warn('Supabase connection offline or blocked:', err.message);
@@ -270,15 +287,15 @@
       // 1. Sync Guests
       try {
         const cloudGuests = await this.supabaseRequest('guests?select=*&order=created_at.desc');
-        if (cloudGuests && Array.isArray(cloudGuests) && cloudGuests.length > 0) {
+        if (cloudGuests && Array.isArray(cloudGuests)) {
           const mapped = cloudGuests.map(g => ({
             id: g.id,
             name: g.name,
             phone: g.phone || '',
-            category: g.category || 'Umum',
+            category: this.normalizeCategory(g.category),
             pax: g.pax || 1,
             table: g.table_seat || 'Meja Umum',
-            status: g.status || 'pending',
+            status: this.normalizeStatus(g.status),
             checkedIn: !!g.checked_in,
             createdAt: g.created_at
           }));
@@ -289,11 +306,11 @@
       // 2. Sync Wishes
       try {
         const cloudWishes = await this.supabaseRequest('wishes?select=*&order=created_at.desc');
-        if (cloudWishes && Array.isArray(cloudWishes) && cloudWishes.length > 0) {
+        if (cloudWishes && Array.isArray(cloudWishes)) {
           const mappedW = cloudWishes.map(w => ({
             id: w.id,
             name: w.sender_name,
-            attendance: w.attendance || 'hadir',
+            attendance: this.normalizeStatus(w.attendance),
             pax: w.pax || 1,
             message: w.message || '',
             timestamp: w.created_at ? new Date(w.created_at).toLocaleString('id-ID', {
@@ -307,6 +324,45 @@
             likes: w.likes_count || 0
           }));
           this.saveWishes(mappedW);
+        }
+      } catch (e) {}
+
+      // 3. Sync Wedding Info
+      try {
+        const cloudInfo = await this.supabaseRequest('wedding_info?select=*&limit=1');
+        if (cloudInfo && Array.isArray(cloudInfo) && cloudInfo.length > 0) {
+          const info = cloudInfo[0];
+          const currentWedding = this.getWeddingData();
+          const merged = {
+            ...currentWedding,
+            couple: {
+              ...currentWedding.couple,
+              groom: {
+                ...currentWedding.couple.groom,
+                name: info.groom_name || currentWedding.couple.groom.name,
+                nickname: info.groom_nickname || currentWedding.couple.groom.nickname,
+                parents: info.groom_parents || currentWedding.couple.groom.parents,
+                avatar: info.groom_avatar || currentWedding.couple.groom.avatar,
+                instagram: info.groom_instagram || currentWedding.couple.groom.instagram
+              },
+              bride: {
+                ...currentWedding.couple.bride,
+                name: info.bride_name || currentWedding.couple.bride.name,
+                nickname: info.bride_nickname || currentWedding.couple.bride.nickname,
+                parents: info.bride_parents || currentWedding.couple.bride.parents,
+                avatar: info.bride_avatar || currentWedding.couple.bride.avatar,
+                instagram: info.bride_instagram || currentWedding.couple.bride.instagram
+              },
+              combinedTitle: info.combined_title || currentWedding.couple.combinedTitle
+            },
+            weddingDate: info.wedding_date || currentWedding.weddingDate
+          };
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(STORAGE_KEYS.WEDDING, JSON.stringify(merged));
+          }
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('wedding_data_updated', { detail: merged }));
+          }
         }
       } catch (e) {}
     },
@@ -327,6 +383,25 @@
         }
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('wedding_data_updated', { detail: data }));
+        }
+
+        // Push to Supabase table wedding_info
+        if (data && data.couple) {
+          const payload = {
+            groom_name: (data.couple.groom && data.couple.groom.name) || 'Nuruddin',
+            groom_nickname: (data.couple.groom && data.couple.groom.nickname) || 'Nuruddin',
+            groom_parents: (data.couple.groom && data.couple.groom.parents) || '',
+            groom_avatar: (data.couple.groom && data.couple.groom.avatar) || '1.jpg',
+            groom_instagram: (data.couple.groom && data.couple.groom.instagram) || '',
+            bride_name: (data.couple.bride && data.couple.bride.name) || 'Silfiana',
+            bride_nickname: (data.couple.bride && data.couple.bride.nickname) || 'Silfi',
+            bride_parents: (data.couple.bride && data.couple.bride.parents) || '',
+            bride_avatar: (data.couple.bride && data.couple.bride.avatar) || '2.jpg',
+            bride_instagram: (data.couple.bride && data.couple.bride.instagram) || '',
+            combined_title: data.couple.combinedTitle || 'Silfi & Nuruddin',
+            wedding_date: data.weddingDate || '2026-09-21 08:00:00+07'
+          };
+          this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payload).catch(() => {});
         }
         return true;
       } catch (e) {
@@ -370,22 +445,25 @@
       const guests = this.getGuests();
       const newGuest = {
         id: 'g-' + Date.now(),
-        name: guest.name || 'Tamu Undangan',
+        name: (guest.name || 'Tamu Undangan').trim(),
         phone: guest.phone || '',
-        category: guest.category || 'Umum',
+        category: this.normalizeCategory(guest.category),
         pax: parseInt(guest.pax, 10) || 1,
         table: guest.table || 'Meja Umum',
-        status: guest.status || 'pending',
+        status: this.normalizeStatus(guest.status),
         wishes: guest.wishes || '',
-        checkedIn: false,
+        checkedIn: !!guest.checkedIn,
         createdAt: new Date().toISOString(),
         ...guest
       };
+      newGuest.category = this.normalizeCategory(newGuest.category);
+      newGuest.status = this.normalizeStatus(newGuest.status);
+
       guests.unshift(newGuest);
       this.saveGuests(guests);
 
-      // Async push to Supabase
-      this.supabaseRequest('guests', 'POST', {
+      // Upsert to Supabase with resolution=merge-duplicates
+      this.supabaseRequest('guests?on_conflict=id', 'POST', {
         id: newGuest.id,
         name: newGuest.name,
         phone: newGuest.phone || null,
@@ -394,7 +472,7 @@
         table_seat: newGuest.table,
         status: newGuest.status,
         checked_in: newGuest.checkedIn
-      }).catch(() => {});
+      }, { 'Prefer': 'resolution=merge-duplicates,return=representation' }).catch(() => {});
 
       return newGuest;
     },
@@ -404,24 +482,23 @@
       const idx = guests.findIndex(g => g.id === id);
       if (idx !== -1) {
         guests[idx] = { ...guests[idx], ...updatedFields };
+        if (updatedFields.category !== undefined) guests[idx].category = this.normalizeCategory(guests[idx].category);
+        if (updatedFields.status !== undefined) guests[idx].status = this.normalizeStatus(guests[idx].status);
         this.saveGuests(guests);
 
-        // Async patch to Supabase
-        const payload = {};
-        if (updatedFields.name !== undefined) payload.name = updatedFields.name;
-        if (updatedFields.phone !== undefined) payload.phone = updatedFields.phone || null;
-        if (updatedFields.category !== undefined) payload.category = updatedFields.category;
-        if (updatedFields.pax !== undefined) payload.pax = updatedFields.pax;
-        if (updatedFields.table !== undefined) payload.table_seat = updatedFields.table;
-        if (updatedFields.status !== undefined) payload.status = updatedFields.status;
-        if (updatedFields.checkedIn !== undefined) {
-          payload.checked_in = updatedFields.checkedIn;
-          payload.checked_in_at = updatedFields.checkedIn ? new Date().toISOString() : null;
-        }
-
-        if (Object.keys(payload).length > 0) {
-          this.supabaseRequest(`guests?id=eq.${encodeURIComponent(id)}`, 'PATCH', payload).catch(() => {});
-        }
+        const g = guests[idx];
+        // Upsert full row to Supabase so it handles both existing and newly added guests seamlessly
+        this.supabaseRequest('guests?on_conflict=id', 'POST', {
+          id: g.id,
+          name: g.name,
+          phone: g.phone || null,
+          category: this.normalizeCategory(g.category),
+          pax: g.pax,
+          table_seat: g.table,
+          status: this.normalizeStatus(g.status),
+          checked_in: g.checkedIn,
+          checked_in_at: g.checkedIn ? new Date().toISOString() : null
+        }, { 'Prefer': 'resolution=merge-duplicates,return=representation' }).catch(() => {});
 
         return guests[idx];
       }
@@ -464,10 +541,10 @@
       const wishes = this.getWishes();
       const newWish = {
         id: 'w-' + Date.now(),
-        name: wish.name || 'Tamu Baik Hati',
-        attendance: wish.attendance || 'hadir',
+        name: (wish.name || 'Tamu Baik Hati').trim(),
+        attendance: this.normalizeStatus(wish.attendance || 'hadir'),
         pax: parseInt(wish.pax, 10) || 1,
-        message: wish.message || '',
+        message: (wish.message || '').trim(),
         timestamp: new Date().toLocaleString('id-ID', {
           weekday: 'long',
           day: '2-digit',
@@ -482,23 +559,38 @@
       this.saveWishes(wishes);
 
       const guests = this.getGuests();
-      const matchedGuest = guests.find(g => g.name.toLowerCase() === wish.name.toLowerCase());
+      const matchedGuest = guests.find(g => g.name.toLowerCase() === newWish.name.toLowerCase());
+      let matchedGuestId = null;
+
       if (matchedGuest) {
         this.updateGuest(matchedGuest.id, {
-          status: wish.attendance,
-          pax: wish.pax || matchedGuest.pax,
-          wishes: wish.message
+          status: newWish.attendance,
+          pax: newWish.pax || matchedGuest.pax,
+          wishes: newWish.message
         });
+        matchedGuestId = matchedGuest.id;
       }
 
-      // Async push to Supabase
-      this.supabaseRequest('wishes', 'POST', {
+      // Safe Foreign Key Handling: Insert with matchedGuestId if available, fallback to null if FK fails
+      const wishPayload = {
         id: newWish.id,
-        guest_id: matchedGuest ? matchedGuest.id : null,
+        guest_id: matchedGuestId,
         sender_name: newWish.name,
         attendance: newWish.attendance,
         pax: newWish.pax,
         message: newWish.message
+      };
+
+      this.supabaseRequest('wishes?on_conflict=id', 'POST', wishPayload, {
+        'Prefer': 'resolution=merge-duplicates,return=representation'
+      }).then(res => {
+        if (!res && matchedGuestId) {
+          // If insert failed due to FK, retry with guest_id = null
+          wishPayload.guest_id = null;
+          this.supabaseRequest('wishes?on_conflict=id', 'POST', wishPayload, {
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          }).catch(() => {});
+        }
       }).catch(() => {});
 
       return newWish;
@@ -598,8 +690,11 @@ Terima kasih.
     }
   };
 
-  // Auto initialize cloud sync on load
+  // Auto initialize cloud sync on load & when online
   if (typeof window !== 'undefined') {
+    window.addEventListener('online', () => {
+      WeddingStorage.syncFromCloud();
+    });
     setTimeout(() => {
       WeddingStorage.syncFromCloud();
     }, 100);
