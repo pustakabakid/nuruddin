@@ -2148,6 +2148,14 @@
       document.getElementById('guestCategoryFilter').onchange = renderGuestsTable;
       document.getElementById('guestStatusFilter').onchange = renderGuestsTable;
       document.getElementById('broadcastGuestSelect').onchange = updateBroadcastPreview;
+      document.getElementById('broadcastPreviewText').oninput = function() {
+        const customText = (storage.sanitizeWhatsAppMessage ? storage.sanitizeWhatsAppMessage(this.value) : this.value) || '';
+        const selectedId = document.getElementById('broadcastGuestSelect').value;
+        const guest = guests.find(g => g.id === selectedId) || guests[0];
+        const cleanPhone = guest ? normalizePhoneForWa(guest.phone) : '';
+        const waLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(customText)}` : `https://wa.me/?text=${encodeURIComponent(customText)}`;
+        document.getElementById('btnSendWaDirect').href = waLink;
+      };
 
       document.getElementById('wishesSearchInput').oninput = renderWishesTable;
       document.getElementById('wishesAttendanceFilter').onchange = renderWishesTable;

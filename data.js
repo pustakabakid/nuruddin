@@ -4,18 +4,25 @@
  */
 
 (function(root, factory) {
+  const exportsObj = factory();
   if (typeof exports === 'object' && typeof module !== 'undefined') {
-    module.exports = factory();
-  } else if (typeof define === 'function' && define.amd) {
-    define(factory);
-  } else {
-    const exportsObj = factory();
+    module.exports = exportsObj;
+  }
+  if (typeof define === 'function' && define.amd) {
+    define(function() { return exportsObj; });
+  }
+  if (typeof window !== 'undefined') {
+    window.DEFAULT_WEDDING_DATA = exportsObj.DEFAULT_WEDDING_DATA;
+    window.DEFAULT_GUESTS = exportsObj.DEFAULT_GUESTS;
+    window.DEFAULT_WISHES = exportsObj.DEFAULT_WISHES;
+    window.WeddingStorage = exportsObj.WeddingStorage;
+  } else if (typeof root !== 'undefined') {
     root.DEFAULT_WEDDING_DATA = exportsObj.DEFAULT_WEDDING_DATA;
     root.DEFAULT_GUESTS = exportsObj.DEFAULT_GUESTS;
     root.DEFAULT_WISHES = exportsObj.DEFAULT_WISHES;
     root.WeddingStorage = exportsObj.WeddingStorage;
   }
-})(typeof window !== 'undefined' ? window : this, function() {
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this), function() {
 
   const STORAGE_KEYS = {
     WEDDING: 'wevitation_khusus_wedding_data',
@@ -542,39 +549,52 @@
       return `${baseUrl}?${params.toString()}`;
     },
 
+    sanitizeWhatsAppMessage(message) {
+      if (!message) return '';
+      return message
+        .replace(/\uFFFD/g, '')
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .replace(/[ \t]+\n/g, '\n')
+        .trim();
+    },
+
     generateWhatsAppMessage(guest, weddingData, inviteUrl) {
       const couple = (weddingData && weddingData.couple) || {};
       const coupleName = couple.combinedTitle || 'Silfi & Nuruddin';
       const dateFormatted = (weddingData && weddingData.formattedDate) || 'Ahad, 21 September 2026';
 
-      const guestName = (guest && guest.name) ? guest.name.trim() : 'Bapak/Ibu/Saudara/i';
-      const guestSeat = (guest && guest.table && guest.table !== '-') ? guest.table : '';
-      const guestPax = (guest && guest.pax) ? `${guest.pax} Pax` : '';
-      const seatInfo = [guestSeat, guestPax].filter(Boolean).join(' • ');
+      const guestName = (guest && guest.name) ? guest.name.trim() : 'Tamu Undangan';
+      const rawTable = (guest && guest.table && guest.table !== '-') ? guest.table.trim() : '';
+      const paxNum = (guest && guest.pax) ? Number(guest.pax) : 0;
 
-      return `Kepada Yth.
-Bapak/Ibu/Saudara/i:
-*${guestName}*
-${seatInfo ? `_(${seatInfo})_\n` : ''}
-Assalamu’alaikum Warahmatullahi Wabarakatuh
+      let seatPart = '';
+      if (rawTable) {
+        seatPart = rawTable.toLowerCase().startsWith('meja') ? rawTable : `Meja ${rawTable}`;
+      }
+      const paxPart = paxNum > 0 ? `${paxNum} Pax` : '';
+      const seatInfo = [seatPart, paxPart].filter(Boolean).join(' • ');
+      const seatLine = seatInfo ? `_(${seatInfo})_\n` : '';
 
-Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia pernikahan kami:
+      const template = `Kepada Yth. Bapak/Ibu/Saudara/i *${guestName}*
+${seatLine}
+Assalamu’alaikum Warahmatullahi Wabarakatuh.
 
-✨ *The Wedding of ${coupleName}* ✨
-📅 *${dateFormatted}*
+Dengan hormat, kami mengundang Anda untuk hadir di pernikahan:
 
-Untuk informasi detail acara, rute lokasi, dan konfirmasi kehadiran (RSVP), mohon buka tautan undangan digital khusus berikut:
+*The Wedding of ${coupleName}*
+${dateFormatted}
 
-💌 *Buka Undangan:*
+*Buka Undangan:*
 ${inviteUrl}
 
-Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+Kami sangat berharap Anda dapat hadir dan memberikan doa restu.
 
 Terima kasih.
-Wassalamu’alaikum Warahmatullahi Wabarakatuh.
 
-Kami yang berbahagia,
 *${coupleName}*`;
+
+      return this.sanitizeWhatsAppMessage(template);
     }
   };
 
