@@ -1182,7 +1182,7 @@
       function renderWedding() {
         if (!weddingData || !weddingData.couple) return;
 
-        const combined = weddingData.couple.combinedTitle || 'Via & Andra';
+        const combined = weddingData.couple.combinedTitle || 'Silfi & Nuruddin';
         document.getElementById('gateCoupleTitle').textContent = combined;
         document.getElementById('heroCoupleTitle').textContent = combined;
         document.getElementById('footerCoupleTitle').textContent = combined;
@@ -1190,25 +1190,25 @@
 
         document.getElementById('gateGuestName').textContent = guestParamName;
         document.getElementById('gateGuestSeat').textContent = guestParamSeat;
-        document.getElementById('gateDateFormatted').textContent = weddingData.formattedDate || 'Senin, 21 September 2026';
-        document.getElementById('heroDateBadge').textContent = weddingData.formattedDate || 'Senin, 21 September 2026';
+        document.getElementById('gateDateFormatted').textContent = weddingData.formattedDate || 'Ahad, 21 September 2026';
+        document.getElementById('heroDateBadge').textContent = weddingData.formattedDate || 'Ahad, 21 September 2026';
 
         if (weddingData.couple.groom) {
-          document.getElementById('groomName').textContent = weddingData.couple.groom.name || '';
-          document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || '';
+          document.getElementById('groomName').textContent = weddingData.couple.groom.name || 'Nuruddin';
+          document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';
           const gAvatar = (weddingData.couple.groom.avatar && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : '1.jpg';
           document.getElementById('groomAvatar').src = gAvatar;
-          document.getElementById('groomIgHandle').textContent = '@' + (weddingData.couple.groom.instagram || 'andragunawan');
-          document.getElementById('groomIgLink').href = weddingData.couple.groom.instagramUrl || '#';
+          document.getElementById('groomIgHandle').textContent = '@' + (weddingData.couple.groom.instagram || 'nuruddin_bin_aliman');
+          document.getElementById('groomIgLink').href = weddingData.couple.groom.instagramUrl || 'https://instagram.com/nuruddin_bin_aliman';
         }
 
         if (weddingData.couple.bride) {
-          document.getElementById('brideName').textContent = weddingData.couple.bride.name || '';
-          document.getElementById('brideParents').textContent = weddingData.couple.bride.parents || '';
+          document.getElementById('brideName').textContent = weddingData.couple.bride.name || 'Silfiana';
+          document.getElementById('brideParents').textContent = weddingData.couple.bride.parents || 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah';
           const bAvatar = (weddingData.couple.bride.avatar && !weddingData.couple.bride.avatar.includes('bride-eviana')) ? weddingData.couple.bride.avatar : '2.jpg';
           document.getElementById('brideAvatar').src = bAvatar;
-          document.getElementById('brideIgHandle').textContent = '@' + (weddingData.couple.bride.instagram || 'evianasaskia');
-          document.getElementById('brideIgLink').href = weddingData.couple.bride.instagramUrl || '#';
+          document.getElementById('brideIgHandle').textContent = '@' + (weddingData.couple.bride.instagram || 'chilpy04');
+          document.getElementById('brideIgLink').href = weddingData.couple.bride.instagramUrl || 'https://instagram.com/chilpy04';
         }
 
         if (weddingData.quote) {

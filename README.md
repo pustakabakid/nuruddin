@@ -1,90 +1,79 @@
-# 💍 Wevitation Khusus — Paket 1 Undangan + 1 Dashboard Terintegrasi
+# 💍 Undangan Pernikahan Digital & Dashboard Admin: Silfi & Nuruddin
 
-Folder ini berisi sistem **Undangan Pernikahan Digital Interaktif** dan **Dashboard Manajemen Tamu & Pengaturan Acara** yang dapat dijalankan secara langsung di browser dan saling tersinkronisasi.
+Sistem **Undangan Pernikahan Digital Interaktif**, **Animasi Parallax**, **Musik Latar**, dan **Dashboard Manajemen Tamu & Push WhatsApp** yang terintegrasi dengan database cloud **Supabase** dan siap deploy di **Vercel**.
 
 ---
 
-## 📁 Struktur File di Folder `Khusus/`
+## 🌐 Live Production URL
+* **Undangan Publik**: [https://nuruddin-ten.vercel.app/](https://nuruddin-ten.vercel.app/)
+* **Contoh Undangan VIP**: [https://nuruddin-ten.vercel.app/?to=Bpk.+Haji+Slamet&seat=Meja+VIP+01&pax=2](https://nuruddin-ten.vercel.app/?to=Bpk.+Haji+Slamet&seat=Meja+VIP+01&pax=2)
+* **Dashboard Admin**: [https://nuruddin-ten.vercel.app/dashboard.html](https://nuruddin-ten.vercel.app/dashboard.html)
+
+---
+
+## 📁 Struktur File Project
 
 ```text
-d:\APP\Wedding\Khusus\
-├── index.html        # Halaman Undangan Pernikahan Digital (Tampilan Tamu)
-├── dashboard.html    # Halaman Dashboard Manajemen & Admin (Tampilan Pengelola)
-├── data.js           # Shared Data Model, State Manager (localStorage), & Helper
+├── index.html        # Halaman Undangan Pernikahan Digital (Tampilan Tamu + Parallax)
+├── dashboard.html    # Halaman Dashboard Manajemen Tamu & WhatsApp (Tampilan Admin)
+├── data.js           # State Store, Integrasi Supabase REST API, & Helper Generator
+├── schema.sql        # Skema Database PostgreSQL / Supabase
+├── bg.jpeg           # Foto Utama / Background Cover & Hero
+├── 1.jpg             # Foto Mempelai Pria (Nuruddin)
+├── 2.jpg             # Foto Mempelai Wanita (Silfiana)
+├── janjisuci.mp3     # Audio Soundtrack Instrumen Musik Latar
+├── corner-top-left.png     # Ornamen Sudut Kiri Atas
+├── corner-bottom-right.png # Ornamen Sudut Kanan Bawah
 └── README.md         # Dokumentasi & Panduan Lengkap
 ```
 
 ---
 
-## 🌟 1. Undangan Pernikahan Digital (`index.html`)
+## 👰🤵 Informasi Mempelai & Acara
 
-### Fitur Utama:
-1. **Gate / Cover Envelope Screen (`Buka Undangan`)**:
-   - Membaca nama tamu personal secara otomatis dari parameter URL (`?to=Nama+Tamu&seat=VIP+01&pax=2`).
-   - Tombol buka undangan dengan transisi mulus dan pemutaran audio otomatis.
+* **Mempelai Wanita**: Silfiana (Silfi) — Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah (`@chilpy04`)
+* **Mempelai Pria**: Nuruddin — Putra Pertama dari Bpk. Misraji & Ibu Hasibah (`@nuruddin_bin_aliman`)
+* **Hari & Tanggal**: Ahad, 21 September 2026
+* **Waktu Acara**: Pukul 10:00 WIB s/d Selesai
+* **Tempat / Lokasi**: Kediaman Mempelai Pria, Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur
+* **Google Maps**: [https://maps.app.goo.gl/eXsw8jBtcK1uvuib8](https://maps.app.goo.gl/eXsw8jBtcK1uvuib8)
+
+---
+
+## 🌟 Fitur Halaman Undangan (`index.html`)
+
+1. **Cover / Gate Envelope Screen (`Buka Undangan`)**:
+   - Membaca nama tamu personal secara dinamis dari URL (`?to=Nama+Tamu&seat=VIP+01&pax=2`).
+   - Tombol buka undangan dengan transisi buka gerbang yang halus dan auto-play instrumen `janjisuci.mp3`.
 2. **Hero Header & Real-Time Countdown**:
-   - Penghitung waktu mundur 4 kolom (Hari, Jam, Menit, Detik) menuju waktu akad secara akurat.
-3. **Kutipan Suci (Quote Section)**:
-   - Surah Ar-Rum: 21 dalam kaligrafi Arab dan terjemahan Indonesia pada kartu berlatar kaca (*glassmorphism*).
-4. **Profil Mempelai Pria & Wanita**:
-   - Foto mempelai dengan cincin animasi emas, nama orang tua, dan tombol profil Instagram.
-5. **Rangkaian Acara (Akad & Resepsi)**:
-   - Waktu, lokasi, gedung, tombol *Simpan ke Google Calendar*, dan tombol *Petunjuk Arah Google Maps*.
-6. **Love Story Timeline**:
-   - Linimasa kisah cinta (Pertemuan Pertama, Lamaran, dll) dengan foto dan cerita romantis.
-7. **Galeri Foto & Lightbox Zoom**:
-   - Grid galeri foto momen pre-wedding dengan pop-up *Lightbox zoom* resolusi tinggi saat diklik.
-8. **Amplop Digital Cashless (Wedding Gift)**:
-   - Kartu rekening Bank BCA / Mandiri dengan tombol satu-klik **Salin No. Rekening** + notifikasi *toast*.
-   - Tombol pop-up scan QRIS untuk pembayaran digital e-wallet.
-   - Alamat pengiriman kado fisik dengan tombol salin alamat.
-9. **RSVP Kehadiran & Buku Tamu (Ucapan & Doa)**:
-   - Formulir konfirmasi kehadiran (*Hadir, Ragu, Tidak Hadir*) dan jumlah pax.
+   - Multi-layer Parallax effect saat scroll.
+   - Penghitung waktu mundur 4 kolom (Hari, Jam, Menit, Detik) menuju waktu acara.
+3. **Kutipan Suci**:
+   - QS. Ar-Rum: 21 dalam kaligrafi Arab dan terjemahan Indonesia.
+4. **Profil Kedua Mempelai**:
+   - Foto mempelai dengan cincin animasi berputar dinamis, info orang tua, dan tautan Instagram.
+5. **Rangkaian Acara (Walimatul 'Urs / Resepsi)**:
+   - Waktu, venue, tombol *Simpan ke Google Calendar*, dan tombol *Petunjuk Arah Google Maps*.
+6. **RSVP & Buku Tamu (Ucapan & Doa)**:
+   - Form RSVP real-time terhubung langsung ke cloud database Supabase.
    - Efek ledakan confetti selebrasi saat mengirimkan ucapan.
-   - Umpan (*feed*) ucapan doa masuk yang tersinkronisasi langsung ke Dashboard.
-10. **Floating Controls**:
-    - Tombol piringan hitam (*vinyl disc*) musik dengan status putar/jeda.
-    - *Floating navigation dock* melayang untuk lompat cepat ke bagian-bagian undangan.
+7. **Floating Controls**:
+   - Pemutar musik piringan hitam (*vinyl disc*) di pojok kanan atas.
+   - *Floating navigation dock* di bagian bawah layar.
 
 ---
 
-## 📊 2. Dashboard Manajemen Undangan (`dashboard.html`)
+## 📊 Fitur Dashboard Admin (`dashboard.html`)
 
-### Fitur Utama:
-1. **Ringkasan & Statistik (Analytics)**:
-   - Menghitung secara langsung: Total Tamu Terdaftar, Pax Terkonfirmasi Hadir, Status Ragu/Pending, dan Jumlah Ucapan Doa.
-2. **Manajemen Daftar Tamu (Guest Manager)**:
-   - Tambah, Edit, dan Hapus data tamu (Nama, No. WhatsApp, Kategori VIP/Sahabat/Keluarga, Pax, Meja).
-   - Filter pencarian cepat berdasarkan nama, meja, kategori, dan status kehadiran.
-   - Tombol **Salin Link Khusus** per tamu (misal: `index.html?to=Bapak+Ahmad&seat=VIP+01&pax=2`).
-   - Tombol **QR E-Pass Check-in** per tamu untuk pemindaian absensi di lokasi acara.
-   - Tombol status **Check-in Hadir** di meja registrasi.
-   - **Export CSV**: Unduh seluruh daftar tamu dan status RSVP ke format Excel / CSV.
-3. **Buku Tamu & Moderasi Doa**:
-   - Melihat seluruh daftar pesan dan doa restu yang dikirim oleh tamu dari halaman `index.html`.
-   - Menghapus komentar yang tidak sesuai.
-4. **Data Mempelai & Rangkaian Acara**:
-   - Form editor untuk mengubah nama kedua mempelai, orang tua, akun Instagram, tanggal pernikahan, lokasi venue, jam akad/resepsi, hingga nomor rekening bank.
-   - Sekali klik **Simpan Semua Perubahan**, data di halaman `index.html` otomatis terupdate seketika.
-5. **WhatsApp Broadcast & Message Generator**:
-   - Pembuat pesan undangan WhatsApp yang rapi dan elegan.
-   - Memilih tamu untuk membuat pesan otomatis dengan link personal masing-masing.
-   - Tombol **Kirim Langsung ke WhatsApp** yang langsung membuka `wa.me`.
-
----
-
-## 🚀 Cara Menjalankan & Membuka
-
-### Opsi 1: Buka Langsung di Browser
-- Cukup *double-click* file `Khusus/index.html` untuk membuka Undangan.
-- Cukup *double-click* file `Khusus/dashboard.html` untuk membuka Dashboard.
-
-### Opsi 2: Menggunakan Link Tamu Personal
-Format URL untuk tamu khusus:
-```text
-index.html?to=Bapak+Joko+Santoso&seat=VIP+01&pax=2
-```
-Parameter yang didukung:
-- `to`: Nama tamu / keluarga penerima undangan.
-- `seat` / `table`: Keterangan nomor meja atau kursi.
-- `pax`: Jumlah kuota kehadiran tamu.
+1. **Form Tambah Tamu Lengkap (1 Baris)**:
+   - Nama Penerima, No. WhatsApp, Kategori (`Umum`, `VIP`, `Keluarga`, `Sahabat`, `Rekan Kerja`), Meja (`VIP 01`, dll.), dan Pax (`1-5+`).
+2. **Manajemen Tamu (Compact SaaS Table)**:
+   - Tombol kirim pesan WhatsApp langsung ke nomor tamu.
+   - Tombol salin link undangan personal.
+   - Modal QR Code E-Pass Check-in per tamu.
+   - Tombol toggle status check-in kehadiran di meja resepsionis.
+   - Ekspor data tamu ke file Excel / CSV.
+3. **Kontrol Buku Tamu**:
+   - Melihat dan memoderasi seluruh ucapan masuk dari para tamu.
+4. **Cloud Database Supabase Sync**:
+   - Sinkronisasi instan dua arah untuk tabel `guests` dan `wishes`.

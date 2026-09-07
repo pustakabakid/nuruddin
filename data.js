@@ -102,23 +102,23 @@
         id: 'bank-bca',
         bankName: 'Bank Central Asia (BCA)',
         accountNumber: '7829103841',
-        accountHolder: 'Eviana Saskia',
-        logo: '../public/assets/svg/bca-logo.svg',
-        qrisImage: '../public/assets/images/qris-bca.jpg'
+        accountHolder: 'Silfiana',
+        logo: '',
+        qrisImage: ''
       },
       {
         id: 'bank-mandiri',
         bankName: 'Bank Mandiri',
         accountNumber: '1320019283741',
-        accountHolder: 'Andra Gunawan',
+        accountHolder: 'Nuruddin',
         logo: '',
         qrisImage: ''
       }
     ],
     giftAddress: {
-      recipientName: 'Eviana & Andra',
+      recipientName: 'Silfi & Nuruddin',
       phoneNumber: '081234567890',
-      fullAddress: 'Jl. Dago Asri No. 18, Coblong, Kota Bandung, Jawa Barat 40135 (Titip di Pos Security Cluster)'
+      fullAddress: 'Kediaman Mempelai Pria, Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur'
     },
     liveStreamUrl: 'https://youtube.com/wevitation',
     closingMessage: 'Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kami.'
@@ -145,7 +145,7 @@
       pax: 2,
       table: 'Meja 04',
       status: 'hadir',
-      wishes: 'Selamat menempuh hidup baru bro Andra & Via! Lancar acaranya.',
+      wishes: 'Selamat menempuh hidup baru bro Nuruddin & Mbak Silfi! Lancar acaranya.',
       checkedIn: false,
       createdAt: '2026-09-02T11:20:00Z'
     },
@@ -157,7 +157,7 @@
       pax: 1,
       table: 'Meja 08',
       status: 'ragu',
-      wishes: 'Happy wedding Via cantik! Semoga menjadi keluarga yang sakinah mawaddah warahmah.',
+      wishes: 'Happy wedding Silfi cantik & Mas Nuruddin! Semoga menjadi keluarga yang sakinah mawaddah warahmah.',
       checkedIn: false,
       createdAt: '2026-09-03T15:40:00Z'
     },
@@ -169,7 +169,7 @@
       pax: 2,
       table: 'Meja VIP 02',
       status: 'hadir',
-      wishes: 'Barakallah Via dan Andra, semoga senantiasa dalam limpahan berkah.',
+      wishes: 'Barakallah Silfi dan Nuruddin, semoga senantiasa dalam limpahan berkah.',
       checkedIn: false,
       createdAt: '2026-09-04T09:15:00Z'
     },
@@ -181,7 +181,7 @@
       pax: 4,
       table: 'Meja 12',
       status: 'tidak_hadir',
-      wishes: 'Selamat Mas Andra! Mohon maaf belum bisa hadir langsung, doa terbaik dari kami.',
+      wishes: 'Selamat Mas Nuruddin & Mbak Silfi! Mohon maaf belum bisa hadir langsung, doa terbaik dari kami.',
       checkedIn: false,
       createdAt: '2026-09-05T14:10:00Z'
     }
@@ -193,7 +193,7 @@
       name: 'Bapak Ahmad Sanusi & Keluarga',
       attendance: 'hadir',
       pax: 2,
-      message: 'Selamat untuk kedua mempelai, semoga rukun bahagia selalu sampai kakek nenek.',
+      message: 'Selamat untuk kedua mempelai Silfi & Nuruddin, semoga rukun bahagia selalu sampai kakek nenek.',
       timestamp: 'Senin, 01 September 2026 10:15 WIB',
       likes: 4
     },
@@ -202,7 +202,7 @@
       name: 'Dimas Prasetyo & Partner',
       attendance: 'hadir',
       pax: 2,
-      message: 'Selamat menempuh hidup baru bro Andra & Via! Lancar acaranya ya, nanti kita kumpul seru!',
+      message: 'Selamat menempuh hidup baru bro Nuruddin & Mbak Silfi! Lancar acaranya ya, nanti kita kumpul seru!',
       timestamp: 'Selasa, 02 September 2026 11:32 WIB',
       likes: 2
     },
@@ -211,7 +211,7 @@
       name: 'Clarissa Maharani',
       attendance: 'ragu',
       pax: 1,
-      message: 'Happy wedding Via cantik! Semoga menjadi keluarga yang sakinah mawaddah warahmah. Aamiin ya rabbal alamin.',
+      message: 'Happy wedding Silfi cantik & Mas Nuruddin! Semoga menjadi keluarga yang sakinah mawaddah warahmah. Aamiin ya rabbal alamin.',
       timestamp: 'Rabu, 03 September 2026 16:05 WIB',
       likes: 5
     },
@@ -220,7 +220,7 @@
       name: 'Rian Pratama',
       attendance: 'tidak_hadir',
       pax: 0,
-      message: 'Selamat Mas Andra & Mbak Via! Mohon maaf belum bisa hadir langsung karena dinas luar kota, doa terbaik untuk kalian berdua.',
+      message: 'Selamat Mas Nuruddin & Mbak Silfi! Mohon maaf belum bisa hadir langsung karena dinas luar kota, doa terbaik untuk kalian berdua.',
       timestamp: 'Jumat, 05 September 2026 14:22 WIB',
       likes: 1
     }
