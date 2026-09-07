@@ -354,8 +354,8 @@
 
     .quick-guest-inline-form {
       display: grid;
-      grid-template-columns: 1.4fr 1fr auto;
-      gap: 10px;
+      grid-template-columns: 1.4fr 1.1fr 1fr 1fr 85px auto;
+      gap: 8px;
       align-items: center;
       width: 100%;
     }
@@ -907,22 +907,29 @@
         letter-spacing: 0.2px;
       }
 
-      /* 5. QUICK ADD GUEST FORM (TOUCH FRIENDLY FULL-WIDTH) */
+      /* 5. QUICK ADD GUEST FORM (TOUCH FRIENDLY RESPONSIVE GRID) */
       .quick-guest-inline-form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
         width: 100%;
       }
 
-      .quick-guest-inline-form .form-input {
-        min-height: 44px;
-        height: 44px;
-        font-size: 0.9rem;
-        padding: 0 14px;
+      .quick-guest-inline-form #quickName,
+      .quick-guest-inline-form #quickPhone {
+        grid-column: 1 / -1;
+      }
+
+      .quick-guest-inline-form .form-input,
+      .quick-guest-inline-form .form-select {
+        min-height: 42px;
+        height: 42px;
+        font-size: 0.88rem;
+        padding: 0 12px;
       }
 
       .quick-guest-inline-form .btn-primary {
+        grid-column: 1 / -1;
         width: 100%;
         min-height: 44px;
         height: 44px;
@@ -1332,14 +1339,29 @@
           </div>
         </div>
 
-        <!-- FORM INPUT PENERIMA UNDANGAN (1 BARIS HORIZONTAL) -->
+        <!-- FORM INPUT PENERIMA UNDANGAN (LENGKAP VIP, MEJA & PAX) -->
         <div class="panel" style="padding: 12px 16px; margin-bottom: 16px;">
           <form id="quickGuestForm" class="quick-guest-inline-form">
-            <input type="text" id="quickName" class="form-input" placeholder="Nama Penerima Undangan *" required>
+            <input type="text" id="quickName" class="form-input" placeholder="Nama Penerima *" required>
             <input type="text" id="quickPhone" class="form-input" placeholder="No. WhatsApp (opsional)" inputmode="tel">
+            <select id="quickCategory" class="form-select" title="Kategori Tamu">
+              <option value="Umum" selected>Kategori: Umum</option>
+              <option value="VIP">⭐ VIP</option>
+              <option value="Keluarga">Keluarga</option>
+              <option value="Sahabat">Sahabat</option>
+              <option value="Rekan Kerja">Rekan Kerja</option>
+            </select>
+            <input type="text" id="quickTable" class="form-input" placeholder="Meja / VIP 01">
+            <select id="quickPax" class="form-select" title="Jumlah Pax">
+              <option value="1">1 Pax</option>
+              <option value="2" selected>2 Pax</option>
+              <option value="3">3 Pax</option>
+              <option value="4">4 Pax</option>
+              <option value="5">5+ Pax</option>
+            </select>
             <button type="submit" class="btn btn-primary" style="white-space: nowrap;">
               <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
-              <span>Tambah Penerima</span>
+              <span>Tambah</span>
             </button>
           </form>
         </div>
@@ -1777,7 +1799,7 @@
                     ${g.phone ? `<span class="guest-code">${g.phone}</span>` : ''}
                   </div>
                   <div class="guest-meta">
-                    ${g.table || 'Meja Umum'} · ${g.pax || 2} pax
+                    ${g.category && g.category !== 'Umum' ? `<span style="font-weight: 700; color: var(--accent-gold);">${g.category}</span> · ` : ''}${g.table || 'Meja Umum'} · ${g.pax || 2} pax
                   </div>
                 </div>
               </td>
@@ -1886,6 +1908,9 @@
         e.preventDefault();
         const name = document.getElementById('quickName').value.trim();
         const phone = document.getElementById('quickPhone').value.trim();
+        const category = document.getElementById('quickCategory').value || 'Umum';
+        const table = document.getElementById('quickTable').value.trim() || (category === 'VIP' ? 'Meja VIP' : 'Meja Umum');
+        const pax = parseInt(document.getElementById('quickPax').value, 10) || 2;
 
         if (!name) {
           showToast('Nama penerima undangan wajib diisi');
@@ -1895,15 +1920,17 @@
         const newGuest = storage.addGuest({
           name,
           phone,
-          category: 'Umum',
-          pax: 2,
-          table: 'Meja Umum',
+          category,
+          pax,
+          table,
           status: 'pending'
         });
 
         guests = storage.getGuests();
         quickGuestForm.reset();
-        showToast(`Penerima "${name}" berhasil ditambahkan & link WA siap!`);
+        document.getElementById('quickCategory').value = 'Umum';
+        document.getElementById('quickPax').value = '2';
+        showToast(`Penerima "${name}" (${category}) berhasil ditambahkan!`);
 
         updateStats();
         renderGuestsTable();
