@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Undangan & Buku Tamu — Wevitation</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- External Libraries: Lucide Icons & QR Code Generator -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+  <!-- Shared Data Script -->
+  <script src="data.js"></script>
+
+  <style>
+    :root {
+      /* Palette */
+      --bg-canvas: #F8F7F4;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #F2F0EB;
+      --sidebar-bg: #142022;
+      
+      --text-main: #1D1A16;
+      --text-muted: #6E685F;
+      --text-subtle: #999388;
+      
+      --border: #E8E4DC;
+      --border-subtle: #EFECE6;
+      --border-focus: #1F4E5B;
+
+      --primary: #1F4E5B;
+      --primary-hover: #173C46;
+      --primary-tint: #EEF4F5;
+      
+      --accent-gold: #B88946;
+      --accent-gold-tint: #FAF5EC;
+
+      --success: #267A38;
+      --success-tint: #EEF7F0;
+      --warning: #B36200;
+      --warning-tint: #FDF5E8;
+      --danger: #C02D2D;
+      --danger-tint: #FDF1F1;
+      
+      --wa-green: #22BF5B;
+      --wa-green-hover: #1BA44C;
+
+      /* Radii */
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-full: 9999px;
+
+      /* Elevation */
+      --shadow-card: 0 1px 2px rgba(29, 26, 22, 0.03);
+      --shadow-overlay: 0 12px 36px rgba(20, 32, 34, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================================
+       SIDEBAR
+       ========================================= */
+    .sidebar {
+      width: 240px;
+      background-color: var(--sidebar-bg);
+      color: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      flex-shrink: 0;
+      padding: 20px 14px;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #D4AF37, #B88946);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #142022;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #F8F6F0;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: #8C9C9E;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 12px;
+      background: transparent;
+      border: none;
+      color: #9EAFB1;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #FFFFFF;
+    }
+
+    .nav-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-preview-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px;
+      background: rgba(184, 137, 70, 0.12);
+      border: 1px solid rgba(184, 137, 70, 0.3);
+      border-radius: var(--radius-sm);
+      color: #F0DFC2;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .btn-preview-link:hover {
+      background: rgba(184, 137, 70, 0.22);
+      color: #FFFFFF;
+    }
+
+    /* =========================================
+       MAIN LAYOUT & TOPBAR
+       ========================================= */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 60px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--success-tint);
+      color: var(--success);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .content-area {
+      padding: 28px 32px 48px;
+      flex: 1;
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .tab-section {
+      display: none;
+    }
+
+    .tab-section.active {
+      display: block;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================
+       METRICS / STATS STRIP (1 BARIS HORIZONTAL DENGAN LABEL KECIL DI BAWAH)
+       ========================================= */
+    .metrics-strip {
+      display: flex;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-cell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2px 10px;
+    }
+
+    .metric-cell:not(:last-child) {
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .metric-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .metric-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* =========================================
+       PANELS & CONTAINERS
+       ========================================= */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================
+       FORM ELEMENTS
+       ========================================= */
+    .form-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .quick-guest-inline-form {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.85rem;
+      background: var(--bg-surface);
+      color: var(--text-main);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-textarea {
+      height: auto;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31, 78, 91, 0.08);
+    }
+
+    /* =========================================
+       BUTTONS
+       ========================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      border-color: var(--border);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+      border-color: #D6D0C5;
+    }
+
+    .btn-whatsapp {
+      background: var(--wa-green);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--wa-green-hover);
+      color: #FFFFFF;
+    }
+
+    .btn-sm {
+      height: 32px;
+      padding: 0 10px;
+      font-size: 0.78rem;
+    }
+
+    /* =========================================
+       GUEST ROW & IDENTITY TYPOGRAPHY
+       ========================================= */
+    .guest-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.25;
+      text-align: left;
+    }
+
+    .guest-primary {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    .guest-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.1px;
+    }
+
+    .guest-code {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .guest-primary .guest-code::before {
+      content: "·";
+      margin-right: 6px;
+      color: var(--text-subtle);
+    }
+
+    .guest-meta {
+      font-size: 0.70rem;
+      color: var(--text-subtle);
+      font-weight: 400;
+    }
+
+    /* Micro Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      height: 22px;
+      border-radius: var(--radius-xs);
+      font-size: 0.70rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .status-badge.hadir { background: var(--success-tint); color: var(--success); }
+    .status-badge.ragu { background: var(--warning-tint); color: var(--warning); }
+    .status-badge.tidak_hadir { background: var(--danger-tint); color: var(--danger); }
+    .status-badge.pending { background: #F0ECE4; color: var(--text-muted); }
+
+    /* Compact Check-In Button */
+    .btn-toggle-checkin {
+      height: 24px;
+      padding: 0 8px;
+      font-size: 0.70rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      min-height: auto;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* Action Icons Group (Desktop) */
+    .action-icons {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+    }
+
+    .action-icons .icon-btn,
+    .action-icons .btn-whatsapp-pill {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      border-radius: var(--radius-xs);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .action-icons .btn-whatsapp-pill {
+      color: var(--wa-green);
+      background: rgba(34, 191, 91, 0.08);
+      border-color: rgba(34, 191, 91, 0.2);
+    }
+
+    .action-icons .btn-whatsapp-pill:hover {
+      background: var(--wa-green);
+      color: #FFFFFF;
+      border-color: var(--wa-green);
+    }
+
+    .action-icons .icon-btn:hover {
+      background: var(--bg-subtle);
+      border-color: var(--border);
+      color: var(--text-main);
+    }
+
+    .action-icons .icon-btn.danger:hover {
+      background: var(--danger-tint);
+      border-color: rgba(192, 45, 45, 0.2);
+      color: var(--danger);
+    }
+
+    /* =========================================
+       DATA TABLE & TOOLBAR
+       ========================================= */
+    .table-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+    }
+
+    .search-input-wrap .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--text-subtle);
+      pointer-events: none;
+    }
+
+    .search-input-wrap .form-input {
+      padding-left: 32px;
+      height: 34px;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      height: 34px;
+      padding: 0 10px;
+      font-size: 0.78rem;
+      width: auto;
+      min-width: 130px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      background: var(--bg-surface);
+      white-space: nowrap;
+    }
+
+    th {
+      background: #FAF9F6;
+      color: var(--text-muted);
+      font-size: 0.70rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 12px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.82rem;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #FAFAF8;
+    }
+
+    /* =========================================
+       MODALS & DIALOGS
+       ========================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 20, 22, 0.45);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-overlay);
+      position: relative;
+      animation: modalFadeIn 0.15s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-subtle);
+      font-size: 1.1rem;
+      padding: 4px;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    /* =========================================
+       TOAST
+       ========================================= */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--sidebar-bg);
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-overlay);
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2000;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    .toast-box.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-live-link {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      background: rgba(184, 137, 70, 0.16);
+      border: 1px solid rgba(184, 137, 70, 0.35);
+      border-radius: var(--radius-full);
+      color: #F0DFC2;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    .mobile-live-link:hover {
+      background: rgba(184, 137, 70, 0.28);
+      color: #FFFFFF;
+    }
+
+    .wa-action-buttons-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .wa-secondary-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================================
+       RESPONSIVE & MOBILE-FIRST OPTIMIZATIONS
+       ========================================= */
+    @media (max-width: 860px) {
+      body {
+        flex-direction: column;
+      }
+
+      /* 1. COMPACT STICKY MOBILE APP HEADER */
+      .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
+        box-shadow: 0 4px 16px rgba(14, 20, 22, 0.18);
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background-color: var(--sidebar-bg);
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 0 6px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .mobile-live-link {
+        display: inline-flex !important;
+        min-height: 34px;
+      }
+
+      .sidebar-footer {
+        display: none;
+      }
+
+      .nav-list {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        width: 100%;
+      }
+
+      .nav-list li {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .nav-btn {
+        justify-content: center;
+        padding: 0 10px;
+        min-height: 44px;
+        height: 44px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        border-radius: var(--radius-sm);
+        gap: 6px;
+      }
+
+      .nav-btn.active {
+        background: rgba(255, 255, 255, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #FFFFFF;
+      }
+
+      /* 2. HIDE REDUNDANT DESKTOP TOPBAR */
+      .topbar {
+        display: none !important;
+      }
+
+      /* 3. FLUID CONTENT WIDTH & SAFE AREA */
+      .content-area {
+        width: 100%;
+        max-width: 100%;
+        padding-inline: max(12px, env(safe-area-inset-left));
+        padding-top: 12px;
+        padding-bottom: max(32px, env(safe-area-inset-bottom));
+        margin: 0;
+      }
+
+      /* 4. FLUID METRICS STRIP (READABLE & RESPONSIVE) */
+      .metrics-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 8px;
+        padding: 10px;
+        border-radius: var(--radius-md);
+        margin-bottom: 14px;
+      }
+
+      .metric-cell {
+        padding: 8px 6px;
+        background: var(--bg-subtle);
+        border-radius: var(--radius-sm);
+        border-right: none !important;
+      }
+
+      .metric-val {
+        font-size: 1.15rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      .metric-label {
+        font-size: 0.68rem;
+        font-weight: 600;
+        margin-top: 3px;
+        letter-spacing: 0.2px;
+      }
+
+      /* 5. QUICK ADD GUEST FORM (TOUCH FRIENDLY FULL-WIDTH) */
+      .quick-guest-inline-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .quick-guest-inline-form .form-input {
+        min-height: 44px;
+        height: 44px;
+        font-size: 0.9rem;
+        padding: 0 14px;
+      }
+
+      .quick-guest-inline-form .btn-primary {
+        width: 100%;
+        min-height: 44px;
+        height: 44px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        justify-content: center;
+      }
+
+      /* 6. WHATSAPP WORKFLOW VERTICAL FLOW */
+      .wa-action-buttons-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+      }
+
+      #btnSendWaDirect {
+        width: 100%;
+        min-height: 46px;
+        height: 46px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        justify-content: center;
+      }
+
+      .wa-secondary-btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .wa-secondary-btns .btn {
+        width: 100%;
+        min-height: 44px;
+        height: 44px;
+        font-size: 0.8rem;
+        justify-content: center;
+      }
+
+      /* 7. DATA TABLE TO STACKED CARD PRESENTATION */
+      .table-responsive {
+        border: none;
+        background: transparent;
+        overflow: visible;
+        width: 100%;
+      }
+
+      table, tbody {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        display: none !important;
+      }
+
+      tbody tr {
+        display: block;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 14px;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-card);
+        width: 100%;
+      }
+
+      tbody td {
+        display: block;
+        padding: 0;
+        border: none;
+        white-space: normal;
+      }
+
+      /* Guest Card Layout (Mobile) */
+      #guestsTableBody tr {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "identity status"
+          "identity checkin"
+          "actions actions";
+        row-gap: 6px;
+        column-gap: 8px;
+        padding: 10px 12px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        margin-bottom: 8px;
+        box-shadow: var(--shadow-card);
+      }
+
+      #guestsTableBody td:nth-child(1) {
+        grid-area: identity;
+        align-self: center;
+      }
+
+      #guestsTableBody td:nth-child(2) {
+        grid-area: status;
+        justify-self: end;
+        align-self: center;
+      }
+
+      #guestsTableBody td:nth-child(3) {
+        grid-area: checkin;
+        justify-self: end;
+        align-self: center;
+      }
+
+      #guestsTableBody td:nth-child(4) {
+        grid-area: actions;
+        margin-top: 2px;
+        padding-top: 6px;
+        border-top: 1px solid var(--border-subtle);
+        width: 100%;
+      }
+
+      #guestsTableBody .action-icons {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+        width: 100%;
+      }
+
+      #guestsTableBody .action-icons .btn-whatsapp-pill,
+      #guestsTableBody .action-icons .icon-btn {
+        width: 100%;
+        min-height: 40px;
+        height: 40px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg-surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #guestsTableBody .action-icons .btn-whatsapp-pill {
+        background: rgba(34, 191, 91, 0.08);
+        border-color: rgba(34, 191, 91, 0.25);
+        color: var(--wa-green);
+      }
+
+      #guestsTableBody .btn-toggle-checkin {
+        min-height: 26px;
+        height: 26px;
+        padding: 0 10px;
+        font-size: 0.72rem;
+      }
+
+      /* Wishes Card Layout */
+      #wishesTableBody tr {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 14px;
+      }
+
+      #wishesTableBody td:nth-child(1) {
+        flex: 1;
+        min-width: 0;
+      }
+
+      #wishesTableBody .btn-view-wish-detail {
+        min-height: 44px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        width: 100%;
+      }
+
+      #wishesTableBody .btn-delete-wish {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        flex-shrink: 0;
+        border-radius: var(--radius-sm);
+      }
+
+      /* 8. SEARCH & FILTER TOOLBAR */
+      .table-toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        margin-bottom: 12px;
+      }
+
+      .search-input-wrap {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+      }
+
+      .search-input-wrap .form-input {
+        min-height: 44px;
+        height: 44px;
+        padding-left: 36px;
+        font-size: 0.88rem;
+      }
+
+      .filter-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .filter-select {
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        height: 44px;
+        font-size: 0.82rem;
+      }
+
+      /* 9. PANELS & HEADERS */
+      .panel {
+        padding: 14px;
+        border-radius: var(--radius-md);
+        margin-bottom: 14px;
+      }
+
+      .panel-header {
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      /* 10. MODALS (BOTTOM SHEET STYLE) */
+      .modal-backdrop {
+        align-items: flex-end;
+        padding: 0;
+        z-index: 1500;
+      }
+
+      .modal-box {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 20px 20px 0 0;
+        max-height: 90dvh;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 22px 16px max(24px, env(safe-area-inset-bottom));
+        margin: 0;
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.2);
+        animation: modalSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @keyframes modalSlideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      #confirmDialogModal {
+        align-items: center;
+        padding: 16px;
+      }
+
+      #confirmDialogModal .modal-box {
+        border-radius: var(--radius-lg);
+        max-width: 360px;
+        margin: auto;
+        animation: modalFadeIn 0.15s ease-out;
+      }
+
+      #qrModal {
+        align-items: center;
+        padding: 16px;
+      }
+
+      #qrModal .modal-box {
+        border-radius: var(--radius-lg);
+        max-width: 340px;
+        margin: auto;
+        animation: modalFadeIn 0.15s ease-out;
+      }
+
+      .modal-box .form-input,
+      .modal-box .form-select {
+        min-height: 44px;
+        height: 44px;
+        font-size: 0.88rem;
+      }
+
+      .modal-box .btn {
+        min-height: 44px;
+        height: 44px;
+      }
+
+      /* 11. TOAST NOTIFICATION */
+      .toast-box {
+        left: max(12px, env(safe-area-inset-left));
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        transform: translateY(80px);
+        justify-content: center;
+        text-align: center;
+        min-height: 44px;
+        border-radius: var(--radius-sm);
+        font-size: 0.84rem;
+      }
+
+      .toast-box.active {
+        transform: translateY(0);
+      }
+    }
+
+    /* Extra refinement for small mobile (<= 380px) */
+    @media (max-width: 380px) {
+      .filter-group {
+        grid-template-columns: 1fr;
+      }
+      .wa-secondary-btns {
+        grid-template-columns: 1fr;
+      }
+      .nav-btn {
+        padding: 0 6px;
+        font-size: 0.74rem;
+      }
+      .nav-btn span {
+        font-size: 0.74rem;
+      }
+      .metric-val {
+        font-size: 1.05rem;
+      }
+      .metric-label {
+        font-size: 0.62rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="brand-wrap">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="brand-icon">W</div>
+        <div>
+          <h1 class="brand-title">Wevitation</h1>
+          <p class="brand-sub">Management Studio</p>
+        </div>
+      </div>
+      <a href="index.html" target="_blank" class="mobile-live-link" title="Buka Undangan Live">
+        <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
+        <span>Live</span>
+      </a>
+    </div>
+
+    <ul class="nav-list">
+      <li>
+        <button class="nav-btn active" data-tab="tab-guests-wa" type="button">
+          <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+          <span>Penerima & Push WA</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-btn" data-tab="tab-wishes" type="button">
+          <i data-lucide="message-square" style="width: 16px; height: 16px;"></i>
+          <span>Control Buku Tamu</span>
+        </button>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank" class="btn-preview-link">
+        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+        <span>Buka Undangan Live</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <h2 class="topbar-title" id="pageHeaderTitle">Penerima Undangan & Push WhatsApp</h2>
+      <div class="topbar-actions">
+        <span class="badge-status">
+          <i data-lucide="check-circle-2" style="width: 13px; height: 13px;"></i>
+          Sinkronisasi Aktif
+        </span>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="content-area">
+
+      <!-- ================= 1. TAB PENERIMA UNDANGAN & PUSH WA ================= -->
+      <section id="tab-guests-wa" class="tab-section active">
+        
+        <!-- Metrics Strip -->
+        <div class="metrics-strip">
+          <div class="metric-cell">
+            <div class="metric-val" id="statTotalGuests">0</div>
+            <div class="metric-label">Total Penerima</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val" id="statConfirmedPax">0</div>
+            <div class="metric-label">Pax Hadir</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val" id="statTotalWishes">0</div>
+            <div class="metric-label">Ucapan Masuk</div>
+          </div>
+        </div>
+
+        <!-- FORM INPUT PENERIMA UNDANGAN (1 BARIS HORIZONTAL) -->
+        <div class="panel" style="padding: 12px 16px; margin-bottom: 16px;">
+          <form id="quickGuestForm" class="quick-guest-inline-form">
+            <input type="text" id="quickName" class="form-input" placeholder="Nama Penerima Undangan *" required>
+            <input type="text" id="quickPhone" class="form-input" placeholder="No. WhatsApp (opsional)" inputmode="tel">
+            <button type="submit" class="btn btn-primary" style="white-space: nowrap;">
+              <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
+              <span>Tambah Penerima</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- WHATSAPP BROADCAST WORKFLOW -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <i data-lucide="message-square-share" style="width: 16px; height: 16px; color: var(--wa-green);"></i>
+              Push Pesan WhatsApp Personal
+            </h3>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="broadcastGuestSelect">Pilih Penerima Undangan:</label>
+            <select id="broadcastGuestSelect" class="form-select" style="max-width: 420px;">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="broadcastPreviewText">Pratinjau Pesan:</label>
+            <textarea id="broadcastPreviewText" class="form-textarea" rows="6" readonly style="background: #FAF9F6; font-size: 0.82rem;"></textarea>
+          </div>
+
+          <div class="wa-action-buttons-group">
+            <a href="#" target="_blank" class="btn btn-whatsapp" id="btnSendWaDirect">
+              <i data-lucide="send" style="width: 15px; height: 15px;"></i>
+              <span>Kirim Langsung ke WhatsApp</span>
+            </a>
+            <div class="wa-secondary-btns">
+              <button class="btn btn-outline" id="btnCopyBroadcastMsg" type="button">
+                <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                <span>Salin Teks Pesan</span>
+              </button>
+              <button class="btn btn-outline" id="btnCopyDirectUrl" type="button">
+                <i data-lucide="link-2" style="width: 14px; height: 14px;"></i>
+                <span>Salin URL Saja</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAFTAR PENERIMA UNDANGAN -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <i data-lucide="users" style="width: 16px; height: 16px; color: var(--primary);"></i>
+              Daftar Penerima Undangan (<span id="guestCountBadge">0</span>)
+            </h3>
+            <button class="btn btn-outline btn-sm" id="btnExportCsv" type="button">
+              <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+              Export CSV
+            </button>
+          </div>
+
+          <!-- Minimalist Search & Filter Toolbar -->
+          <div class="table-toolbar">
+            <div class="search-input-wrap">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="guestSearchInput" class="form-input" placeholder="Cari nama, no WhatsApp, meja...">
+            </div>
+            <div class="filter-group">
+              <select id="guestCategoryFilter" class="form-select filter-select">
+                <option value="ALL">Semua Kategori</option>
+                <option value="VIP">VIP</option>
+                <option value="Keluarga">Keluarga</option>
+                <option value="Sahabat">Sahabat</option>
+                <option value="Rekan Kerja">Rekan Kerja</option>
+                <option value="Umum">Umum</option>
+              </select>
+              <select id="guestStatusFilter" class="form-select filter-select">
+                <option value="ALL">Semua Status RSVP</option>
+                <option value="hadir">Pasti Hadir</option>
+                <option value="ragu">Ragu</option>
+                <option value="tidak_hadir">Tidak Hadir</option>
+                <option value="pending">Belum Konfirmasi</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Penerima Undangan</th>
+                  <th style="width: 90px;">Status</th>
+                  <th style="width: 80px;">Check-In</th>
+                  <th style="text-align: right; width: 160px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="guestsTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= 2. TAB CONTROL BUKU TAMU ================= -->
+      <section id="tab-wishes" class="tab-section">
+        
+        <!-- Wishes Metrics Strip -->
+        <div class="metrics-strip">
+          <div class="metric-cell">
+            <div class="metric-val" id="statWishesTotal">0</div>
+            <div class="metric-label">Total Ucapan</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val" id="statWishesHadir">0</div>
+            <div class="metric-label">Pasti Hadir</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val" id="statWishesRagu">0</div>
+            <div class="metric-label">Masih Ragu</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val" id="statWishesTidakHadir">0</div>
+            <div class="metric-label">Tidak Hadir</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <i data-lucide="shield-check" style="width: 16px; height: 16px; color: var(--primary);"></i>
+              Moderasi & Pesan Buku Tamu
+            </h3>
+            <span class="panel-desc">Masuk secara real-time dari formulir undangan</span>
+          </div>
+
+          <!-- Filter Wishes Toolbar -->
+          <div class="table-toolbar">
+            <div class="search-input-wrap">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="wishesSearchInput" class="form-input" placeholder="Cari nama pengirim / kata ucapan...">
+            </div>
+            <div class="filter-group">
+              <select id="wishesAttendanceFilter" class="form-select filter-select">
+                <option value="ALL">Semua Kehadiran</option>
+                <option value="hadir">Hadir</option>
+                <option value="ragu">Ragu</option>
+                <option value="tidak_hadir">Tidak Hadir</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Table Wishes -->
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pengirim</th>
+                  <th style="text-align: right; width: 60px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="wishesTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- EDIT GUEST MODAL -->
+  <div class="modal-backdrop" id="guestModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeGuestModal" type="button">✕</button>
+      <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px;" id="guestModalTitle">
+        Edit Penerima Undangan
+      </h3>
+
+      <form id="editGuestForm">
+        <input type="hidden" id="editGuestId">
+        
+        <div class="form-group">
+          <label class="form-label" for="editGuestName">Nama Penerima *</label>
+          <input type="text" id="editGuestName" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editGuestPhone">No. WhatsApp</label>
+          <input type="text" id="editGuestPhone" class="form-input" placeholder="6281234567890" inputmode="tel">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="editGuestCategory">Kategori</label>
+            <select id="editGuestCategory" class="form-select">
+              <option value="VIP">VIP</option>
+              <option value="Keluarga">Keluarga</option>
+              <option value="Sahabat">Sahabat</option>
+              <option value="Rekan Kerja">Rekan Kerja</option>
+              <option value="Umum">Umum</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editGuestPax">Jumlah Pax</label>
+            <select id="editGuestPax" class="form-select">
+              <option value="1">1 Orang</option>
+              <option value="2" selected>2 Orang</option>
+              <option value="3">3 Orang</option>
+              <option value="4">4 Orang</option>
+              <option value="5">5+ Orang</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editGuestTable">Meja / Sesi</label>
+          <input type="text" id="editGuestTable" class="form-input" placeholder="VIP 01">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editGuestStatus">Status Konfirmasi</label>
+          <select id="editGuestStatus" class="form-select">
+            <option value="pending">Pending (Belum Konfirmasi)</option>
+            <option value="hadir">Pasti Hadir</option>
+            <option value="ragu">Ragu</option>
+            <option value="tidak_hadir">Tidak Hadir</option>
+          </select>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px;">
+          <button type="button" class="btn btn-outline" id="btnCancelEditGuest">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- QR CODE PASS MODAL -->
+  <div class="modal-backdrop" id="qrModal">
+    <div class="modal-box" style="text-align: center; max-width: 360px;">
+      <button class="modal-close" id="closeQrModal" type="button">✕</button>
+      <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">E-Pass Check-in</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;" id="qrGuestNameTitle">Tamu Undangan</p>
+      
+      <div id="qrCodeContainer" style="margin: 0 auto 14px; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; background: #FFF; padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border);"></div>
+
+      <p style="font-size: 0.78rem; color: var(--text-muted);" id="qrGuestDetailInfo">Meja VIP 01 • 2 Pax</p>
+    </div>
+  </div>
+
+  <!-- WISH DETAIL MODAL -->
+  <div class="modal-backdrop" id="wishDetailModal">
+    <div class="modal-box" style="max-width: 440px;">
+      <button class="modal-close" id="closeWishDetailModal" type="button">✕</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+        <div style="width: 38px; height: 38px; border-radius: var(--radius-full); background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <i data-lucide="message-square" style="width: 18px; height: 18px;"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 1.02rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px;" id="wishDetailSenderName">Nama Pengirim</h3>
+          <span style="font-size: 0.74rem; color: var(--text-muted);" id="wishDetailTimestamp">-</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <div style="font-size: 0.76rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px;">Konfirmasi Kehadiran:</div>
+        <div id="wishDetailAttendanceBadge"></div>
+      </div>
+
+      <div style="margin-bottom: 18px;">
+        <div style="font-size: 0.76rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px;">Isi Ucapan & Doa:</div>
+        <div id="wishDetailMessage" style="background: var(--bg-canvas); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 0.84rem; line-height: 1.6; color: var(--text-main); max-height: 220px; overflow-y: auto; white-space: pre-wrap;"></div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="btn btn-outline" id="btnCloseWishDetail">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRMATION MODAL -->
+  <div class="modal-backdrop" id="confirmDialogModal">
+    <div class="modal-box" style="max-width: 380px; text-align: center; padding: 24px;">
+      <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--danger-tint); color: var(--danger); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <i data-lucide="alert-triangle" style="width: 22px; height: 22px;"></i>
+      </div>
+      <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;" id="confirmDialogTitle">
+        Konfirmasi Hapus
+      </h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 18px;" id="confirmDialogMessage">
+        Apakah Anda yakin ingin melanjutkan tindakan ini?
+      </p>
+      <div style="display: flex; gap: 8px; justify-content: center;">
+        <button type="button" class="btn btn-outline" id="btnConfirmCancel" style="flex: 1;">Batal</button>
+        <button type="button" class="btn btn-primary" id="btnConfirmOk" style="flex: 1; background: var(--danger); border-color: var(--danger);">Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-box" id="dashboardToast">
+    <i data-lucide="check-circle" style="color: #48BB78; width: 16px; height: 16px;"></i>
+    <span id="dashboardToastMsg">Aksi berhasil!</span>
+  </div>
+
+  <!-- Regular JavaScript Execution -->
+  <script>
+    (function() {
+      const storage = window.WeddingStorage || {
+        getWeddingData: () => window.DEFAULT_WEDDING_DATA || {},
+        getGuests: () => window.DEFAULT_GUESTS || [],
+        getWishes: () => window.DEFAULT_WISHES || [],
+        getStats: () => ({ totalGuests: 0, hadirCount: 0, totalPaxConfirmed: 0, raguCount: 0, totalWishes: 0, totalCheckedIn: 0 }),
+        addGuest: () => ({}),
+        updateGuest: () => ({}),
+        deleteGuest: () => true,
+        deleteWish: () => true,
+        generateInvitationUrl: () => 'index.html',
+        generateWhatsAppMessage: () => ''
+      };
+
+      let weddingData = storage.getWeddingData();
+      let guests = storage.getGuests();
+      let wishes = storage.getWishes();
+
+      const toast = document.getElementById('dashboardToast');
+      const toastMsg = document.getElementById('dashboardToastMsg');
+
+      function showToast(msg) {
+        toastMsg.textContent = msg;
+        toast.classList.add('active');
+        setTimeout(() => toast.classList.remove('active'), 3000);
+      }
+
+      function refreshIcons() {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      }
+
+      // Tab Switching
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const tabSections = document.querySelectorAll('.tab-section');
+      const pageHeaderTitle = document.getElementById('pageHeaderTitle');
+
+      const tabTitles = {
+        'tab-guests-wa': 'Penerima Undangan & Push WhatsApp',
+        'tab-wishes': 'Control & Moderasi Buku Tamu'
+      };
+
+      navButtons.forEach(btn => {
+        btn.onclick = function() {
+          const targetTab = btn.getAttribute('data-tab');
+          navButtons.forEach(b => b.classList.remove('active'));
+          tabSections.forEach(s => s.classList.remove('active'));
+
+          btn.classList.add('active');
+          document.getElementById(targetTab).classList.add('active');
+          pageHeaderTitle.textContent = tabTitles[targetTab] || 'Dashboard';
+          refreshIcons();
+        };
+      });
+
+      function formatStatus(status) {
+        if (status === 'hadir') return 'Hadir';
+        if (status === 'ragu') return 'Ragu';
+        if (status === 'tidak_hadir') return 'Tidak Hadir';
+        return 'Pending';
+      }
+
+      function normalizePhoneForWa(phone) {
+        if (!phone) return '';
+        let cleaned = phone.replace(/[^0-9]/g, '');
+        if (cleaned.startsWith('0')) {
+          cleaned = '62' + cleaned.slice(1);
+        }
+        return cleaned;
+      }
+
+      // Update Summary Stats
+      function updateStats() {
+        const stats = storage.getStats();
+        document.getElementById('statTotalGuests').textContent = stats.totalGuests;
+        document.getElementById('statConfirmedPax').textContent = stats.totalPaxConfirmed;
+        document.getElementById('statTotalWishes').textContent = stats.totalWishes;
+
+        // Wishes stats
+        const wishesData = storage.getWishes();
+        const hadirW = wishesData.filter(w => w.attendance === 'hadir').length;
+        const raguW = wishesData.filter(w => w.attendance === 'ragu').length;
+        const tidakW = wishesData.filter(w => w.attendance === 'tidak_hadir').length;
+
+        document.getElementById('statWishesTotal').textContent = wishesData.length;
+        document.getElementById('statWishesHadir').textContent = hadirW;
+        document.getElementById('statWishesRagu').textContent = raguW;
+        document.getElementById('statWishesTidakHadir').textContent = tidakW;
+
+        document.getElementById('guestCountBadge').textContent = guests.length;
+      }
+
+      // Render Guests Table
+      function renderGuestsTable() {
+        const search = document.getElementById('guestSearchInput').value.toLowerCase();
+        const catFilter = document.getElementById('guestCategoryFilter').value;
+        const statusFilter = document.getElementById('guestStatusFilter').value;
+
+        const filtered = guests.filter(g => {
+          const matchesSearch = g.name.toLowerCase().includes(search) || 
+                                (g.phone && g.phone.includes(search)) || 
+                                (g.table && g.table.toLowerCase().includes(search));
+          const matchesCat = catFilter === 'ALL' || g.category === catFilter;
+          const matchesStatus = statusFilter === 'ALL' || g.status === statusFilter;
+          return matchesSearch && matchesCat && matchesStatus;
+        });
+
+        const tbody = document.getElementById('guestsTableBody');
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 32px;">Tidak ada data penerima undangan yang cocok.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(g => {
+          const cleanPhone = normalizePhoneForWa(g.phone);
+          const inviteUrl = storage.generateInvitationUrl(g.name, g.pax, g.table);
+          const waMsg = storage.generateWhatsAppMessage(g, weddingData, inviteUrl);
+          const waLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMsg)}` : `https://wa.me/?text=${encodeURIComponent(waMsg)}`;
+
+          return `
+            <tr>
+              <td>
+                <div class="guest-identity">
+                  <div class="guest-primary">
+                    <span class="guest-name">${g.name}</span>
+                    ${g.phone ? `<span class="guest-code">${g.phone}</span>` : ''}
+                  </div>
+                  <div class="guest-meta">
+                    ${g.table || 'Meja Umum'} · ${g.pax || 2} pax
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="status-badge ${g.status}">${formatStatus(g.status)}</span>
+              </td>
+              <td>
+                <button class="btn btn-sm ${g.checkedIn ? 'btn-primary' : 'btn-outline'} btn-toggle-checkin" data-id="${g.id}" type="button">
+                  ${g.checkedIn ? 'Hadir' : 'Belum'}
+                </button>
+              </td>
+              <td style="text-align: right;">
+                <div class="action-icons">
+                  <a href="${waLink}" target="_blank" class="btn-whatsapp-pill" title="Kirim Pesan WhatsApp" aria-label="Kirim Pesan WhatsApp">
+                    <i data-lucide="send" style="width: 13px; height: 13px;"></i>
+                  </a>
+                  <button class="icon-btn btn-copy-link" data-name="${g.name}" data-seat="${g.table || ''}" data-pax="${g.pax}" title="Salin Tautan Undangan" aria-label="Salin Tautan Undangan" type="button">
+                    <i data-lucide="copy" style="width: 13px; height: 13px;"></i>
+                  </button>
+                  <button class="icon-btn btn-show-qr" data-id="${g.id}" title="Lihat QR Check-in" aria-label="Lihat QR Check-in" type="button">
+                    <i data-lucide="qr-code" style="width: 13px; height: 13px;"></i>
+                  </button>
+                  <button class="icon-btn btn-edit-guest" data-id="${g.id}" title="Edit Data" aria-label="Edit Data" type="button">
+                    <i data-lucide="edit-3" style="width: 13px; height: 13px;"></i>
+                  </button>
+                  <button class="icon-btn danger btn-delete-guest" data-id="${g.id}" title="Hapus" aria-label="Hapus" type="button">
+                    <i data-lucide="trash-2" style="width: 13px; height: 13px;"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        refreshIcons();
+      }
+
+      // Render Broadcast Generator
+      function renderBroadcastOptions() {
+        const select = document.getElementById('broadcastGuestSelect');
+        if (guests.length === 0) {
+          select.innerHTML = '<option value="">Belum ada data penerima undangan</option>';
+          document.getElementById('broadcastPreviewText').value = '';
+          return;
+        }
+
+        select.innerHTML = guests.map(g => `<option value="${g.id}">${g.name} (${g.category || 'Umum'} • ${g.table || 'Meja Umum'})</option>`).join('');
+        updateBroadcastPreview();
+      }
+
+      function updateBroadcastPreview() {
+        const selectedId = document.getElementById('broadcastGuestSelect').value;
+        const guest = guests.find(g => g.id === selectedId) || guests[0];
+        if (!guest) return;
+
+        const inviteUrl = storage.generateInvitationUrl(guest.name, guest.pax, guest.table);
+        const msg = storage.generateWhatsAppMessage(guest, weddingData, inviteUrl);
+        document.getElementById('broadcastPreviewText').value = msg;
+
+        const cleanPhone = normalizePhoneForWa(guest.phone);
+        const encodedMsg = encodeURIComponent(msg);
+        const waLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodedMsg}` : `https://wa.me/?text=${encodedMsg}`;
+        document.getElementById('btnSendWaDirect').href = waLink;
+      }
+
+      // Render Wishes Table (Control Buku Tamu)
+      function renderWishesTable() {
+        const search = document.getElementById('wishesSearchInput').value.toLowerCase();
+        const attendanceFilter = document.getElementById('wishesAttendanceFilter').value;
+
+        const filtered = wishes.filter(w => {
+          const matchesSearch = (w.name && w.name.toLowerCase().includes(search)) || 
+                                (w.message && w.message.toLowerCase().includes(search));
+          const matchesAttendance = attendanceFilter === 'ALL' || w.attendance === attendanceFilter;
+          return matchesSearch && matchesAttendance;
+        });
+
+        const tbody = document.getElementById('wishesTableBody');
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 32px;">Tidak ada ucapan/doa buku tamu yang sesuai filter.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(w => `
+          <tr>
+            <td>
+              <button type="button" class="btn-view-wish-detail" data-id="${w.id}" title="Klik untuk lihat detail pesan" style="background: none; border: none; padding: 0; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: var(--primary); cursor: pointer; text-align: left; display: inline-flex; align-items: center; gap: 6px;">
+                <span>${w.name}</span>
+                <i data-lucide="info" style="width: 13px; height: 13px; opacity: 0.5;"></i>
+              </button>
+            </td>
+            <td style="text-align: right;">
+              <button class="icon-btn danger btn-delete-wish" data-id="${w.id}" title="Hapus Ucapan Ini" type="button">
+                <i data-lucide="trash-2" style="width: 13px; height: 13px;"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+        refreshIcons();
+      }
+
+      // Quick Add Guest Form
+      const quickGuestForm = document.getElementById('quickGuestForm');
+      quickGuestForm.onsubmit = function(e) {
+        e.preventDefault();
+        const name = document.getElementById('quickName').value.trim();
+        const phone = document.getElementById('quickPhone').value.trim();
+
+        if (!name) {
+          showToast('Nama penerima undangan wajib diisi');
+          return;
+        }
+
+        const newGuest = storage.addGuest({
+          name,
+          phone,
+          category: 'Umum',
+          pax: 2,
+          table: 'Meja Umum',
+          status: 'pending'
+        });
+
+        guests = storage.getGuests();
+        quickGuestForm.reset();
+        showToast(`Penerima "${name}" berhasil ditambahkan & link WA siap!`);
+
+        updateStats();
+        renderGuestsTable();
+        renderBroadcastOptions();
+
+        if (newGuest && newGuest.id) {
+          document.getElementById('broadcastGuestSelect').value = newGuest.id;
+          updateBroadcastPreview();
+        }
+      };
+
+      // Edit Guest Modal Handling
+      const guestModal = document.getElementById('guestModal');
+      const editGuestForm = document.getElementById('editGuestForm');
+
+      document.getElementById('closeGuestModal').onclick = function() { guestModal.classList.remove('open'); };
+      document.getElementById('btnCancelEditGuest').onclick = function() { guestModal.classList.remove('open'); };
+
+      editGuestForm.onsubmit = function(e) {
+        e.preventDefault();
+        const id = document.getElementById('editGuestId').value;
+        const name = document.getElementById('editGuestName').value.trim();
+        const phone = document.getElementById('editGuestPhone').value.trim();
+        const category = document.getElementById('editGuestCategory').value;
+        const pax = parseInt(document.getElementById('editGuestPax').value, 10);
+        const table = document.getElementById('editGuestTable').value.trim();
+        const status = document.getElementById('editGuestStatus').value;
+
+        if (!name) {
+          showToast('Nama penerima wajib diisi');
+          return;
+        }
+
+        storage.updateGuest(id, { name, phone, category, pax, table, status });
+        guests = storage.getGuests();
+        guestModal.classList.remove('open');
+        showToast('Data penerima undangan berhasil diperbarui');
+
+        updateStats();
+        renderGuestsTable();
+        renderBroadcastOptions();
+      };
+
+      // Custom Non-native Confirm Modal Logic
+      const confirmDialogModal = document.getElementById('confirmDialogModal');
+      const confirmDialogTitle = document.getElementById('confirmDialogTitle');
+      const confirmDialogMessage = document.getElementById('confirmDialogMessage');
+      const btnConfirmOk = document.getElementById('btnConfirmOk');
+      const btnConfirmCancel = document.getElementById('btnConfirmCancel');
+      let onConfirmCallback = null;
+
+      function openConfirmModal(options) {
+        confirmDialogTitle.textContent = options.title || 'Konfirmasi Hapus';
+        confirmDialogMessage.textContent = options.message || 'Apakah Anda yakin ingin menghapus data ini?';
+        btnConfirmOk.textContent = options.confirmText || 'Hapus';
+        btnConfirmCancel.textContent = options.cancelText || 'Batal';
+        onConfirmCallback = options.onConfirm || null;
+        confirmDialogModal.classList.add('open');
+        refreshIcons();
+      }
+
+      function closeConfirmModal() {
+        confirmDialogModal.classList.remove('open');
+        onConfirmCallback = null;
+      }
+
+      btnConfirmCancel.onclick = closeConfirmModal;
+      btnConfirmOk.onclick = function() {
+        if (typeof onConfirmCallback === 'function') {
+          onConfirmCallback();
+        }
+        closeConfirmModal();
+      };
+
+      // Global Table Action Handlers
+      document.addEventListener('click', function(e) {
+        // Copy Invitation Link
+        const copyBtn = e.target.closest('.btn-copy-link');
+        if (copyBtn) {
+          const name = copyBtn.getAttribute('data-name');
+          const seat = copyBtn.getAttribute('data-seat');
+          const pax = copyBtn.getAttribute('data-pax');
+          const url = storage.generateInvitationUrl(name, pax, seat);
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast(`Link undangan untuk "${name}" berhasil disalin!`));
+          } else {
+            showToast(`Link disalin: ${url}`);
+          }
+        }
+
+        // Toggle Check-in
+        const checkinBtn = e.target.closest('.btn-toggle-checkin');
+        if (checkinBtn) {
+          const id = checkinBtn.getAttribute('data-id');
+          const target = guests.find(g => g.id === id);
+          if (target) {
+            storage.updateGuest(id, { checkedIn: !target.checkedIn });
+            guests = storage.getGuests();
+            updateStats();
+            renderGuestsTable();
+            showToast(`Status check-in ${target.name} diperbarui!`);
+          }
+        }
+
+        // Edit Guest
+        const editBtn = e.target.closest('.btn-edit-guest');
+        if (editBtn) {
+          const id = editBtn.getAttribute('data-id');
+          const g = guests.find(item => item.id === id);
+          if (g) {
+            document.getElementById('editGuestId').value = g.id;
+            document.getElementById('editGuestName').value = g.name;
+            document.getElementById('editGuestPhone').value = g.phone || '';
+            document.getElementById('editGuestCategory').value = g.category || 'Umum';
+            document.getElementById('editGuestPax').value = g.pax || '2';
+            document.getElementById('editGuestTable').value = g.table || '';
+            document.getElementById('editGuestStatus').value = g.status || 'pending';
+            guestModal.classList.add('open');
+          }
+        }
+
+        // Delete Guest (Using Custom Dialog Modal)
+        const deleteBtn = e.target.closest('.btn-delete-guest');
+        if (deleteBtn) {
+          const id = deleteBtn.getAttribute('data-id');
+          const g = guests.find(item => item.id === id);
+          const guestName = g ? g.name : 'tamu ini';
+
+          openConfirmModal({
+            title: 'Hapus Penerima Undangan',
+            message: `Apakah Anda yakin ingin menghapus "${guestName}" dari daftar penerima undangan?`,
+            confirmText: 'Ya, Hapus',
+            cancelText: 'Batal',
+            onConfirm: function() {
+              storage.deleteGuest(id);
+              guests = storage.getGuests();
+              updateStats();
+              renderGuestsTable();
+              renderBroadcastOptions();
+              showToast(`Penerima "${guestName}" berhasil dihapus`);
+            }
+          });
+        }
+
+        // Delete Wish (Using Custom Dialog Modal)
+        const deleteWishBtn = e.target.closest('.btn-delete-wish');
+        if (deleteWishBtn) {
+          const id = deleteWishBtn.getAttribute('data-id');
+          const w = wishes.find(item => item.id === id);
+          const senderName = w ? w.name : 'pengirim';
+
+          openConfirmModal({
+            title: 'Hapus Pesan Buku Tamu',
+            message: `Apakah Anda yakin ingin menghapus ucapan dan doa dari "${senderName}"?`,
+            confirmText: 'Ya, Hapus',
+            cancelText: 'Batal',
+            onConfirm: function() {
+              storage.deleteWish(id);
+              wishes = storage.getWishes();
+              updateStats();
+              renderWishesTable();
+              showToast('Ucapan berhasil dihapus dari buku tamu');
+            }
+          });
+        }
+
+        // Show QR Pass
+        const qrBtn = e.target.closest('.btn-show-qr');
+        if (qrBtn) {
+          const id = qrBtn.getAttribute('data-id');
+          const g = guests.find(item => item.id === id);
+          if (g && window.qrcode) {
+            document.getElementById('qrGuestNameTitle').textContent = g.name;
+            document.getElementById('qrGuestDetailInfo').textContent = `${g.table || 'Meja Umum'} • ${g.pax} Pax • Status: ${formatStatus(g.status)}`;
+            
+            const qr = qrcode(0, 'M');
+            const passPayload = JSON.stringify({ id: g.id, name: g.name, pax: g.pax, seat: g.table });
+            qr.addData(passPayload);
+            qr.make();
+            document.getElementById('qrCodeContainer').innerHTML = qr.createImgTag(5, 10);
+            document.getElementById('qrModal').classList.add('open');
+          }
+        }
+
+        // View Wish Detail Modal
+        const viewWishBtn = e.target.closest('.btn-view-wish-detail');
+        if (viewWishBtn) {
+          const id = viewWishBtn.getAttribute('data-id');
+          const w = wishes.find(item => item.id === id);
+          if (w) {
+            document.getElementById('wishDetailSenderName').textContent = w.name;
+            document.getElementById('wishDetailTimestamp').textContent = w.timestamp || 'Waktu tidak tercatat';
+            document.getElementById('wishDetailAttendanceBadge').innerHTML = `<span class="status-badge ${w.attendance}">${formatStatus(w.attendance)}</span>`;
+            document.getElementById('wishDetailMessage').textContent = w.message;
+            document.getElementById('wishDetailModal').classList.add('open');
+            refreshIcons();
+          }
+        }
+      });
+
+      document.getElementById('closeQrModal').onclick = function() {
+        document.getElementById('qrModal').classList.remove('open');
+      };
+
+      document.getElementById('closeWishDetailModal').onclick = function() {
+        document.getElementById('wishDetailModal').classList.remove('open');
+      };
+
+      document.getElementById('btnCloseWishDetail').onclick = function() {
+        document.getElementById('wishDetailModal').classList.remove('open');
+      };
+
+      // Search & Filters
+      document.getElementById('guestSearchInput').oninput = renderGuestsTable;
+      document.getElementById('guestCategoryFilter').onchange = renderGuestsTable;
+      document.getElementById('guestStatusFilter').onchange = renderGuestsTable;
+      document.getElementById('broadcastGuestSelect').onchange = updateBroadcastPreview;
+
+      document.getElementById('wishesSearchInput').oninput = renderWishesTable;
+      document.getElementById('wishesAttendanceFilter').onchange = renderWishesTable;
+
+      // Copy Buttons
+      document.getElementById('btnCopyBroadcastMsg').onclick = function() {
+        const text = document.getElementById('broadcastPreviewText').value;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => showToast('Teks pesan WhatsApp berhasil disalin!'));
+        } else {
+          showToast('Pesan disalin');
+        }
+      };
+
+      document.getElementById('btnCopyDirectUrl').onclick = function() {
+        const selectedId = document.getElementById('broadcastGuestSelect').value;
+        const guest = guests.find(g => g.id === selectedId) || guests[0];
+        if (!guest) return;
+        const url = storage.generateInvitationUrl(guest.name, guest.pax, guest.table);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(() => showToast(`URL undangan "${guest.name}" disalin!`));
+        } else {
+          showToast(`URL disalin: ${url}`);
+        }
+      };
+
+      // Export CSV
+      document.getElementById('btnExportCsv').onclick = function() {
+        let csvContent = 'data:text/csv;charset=utf-8,Nama,Kategori,Pax,Meja,No HP,Status,CheckIn\n';
+        guests.forEach(g => {
+          csvContent += `"${g.name}","${g.category || 'Umum'}","${g.pax || 1}","${g.table || '-'}","${g.phone || '-'}","${g.status}","${g.checkedIn ? 'Ya' : 'Tidak'}"\n`;
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `Daftar_Penerima_Undangan.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('File CSV berhasil diunduh');
+      };
+
+      // Real-time Event Listeners
+      window.addEventListener('guests_data_updated', function(e) {
+        guests = e.detail;
+        updateStats();
+        renderGuestsTable();
+        renderBroadcastOptions();
+      });
+
+      window.addEventListener('wishes_data_updated', function(e) {
+        wishes = e.detail;
+        updateStats();
+        renderWishesTable();
+      });
+
+      // Initial execution
+      updateStats();
+      renderGuestsTable();
+      renderBroadcastOptions();
+      renderWishesTable();
+      refreshIcons();
+    })();
+  </script>
+</body>
+</html>
