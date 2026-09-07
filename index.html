@@ -844,7 +844,7 @@
 
   <!-- Audio Element -->
   <audio id="bgAudio" loop preload="auto">
-    <source src="../public/assets/audio/romantic-wedding-soundtrack.mp3" type="audio/mp3">
+    <source src="janjisuci.mp3" type="audio/mp3">
   </audio>
 
   <!-- Toast Notification -->
@@ -1134,9 +1134,8 @@
           document.getElementById('quoteSource').textContent = weddingData.quote.source || '';
         }
 
-        if (weddingData.audioUrl) {
-          bgAudio.src = weddingData.audioUrl;
-        }
+        const audioSrc = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : 'janjisuci.mp3';
+        bgAudio.src = audioSrc;
 
         // Schedules
         const schedContainer = document.getElementById('scheduleContainer');
