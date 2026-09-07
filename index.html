@@ -328,8 +328,9 @@
       top: 0;
       left: 0;
       width: 140px;
-      opacity: 0.6;
+      opacity: 0.75;
       pointer-events: none;
+      z-index: 1;
     }
 
     .hero-watermark-br {
@@ -337,8 +338,29 @@
       bottom: 0;
       right: 0;
       width: 140px;
-      opacity: 0.6;
+      opacity: 0.75;
       pointer-events: none;
+      z-index: 1;
+    }
+
+    .section-ornament-tr {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 120px;
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .section-ornament-bl {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 120px;
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .hero-couple-title {
@@ -895,8 +917,8 @@
 
     <!-- 1. HERO SECTION -->
     <section id="hero">
-      <img src="../public/assets/images/corner-top-left.png" class="hero-watermark-tl" alt="ornament">
-      <img src="../public/assets/images/corner-bottom-right.png" class="hero-watermark-br" alt="ornament">
+      <img src="corner-top-left.png" class="hero-watermark-tl" alt="ornament">
+      <img src="corner-bottom-right.png" class="hero-watermark-br" alt="ornament">
 
       <p style="font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);">Walimatul 'Urs</p>
       <h1 class="hero-couple-title font-script" id="heroCoupleTitle">Silfi & Nuruddin</h1>
@@ -937,8 +959,11 @@
     </section>
 
     <!-- 3. COUPLE PROFILE -->
-    <section id="couple">
-      <div class="section-title-wrap">
+    <section id="couple" style="position: relative; overflow: hidden;">
+      <img src="watercolor-top-right.png" class="section-ornament-tr" alt="ornament">
+      <img src="watercolor-bottom-left.png" class="section-ornament-bl" alt="ornament">
+
+      <div class="section-title-wrap" style="position: relative; z-index: 2;">
         <p class="section-subtitle">Kedua Mempelai</p>
         <h2 class="section-heading font-serif">Maha Suci Allah</h2>
         <div class="section-divider"></div>
@@ -979,8 +1004,11 @@
     </section>
 
     <!-- 4. SCHEDULE / ACARA -->
-    <section id="schedule">
-      <div class="section-title-wrap">
+    <section id="schedule" style="position: relative; overflow: hidden;">
+      <img src="corner-top-left.png" class="section-ornament-tr" alt="ornament" style="transform: scaleX(-1); width: 110px;">
+      <img src="corner-bottom-right.png" class="section-ornament-bl" alt="ornament" style="transform: scaleX(-1); width: 110px;">
+
+      <div class="section-title-wrap" style="position: relative; z-index: 2;">
         <p class="section-subtitle">Waktu & Tempat</p>
         <h2 class="section-heading font-serif">Rangkaian Acara</h2>
         <div class="section-divider"></div>
