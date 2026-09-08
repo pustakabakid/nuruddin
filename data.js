@@ -75,6 +75,34 @@
         calendarUrl: 'https://www.google.com/calendar/event?action=TEMPLATE&text=Walimatul+%27Urs+Silfi+%26+Nuruddin&details=Kediaman+Mempelai+Pria%2C+Tawonsongo+-+Pasrujambe+-+Lumajang&dates=20260921T030000Z/20260921T080000Z'
       }
     ],
+    schedulesPria: [
+      {
+        id: 'resepsi-pria',
+        title: 'Resepsi Pernikahan (Walimatul \'Urs)',
+        badge: 'Walimatul \'Urs',
+        date: 'Ahad, 21 September 2026',
+        time: '10:00 WIB s/d Selesai',
+        venue: 'Kediaman Mempelai Pria',
+        address: 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
+        mapsUrl: 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+        calendarUrl: 'https://www.google.com/calendar/event?action=TEMPLATE&text=Walimatul+%27Urs+Nuruddin+%26+Silfi&details=Kediaman+Mempelai+Pria%2C+Tawonsongo+-+Pasrujambe+-+Lumajang&dates=20260921T030000Z/20260921T080000Z'
+      }
+    ],
+    schedulesWanita: [
+      {
+        id: 'resepsi-wanita',
+        title: 'Akad Nikah & Resepsi Pernikahan',
+        badge: 'Akad & Resepsi',
+        date: 'Ahad, 21 September 2026',
+        time: '08:00 WIB s/d Selesai',
+        venue: 'Kediaman Mempelai Wanita',
+        address: 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
+        mapsUrl: 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+        calendarUrl: 'https://www.google.com/calendar/event?action=TEMPLATE&text=Akad+%26+Resepsi+Silfi+%26+Nuruddin&details=Kediaman+Mempelai+Wanita&dates=20260921T010000Z/20260921T060000Z'
+      }
+    ],
+    hostsPria: 'Keluarga Bpk. Misraji & Ibu Hasibah',
+    hostsWanita: 'Keluarga Bpk. Paiman & Ibu Aliyah',
     loveStories: [
       {
         id: 'story-1',
@@ -137,6 +165,7 @@
       name: 'Bapak Ahmad Sanusi & Keluarga',
       phone: '6281234567891',
       pax: 2,
+      side: 'pria',
       status: 'hadir',
       wishes: 'Selamat untuk kedua mempelai, semoga rukun bahagia selalu sampai kakek nenek.',
       checkedIn: true,
@@ -147,6 +176,7 @@
       name: 'Dimas Prasetyo & Partner',
       phone: '6281398765432',
       pax: 2,
+      side: 'pria',
       status: 'hadir',
       wishes: 'Selamat menempuh hidup baru bro Nuruddin & Mbak Silfi! Lancar acaranya.',
       checkedIn: false,
@@ -157,6 +187,7 @@
       name: 'Clarissa Maharani',
       phone: '6285712349988',
       pax: 1,
+      side: 'wanita',
       status: 'ragu',
       wishes: 'Happy wedding Silfi cantik & Mas Nuruddin! Semoga menjadi keluarga yang sakinah mawaddah warahmah.',
       checkedIn: false,
@@ -167,6 +198,7 @@
       name: 'dr. Hendra Setiawan, Sp.A',
       phone: '6281122334455',
       pax: 2,
+      side: 'pria',
       status: 'hadir',
       wishes: 'Barakallah Silfi dan Nuruddin, semoga senantiasa dalam limpahan berkah.',
       checkedIn: false,
@@ -177,6 +209,7 @@
       name: 'Rian Pratama & Tim IT',
       phone: '6289876543210',
       pax: 4,
+      side: 'wanita',
       status: 'tidak_hadir',
       wishes: 'Selamat Mas Nuruddin & Mbak Silfi! Mohon maaf belum bisa hadir langsung, doa terbaik dari kami.',
       checkedIn: false,
@@ -275,6 +308,7 @@
             name: g.name,
             phone: g.phone || '',
             pax: g.pax || 1,
+            side: (g.side === 'wanita') ? 'wanita' : 'pria',
             status: this.normalizeStatus(g.status),
             checkedIn: !!g.checked_in,
             createdAt: g.created_at
@@ -347,13 +381,44 @@
       } catch (e) {}
     },
 
-    getWeddingData() {
+    getWeddingData(side = '') {
+      let data = null;
       try {
         const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.WEDDING) : null;
-        return stored ? JSON.parse(stored) : DEFAULT_WEDDING_DATA;
+        data = stored ? JSON.parse(stored) : DEFAULT_WEDDING_DATA;
       } catch (e) {
-        return DEFAULT_WEDDING_DATA;
+        data = DEFAULT_WEDDING_DATA;
       }
+
+      const activeSide = (side === 'pria' || side === 'wanita') ? side : '';
+      if (activeSide === 'pria') {
+        return {
+          ...data,
+          activeSide: 'pria',
+          combinedTitle: 'Nuruddin & Silfiana',
+          tagline: 'The Wedding of Nuruddin & Silfi',
+          hostsTitle: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
+          schedules: (data.schedulesPria && data.schedulesPria.length > 0) ? data.schedulesPria : data.schedules
+        };
+      } else if (activeSide === 'wanita') {
+        return {
+          ...data,
+          activeSide: 'wanita',
+          combinedTitle: 'Silfiana & Nuruddin',
+          tagline: 'The Wedding of Silfi & Nuruddin',
+          hostsTitle: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
+          schedules: (data.schedulesWanita && data.schedulesWanita.length > 0) ? data.schedulesWanita : data.schedules
+        };
+      }
+
+      return {
+        ...data,
+        activeSide: 'default',
+        combinedTitle: (data.couple && data.couple.combinedTitle) || 'Silfi & Nuruddin',
+        tagline: (data.couple && data.couple.tagline) || 'The Wedding of Silfi & Nuruddin',
+        hostsTitle: 'Keluarga Besar Kedua Mempelai',
+        schedules: data.schedules
+      };
     },
 
     saveWeddingData(data) {
@@ -428,26 +493,37 @@
         name: (guest.name || 'Tamu Undangan').trim(),
         phone: guest.phone || '',
         pax: parseInt(guest.pax, 10) || 1,
+        side: (guest.side === 'wanita') ? 'wanita' : 'pria',
         status: this.normalizeStatus(guest.status),
         wishes: guest.wishes || '',
         checkedIn: !!guest.checkedIn,
         createdAt: new Date().toISOString(),
         ...guest
       };
+      newGuest.side = (newGuest.side === 'wanita') ? 'wanita' : 'pria';
       newGuest.status = this.normalizeStatus(newGuest.status);
 
       guests.unshift(newGuest);
       this.saveGuests(guests);
 
-      // Upsert to Supabase with resolution=merge-duplicates
-      this.supabaseRequest('guests?on_conflict=id', 'POST', {
+      // Upsert to Supabase with resolution=merge-duplicates (resilient to unmigrated side column)
+      const guestPayload = {
         id: newGuest.id,
         name: newGuest.name,
         phone: newGuest.phone || null,
         pax: newGuest.pax,
+        side: newGuest.side,
         status: newGuest.status,
         checked_in: newGuest.checkedIn
-      }, { 'Prefer': 'resolution=merge-duplicates,return=representation' }).catch(() => {});
+      };
+      this.supabaseRequest('guests?on_conflict=id', 'POST', guestPayload, { 'Prefer': 'resolution=merge-duplicates,return=representation' })
+        .then(res => {
+          if (!res) {
+            const { side, ...legacyPayload } = guestPayload;
+            return this.supabaseRequest('guests?on_conflict=id', 'POST', legacyPayload, { 'Prefer': 'resolution=merge-duplicates,return=representation' });
+          }
+        })
+        .catch(() => {});
 
       return newGuest;
     },
@@ -457,20 +533,30 @@
       const idx = guests.findIndex(g => g.id === id);
       if (idx !== -1) {
         guests[idx] = { ...guests[idx], ...updatedFields };
+        if (updatedFields.side !== undefined) guests[idx].side = (updatedFields.side === 'wanita') ? 'wanita' : 'pria';
         if (updatedFields.status !== undefined) guests[idx].status = this.normalizeStatus(guests[idx].status);
         this.saveGuests(guests);
 
         const g = guests[idx];
         // Upsert full row to Supabase so it handles both existing and newly added guests seamlessly
-        this.supabaseRequest('guests?on_conflict=id', 'POST', {
+        const updatePayload = {
           id: g.id,
           name: g.name,
           phone: g.phone || null,
           pax: g.pax,
+          side: g.side || 'pria',
           status: this.normalizeStatus(g.status),
           checked_in: g.checkedIn,
           checked_in_at: g.checkedIn ? new Date().toISOString() : null
-        }, { 'Prefer': 'resolution=merge-duplicates,return=representation' }).catch(() => {});
+        };
+        this.supabaseRequest('guests?on_conflict=id', 'POST', updatePayload, { 'Prefer': 'resolution=merge-duplicates,return=representation' })
+          .then(res => {
+            if (!res) {
+              const { side, ...legacyPayload } = updatePayload;
+              return this.supabaseRequest('guests?on_conflict=id', 'POST', legacyPayload, { 'Prefer': 'resolution=merge-duplicates,return=representation' });
+            }
+          })
+          .catch(() => {});
 
         return guests[idx];
       }
@@ -587,10 +673,14 @@
       const raguGuests = guests.filter(g => g.status === 'ragu' || g.status === 'pending');
       
       const totalPaxConfirmed = hadirGuests.reduce((acc, curr) => acc + (parseInt(curr.pax, 10) || 1), 0);
+      const totalPria = guests.filter(g => g.side !== 'wanita').length;
+      const totalWanita = guests.filter(g => g.side === 'wanita').length;
       const totalCheckedIn = guests.filter(g => g.checkedIn).length;
 
       return {
-        totalGuests,
+        totalGuests: guests.length,
+        totalPria,
+        totalWanita,
         hadirCount: hadirGuests.length,
         tidakHadirCount: tidakHadirGuests.length,
         raguCount: raguGuests.length,
@@ -600,8 +690,9 @@
       };
     },
 
-    generateInvitationUrl(guestName) {
+    generateInvitationUrl(guestName, side = 'pria') {
       const cleanName = (guestName || '').trim();
+      const targetSide = (side === 'wanita') ? 'wanita' : 'pria';
       let origin = '';
       if (typeof window !== 'undefined' && window.location) {
         origin = window.location.origin;
@@ -613,10 +704,10 @@
       }
 
       if (!cleanName || cleanName === 'Tamu Undangan') {
-        return `${origin}/`;
+        return `${origin}/${targetSide}`;
       }
       const encoded = encodeURIComponent(cleanName).replace(/%20/g, '+');
-      return `${origin}/to/${encoded}`;
+      return `${origin}/${targetSide}/to/${encoded}`;
     },
 
     sanitizeWhatsAppMessage(message) {

@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/pria/to/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pria",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/wanita/to/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/wanita",
+      "destination": "/index.html"
+    },
+    {
       "source": "/to/(.*)",
       "destination": "/index.html"
     },
