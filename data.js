@@ -6,7 +6,6 @@
 (function(root, factory) {
   const exportsObj = factory();
   if (typeof module !== 'undefined' && module.exports) {
-    Object.assign(exports, exportsObj);
     module.exports = exportsObj;
   }
   if (typeof define === 'function' && define.amd) {

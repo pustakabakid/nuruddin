@@ -15,7 +15,12 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
   <!-- Shared Data Script -->
-  <script src="data.js"></script>
+  <script>
+    (function() {
+      var scriptSrc = (window.location.protocol === 'file:') ? 'data.js' : '/data.js';
+      document.write('<script src="' + scriptSrc + '"><\/script>');
+    })();
+  </script>
 
   <style>
     :root {

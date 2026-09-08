@@ -39,8 +39,13 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <!-- Shared Data Script -->
-  <script src="/data.js"></script>
+  <!-- Shared Data Script (Compatible with file:// & nested routes /pria/to/...) -->
+  <script>
+    (function() {
+      var scriptSrc = (window.location.protocol === 'file:') ? 'data.js' : '/data.js';
+      document.write('<script src="' + scriptSrc + '"><\/script>');
+    })();
+  </script>
 
   <style>
     :root {
@@ -121,7 +126,12 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%), #172426;
+      background-color: #172426;
+      background-image: linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%),
+                        url('/bg.jpeg');
+      background-position: center center, center center;
+      background-size: cover, cover;
+      background-repeat: no-repeat, no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -333,7 +343,11 @@
     .hero-bg-parallax {
       position: absolute;
       inset: -35% -20%;
-      background: linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%), #FAF7F2;
+      background-image: linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%),
+                        url('/bg.jpeg');
+      background-position: center center, center center;
+      background-size: cover, cover;
+      background-repeat: no-repeat, no-repeat;
       z-index: 0;
       transform: translate3d(0, 0, 0);
       will-change: transform;
@@ -1242,10 +1256,16 @@
         const coverImg = resolveAssetUrl(weddingData.coverImage || 'bg.jpeg');
         if (gateCover && coverImg) {
           gateCover.style.backgroundImage = `linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%), url('${coverImg}')`;
+          gateCover.style.backgroundPosition = 'center center, center center';
+          gateCover.style.backgroundSize = 'cover, cover';
+          gateCover.style.backgroundRepeat = 'no-repeat, no-repeat';
         }
         const heroBg = document.querySelector('.hero-bg-parallax');
         if (heroBg && coverImg) {
           heroBg.style.backgroundImage = `linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%), url('${coverImg}')`;
+          heroBg.style.backgroundPosition = 'center center, center center';
+          heroBg.style.backgroundSize = 'cover, cover';
+          heroBg.style.backgroundRepeat = 'no-repeat, no-repeat';
         }
 
         if (weddingData.couple.groom) {
