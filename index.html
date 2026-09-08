@@ -48,25 +48,64 @@
   </script>
 
   <style>
-    :root {
-      --primary: #2F5D62;
-      --primary-dark: #1E3F43;
-      --primary-light: #EBF4F4;
-      --accent: #B98B4E;
-      --accent-light: #F8F4EC;
+    /* BASE TOKENS & THEME PRIA (Default: Deep Emerald Teal & Royal Gold) */
+    :root,
+    body.theme-pria,
+    [data-theme="pria"] {
+      --primary: #1F4E5B;
+      --primary-dark: #14353E;
+      --primary-light: #EEF5F6;
+      --accent: #B88946;
+      --accent-light: #FAF5EC;
       --accent-gold: #D4AF37;
       --bg-cream: #FAF7F2;
       --bg-card: rgba(255, 255, 255, 0.94);
-      --text-dark: #2C2621;
-      --text-muted: #6E675F;
-      --text-light: #968F85;
-      --border-color: #E8E1D5;
-      --shadow-sm: 0 4px 12px rgba(44, 38, 33, 0.05);
-      --shadow-md: 0 10px 30px rgba(44, 38, 33, 0.08);
-      --shadow-lg: 0 18px 45px rgba(44, 38, 33, 0.12);
+      --text-dark: #202728;
+      --text-muted: #657476;
+      --text-light: #8E9E9F;
+      --border-color: #E2E8E8;
+      --bg-outer: #131E20;
+      --bg-outer-accent: #244145;
+      --gate-overlay-1: rgba(19, 30, 32, 0.72);
+      --gate-overlay-2: rgba(19, 30, 32, 0.94);
+      --hero-overlay-1: rgba(250, 247, 242, 0.72);
+      --hero-overlay-2: rgba(250, 247, 242, 0.95);
+      --avatar-ring-color: #B88946;
+      --avatar-shadow: rgba(31, 78, 91, 0.22);
+      --shadow-sm: 0 4px 12px rgba(20, 32, 34, 0.05);
+      --shadow-md: 0 10px 30px rgba(20, 32, 34, 0.08);
+      --shadow-lg: 0 18px 45px rgba(20, 32, 34, 0.14);
       --radius-sm: 10px;
       --radius-md: 18px;
       --radius-lg: 28px;
+    }
+
+    /* THEME WANITA (Romantic Dusty Rose / Soft Burgundy & Warm Rose Gold) */
+    body.theme-wanita,
+    [data-theme="wanita"] {
+      --primary: #8E3E56;
+      --primary-dark: #632336;
+      --primary-light: #FDF2F5;
+      --accent: #C57E6B;
+      --accent-light: #FCF4F1;
+      --accent-gold: #D99B82;
+      --bg-cream: #FDF9F8;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --text-dark: #2A1D22;
+      --text-muted: #745F66;
+      --text-light: #9F8B92;
+      --border-color: #EFE0E4;
+      --bg-outer: #221319;
+      --bg-outer-accent: #3E1E28;
+      --gate-overlay-1: rgba(34, 19, 25, 0.74);
+      --gate-overlay-2: rgba(34, 19, 25, 0.95);
+      --hero-overlay-1: rgba(253, 249, 248, 0.72);
+      --hero-overlay-2: rgba(253, 249, 248, 0.96);
+      --avatar-ring-color: #D99B82;
+      --avatar-shadow: rgba(142, 62, 86, 0.22);
+      --shadow-sm: 0 4px 12px rgba(42, 29, 34, 0.05);
+      --shadow-md: 0 10px 30px rgba(42, 29, 34, 0.08);
+      --shadow-lg: 0 18px 45px rgba(42, 29, 34, 0.14);
     }
 
     * {
@@ -82,13 +121,14 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #172426;
+      background-color: var(--bg-outer, #172426);
       color: var(--text-dark);
       line-height: 1.6;
       overflow-x: hidden;
       min-height: 100vh;
       display: flex;
       justify-content: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     /* Outer Wrapper for responsive luxury look */
@@ -100,11 +140,12 @@
       position: relative;
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
       overflow-x: hidden;
+      transition: background-color 0.3s ease;
     }
 
     @media (min-width: 1024px) {
       body {
-        background: radial-gradient(circle at center, #244145 0%, #132022 100%);
+        background: radial-gradient(circle at center, var(--bg-outer-accent, #244145) 0%, var(--bg-outer, #132022) 100%);
       }
       .app-viewport {
         margin: 20px auto;
@@ -1054,7 +1095,7 @@
       <div class="couple-card">
         <div class="couple-avatar-wrap">
           <div class="couple-avatar-ring"></div>
-          <img src="" id="groomAvatar" class="couple-avatar" alt="Groom" onerror="this.onerror=null; this.src=(window.location.protocol==='file:'?'1.jpg':'/1.jpg');">
+          <img src="" id="groomAvatar" class="couple-avatar" alt="Groom" onerror="this.onerror=null; this.src=(window.location.protocol==='file:'?'avatar-empty.svg':'/avatar-empty.svg');">
         </div>
         <h3 class="couple-name font-serif" id="groomName">Nuruddin</h3>
         <p class="couple-parents" id="groomParents">Putra Pertama dari Bpk. Misraji & Ibu Hasibah</p>
@@ -1070,7 +1111,7 @@
       <div class="couple-card">
         <div class="couple-avatar-wrap">
           <div class="couple-avatar-ring"></div>
-          <img src="" id="brideAvatar" class="couple-avatar" alt="Bride" onerror="this.onerror=null; this.src=(window.location.protocol==='file:'?'2.jpg':'/2.jpg');">
+          <img src="" id="brideAvatar" class="couple-avatar" alt="Bride" onerror="this.onerror=null; this.src=(window.location.protocol==='file:'?'avatar-empty.svg':'/avatar-empty.svg');">
         </div>
         <h3 class="couple-name font-serif" id="brideName">Silfiana</h3>
         <p class="couple-parents" id="brideParents">Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah</p>
@@ -1194,10 +1235,15 @@
           currentSide = 'pria';
         } else if (/^\/wanita(\/|$)/i.test(path)) {
           currentSide = 'wanita';
+        } else {
+          const matchSlug = path.match(/^\/([a-zA-Z0-9_-]+)(?:\/|$)/i);
+          if (matchSlug && matchSlug[1] && !['dashboard', 'dashboard.html', 'index.html', 'to'].includes(matchSlug[1].toLowerCase())) {
+            currentSide = matchSlug[1].toLowerCase();
+          }
         }
 
         if (!guestParamName) {
-          const match = path.match(/\/(?:pria|wanita)?\/?to\/([^/?#]+)/i);
+          const match = path.match(/\/(?:[a-zA-Z0-9_-]+)?\/?to\/([^/?#]+)/i);
           if (match && match[1]) {
             try {
               guestParamName = decodeURIComponent(match[1].replace(/\+/g, ' ')).trim();
@@ -1238,7 +1284,7 @@
       function renderWedding() {
         if (!weddingData || !weddingData.couple) return;
 
-        const combined = weddingData.combinedTitle || (weddingData.couple ? weddingData.couple.combinedTitle : 'Nuruddin & Silfiana');
+        const combined = weddingData.combinedTitle || (weddingData.couple ? weddingData.couple.combinedTitle : '') || 'Undangan Pernikahan';
         document.getElementById('gateCoupleTitle').textContent = combined;
         document.getElementById('heroCoupleTitle').textContent = combined;
         document.getElementById('footerCoupleTitle').textContent = combined;
@@ -1250,40 +1296,71 @@
 
         const hostEl = document.getElementById('coupleHostFamily');
         if (hostEl) {
-          hostEl.textContent = weddingData.hostsTitle || 'Keluarga Bpk. Misraji & Ibu Hasibah';
+          hostEl.textContent = weddingData.hostsTitle || 'Keluarga Besar';
         }
 
-        const coverImg = resolveAssetUrl(weddingData.coverImage || 'bg.jpeg');
-        if (gateCover && coverImg) {
-          gateCover.style.backgroundImage = `linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%), url('${coverImg}')`;
-          gateCover.style.backgroundPosition = 'center center, center center';
-          gateCover.style.backgroundSize = 'cover, cover';
-          gateCover.style.backgroundRepeat = 'no-repeat, no-repeat';
+        const rawCover = weddingData.coverImage;
+        const hasCustomCover = Boolean(rawCover && rawCover !== 'bg.jpeg' && rawCover !== 'default');
+        const coverImg = hasCustomCover ? resolveAssetUrl(rawCover) : '';
+
+        if (gateCover) {
+          if (coverImg) {
+            gateCover.style.backgroundImage = `linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%), url('${coverImg}')`;
+            gateCover.style.backgroundPosition = 'center center, center center';
+            gateCover.style.backgroundSize = 'cover, cover';
+            gateCover.style.backgroundRepeat = 'no-repeat, no-repeat';
+          } else {
+            gateCover.style.backgroundImage = 'radial-gradient(ellipse at center top, #233a3e 0%, #142022 65%, #0d1618 100%)';
+            gateCover.style.backgroundPosition = 'center center';
+            gateCover.style.backgroundSize = 'cover';
+            gateCover.style.backgroundRepeat = 'no-repeat';
+          }
         }
         const heroBg = document.querySelector('.hero-bg-parallax');
-        if (heroBg && coverImg) {
-          heroBg.style.backgroundImage = `linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%), url('${coverImg}')`;
-          heroBg.style.backgroundPosition = 'center center, center center';
-          heroBg.style.backgroundSize = 'cover, cover';
-          heroBg.style.backgroundRepeat = 'no-repeat, no-repeat';
+        if (heroBg) {
+          if (coverImg) {
+            heroBg.style.backgroundImage = `linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%), url('${coverImg}')`;
+            heroBg.style.backgroundPosition = 'center center, center center';
+            heroBg.style.backgroundSize = 'cover, cover';
+            heroBg.style.backgroundRepeat = 'no-repeat, no-repeat';
+          } else {
+            heroBg.style.backgroundImage = 'radial-gradient(ellipse at 50% 20%, #FFFDF8 0%, #F5EFE6 55%, #EBE3D5 100%)';
+            heroBg.style.backgroundPosition = 'center center';
+            heroBg.style.backgroundSize = 'cover';
+            heroBg.style.backgroundRepeat = 'no-repeat';
+          }
         }
 
+        const emptyAvatar = resolveAssetUrl('avatar-empty.svg');
+
         if (weddingData.couple.groom) {
-          document.getElementById('groomName').textContent = weddingData.couple.groom.name || 'Nuruddin';
-          document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';
-          const gAvatar = resolveAssetUrl((weddingData.couple.groom.avatar && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : '1.jpg');
-          document.getElementById('groomAvatar').src = gAvatar;
-          document.getElementById('groomIgHandle').textContent = '@' + (weddingData.couple.groom.instagram || 'nuruddin_bin_aliman');
-          document.getElementById('groomIgLink').href = weddingData.couple.groom.instagramUrl || 'https://instagram.com/nuruddin_bin_aliman';
+          document.getElementById('groomName').textContent = weddingData.couple.groom.name || 'Mempelai Pria';
+          document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || '';
+          const rawG = weddingData.couple.groom.avatar;
+          const gAvatar = (rawG && rawG !== '1.jpg' && !rawG.includes('groom-andra')) ? resolveAssetUrl(rawG) : emptyAvatar;
+          const groomAvatarEl = document.getElementById('groomAvatar');
+          groomAvatarEl.src = gAvatar;
+          groomAvatarEl.onerror = function() { this.onerror = null; this.src = emptyAvatar; };
+          const gIg = weddingData.couple.groom.instagram || '';
+          document.getElementById('groomIgHandle').textContent = gIg ? '@' + gIg : '';
+          document.getElementById('groomIgLink').href = weddingData.couple.groom.instagramUrl || (gIg ? `https://instagram.com/${gIg}` : '#');
+          if (!gIg) document.getElementById('groomIgLink').style.display = 'none';
+          else document.getElementById('groomIgLink').style.display = '';
         }
 
         if (weddingData.couple.bride) {
-          document.getElementById('brideName').textContent = weddingData.couple.bride.name || 'Silfiana';
-          document.getElementById('brideParents').textContent = weddingData.couple.bride.parents || 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah';
-          const bAvatar = resolveAssetUrl((weddingData.couple.bride.avatar && !weddingData.couple.bride.avatar.includes('bride-clara')) ? weddingData.couple.bride.avatar : '2.jpg');
-          document.getElementById('brideAvatar').src = bAvatar;
-          document.getElementById('brideIgHandle').textContent = '@' + (weddingData.couple.bride.instagram || 'chilpy04');
-          document.getElementById('brideIgLink').href = weddingData.couple.bride.instagramUrl || 'https://instagram.com/chilpy04';
+          document.getElementById('brideName').textContent = weddingData.couple.bride.name || 'Mempelai Wanita';
+          document.getElementById('brideParents').textContent = weddingData.couple.bride.parents || '';
+          const rawB = weddingData.couple.bride.avatar;
+          const bAvatar = (rawB && rawB !== '2.jpg' && !rawB.includes('bride-clara')) ? resolveAssetUrl(rawB) : emptyAvatar;
+          const brideAvatarEl = document.getElementById('brideAvatar');
+          brideAvatarEl.src = bAvatar;
+          brideAvatarEl.onerror = function() { this.onerror = null; this.src = emptyAvatar; };
+          const bIg = weddingData.couple.bride.instagram || '';
+          document.getElementById('brideIgHandle').textContent = bIg ? '@' + bIg : '';
+          document.getElementById('brideIgLink').href = weddingData.couple.bride.instagramUrl || (bIg ? `https://instagram.com/${bIg}` : '#');
+          if (!bIg) document.getElementById('brideIgLink').style.display = 'none';
+          else document.getElementById('brideIgLink').style.display = '';
         }
 
         if (weddingData.quote) {
@@ -1341,7 +1418,15 @@
 
       // Countdown Timer
       function startCountdown() {
-        const targetDateStr = (weddingData && weddingData.weddingDate) ? weddingData.weddingDate : '2026-09-21T16:00:00+07:00';
+        let targetDateStr = (weddingData && weddingData.weddingDate) ? weddingData.weddingDate : '2026-09-21T08:00:00+07:00';
+        if (weddingData && weddingData.schedules && weddingData.schedules.length > 0) {
+          const firstSched = weddingData.schedules[0];
+          if (firstSched.date && firstSched.date.includes('20')) {
+            targetDateStr = '2026-09-20T08:00:00+07:00';
+          } else if (firstSched.date && firstSched.date.includes('21')) {
+            targetDateStr = '2026-09-21T08:00:00+07:00';
+          }
+        }
         const targetTime = new Date(targetDateStr).getTime();
         
         function update() {

@@ -27,6 +27,14 @@
     {
       "source": "/to",
       "destination": "/index.html"
+    },
+    {
+      "source": "/:slug/to/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/:slug",
+      "destination": "/index.html"
     }
   ]
 }

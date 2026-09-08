@@ -82,6 +82,8 @@
       font-size: 14px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      max-width: 100vw;
     }
 
     /* =========================================
@@ -136,41 +138,121 @@
       color: #8C9C9E;
     }
 
+    .nav-section-header {
+      margin-top: 6px;
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
+
+    .nav-section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8C9C9E;
+    }
+
     .nav-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
       flex: 1;
     }
 
     .nav-btn {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       width: 100%;
       padding: 9px 12px;
       background: transparent;
-      border: none;
-      color: #9EAFB1;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      color: #A3B6B8;
       font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border-radius: var(--radius-sm);
       cursor: pointer;
       text-align: left;
-      transition: all 0.15s ease;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-icon-wrapper {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #8EA0A3;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .nav-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+      text-align: left;
+    }
+
+    .nav-main-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #E2EBEB;
+      letter-spacing: -0.1px;
+      line-height: 1.25;
+      transition: color 0.15s ease;
+    }
+
+    .nav-sub-desc {
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: #798D90;
+      line-height: 1.2;
+      transition: color 0.15s ease;
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
+      transform: translateX(2px);
+    }
+
+    .nav-btn:hover .nav-icon-wrapper {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+    }
+
+    .nav-btn:hover .nav-main-title {
       color: #FFFFFF;
     }
 
     .nav-btn.active {
-      background: rgba(255, 255, 255, 0.12);
+      background: linear-gradient(135deg, rgba(31, 78, 91, 0.5) 0%, rgba(20, 48, 55, 0.7) 100%);
+      border-color: rgba(79, 150, 168, 0.35);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transform: translateX(3px);
+    }
+
+    .nav-btn.active .nav-icon-wrapper {
+      background: linear-gradient(135deg, #D4AF37, #B88946);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: #142022;
+      box-shadow: 0 2px 8px rgba(184, 137, 70, 0.35);
+    }
+
+    .nav-btn.active .nav-main-title {
       color: #FFFFFF;
-      font-weight: 600;
+      font-weight: 700;
+    }
+
+    .nav-btn.active .nav-sub-desc {
+      color: #9DBFC2;
     }
 
     .sidebar-footer {
@@ -198,6 +280,342 @@
     .btn-preview-link:hover {
       background: rgba(184, 137, 70, 0.22);
       color: #FFFFFF;
+    }
+
+    /* =========================================
+       MULTI-DASHBOARD WORKSPACE SWITCHER
+       ========================================= */
+    .workspace-section {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .workspace-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
+
+    .workspace-section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8C9C9E;
+    }
+
+    .btn-add-workspace {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-xs);
+      color: #F8F6F0;
+      font-family: inherit;
+      font-size: 0.70rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-add-workspace:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #FFFFFF;
+    }
+
+    .workspace-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .workspace-item-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+      padding: 8px 10px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: #C2D0D2;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+    }
+
+    .workspace-item-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #FFFFFF;
+    }
+
+    .workspace-item-btn.active {
+      background: rgba(31, 78, 91, 0.45);
+      border-color: rgba(79, 150, 168, 0.4);
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .workspace-item-btn .ws-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .workspace-item-btn .ws-icon-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #7B8E91;
+      flex-shrink: 0;
+    }
+
+    .workspace-item-btn.active .ws-icon-dot {
+      background: #22BF5B;
+      box-shadow: 0 0 8px #22BF5B;
+    }
+
+    .workspace-item-btn.pria.active .ws-icon-dot {
+      background: #3B82F6;
+      box-shadow: 0 0 8px #3B82F6;
+    }
+
+    .workspace-item-btn.wanita.active .ws-icon-dot {
+      background: #EC4899;
+      box-shadow: 0 0 8px #EC4899;
+    }
+
+    .workspace-item-btn .ws-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .workspace-item-btn .ws-badge {
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.08);
+      color: #A3B5B7;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      flex-shrink: 0;
+    }
+
+    .workspace-item-btn.active .ws-badge {
+      background: rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+    }
+
+    .topbar-ws-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      border: 1px solid rgba(31, 78, 91, 0.2);
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .topbar-ws-pill.pria {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border-color: rgba(29, 78, 216, 0.2);
+    }
+
+    .topbar-ws-pill.wanita {
+      background: #FDF2F8;
+      color: #BE185D;
+      border-color: rgba(190, 24, 93, 0.2);
+    }
+
+    .topbar-ws-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Minimalist Active Context Switcher Banner */
+    .active-dash-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      margin-bottom: 14px;
+      transition: all 0.25s ease;
+    }
+
+    .active-dash-banner.wanita {
+      border-left-color: #BE123C;
+      background: linear-gradient(90deg, rgba(190, 18, 60, 0.04) 0%, var(--bg-surface) 100%);
+    }
+
+    .active-dash-banner.pria {
+      border-left-color: var(--primary);
+      background: linear-gradient(90deg, rgba(31, 78, 91, 0.04) 0%, var(--bg-surface) 100%);
+    }
+
+    .active-dash-banner-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .active-dash-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(31, 78, 91, 0.2);
+    }
+
+    .active-dash-banner.wanita .active-dash-status-dot {
+      background: #BE123C;
+      box-shadow: 0 0 0 2px rgba(190, 18, 60, 0.2);
+    }
+
+    .active-dash-text-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .active-dash-banner-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.78rem;
+    }
+
+    .active-dash-banner-title {
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    /* Segmented Switcher Controls */
+    .active-dash-segmented-switch {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .dash-seg-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.2;
+    }
+
+    .dash-seg-btn:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .dash-seg-btn .seg-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dash-seg-btn .seg-dot.pria {
+      background: var(--primary);
+    }
+
+    .dash-seg-btn .seg-dot.wanita {
+      background: #BE123C;
+    }
+
+    .dash-seg-btn.active#btnSwitchToPriaTab {
+      background: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 1px 4px rgba(31, 78, 91, 0.25);
+    }
+
+    .dash-seg-btn.active#btnSwitchToPriaTab .seg-dot.pria {
+      background: #FFFFFF;
+    }
+
+    .dash-seg-btn.active#btnSwitchToWanitaTab {
+      background: #BE123C;
+      color: #FFFFFF;
+      box-shadow: 0 1px 4px rgba(190, 18, 60, 0.25);
+    }
+
+    .dash-seg-btn.active#btnSwitchToWanitaTab .seg-dot.wanita {
+      background: #FFFFFF;
+    }
+
+    @media (max-width: 576px) {
+      .active-dash-banner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px 12px;
+      }
+      .active-dash-segmented-switch {
+        justify-content: center;
+        width: 100%;
+      }
+      .dash-seg-btn {
+        flex: 1;
+        justify-content: center;
+        padding: 6px 10px;
+      }
+    }
+
+    .media-slot-notice {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      margin-top: 6px;
     }
 
     /* =========================================
@@ -517,27 +935,190 @@
       border: 1px solid rgba(190, 18, 60, 0.2);
     }
 
-    .couple-event-box {
-      margin-top: 18px;
-      padding-top: 16px;
+    /* =========================================
+       DYNAMIC MULTI-EVENT MANAGEMENT
+       ========================================= */
+    .events-management-wrap {
+      margin-top: 20px;
+      padding-top: 18px;
       border-top: 1px dashed var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
     }
 
-    .couple-event-header {
+    .events-management-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .events-management-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 8px;
-      padding-bottom: 4px;
     }
 
-    .couple-event-title {
-      font-size: 0.86rem;
+    .btn-add-event-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(31, 78, 91, 0.08);
+      border: 1px solid rgba(31, 78, 91, 0.25);
+      border-radius: var(--radius-full);
+      color: var(--primary);
+      font-size: 0.74rem;
       font-weight: 700;
-      color: var(--text-main);
-      letter-spacing: -0.2px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-add-event-action:hover {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-add-event-action.wanita {
+      background: rgba(190, 18, 60, 0.08);
+      border-color: rgba(190, 18, 60, 0.25);
+      color: #BE123C;
+    }
+
+    .btn-add-event-action.wanita:hover {
+      background: #BE123C;
+      color: #FFFFFF;
+      border-color: #BE123C;
+    }
+
+    .events-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .event-card-item {
+      background: #FCFBF9;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .event-card-item:hover {
+      border-color: rgba(31, 78, 91, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .event-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 8px;
+    }
+
+    .event-card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-xs);
+      background: var(--primary-tint);
+      color: var(--primary);
+      letter-spacing: 0.2px;
+    }
+
+    .event-card-tag.wanita {
+      background: #FFF1F2;
+      color: #BE123C;
+    }
+
+    .event-card-tag.secondary {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .btn-remove-event {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: transparent;
+      border: 1px solid rgba(192, 45, 45, 0.2);
+      color: var(--danger);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-remove-event:hover {
+      background: var(--danger-tint);
+      border-color: var(--danger);
+    }
+
+    .same-location-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(184, 137, 70, 0.08);
+      border: 1px dashed rgba(184, 137, 70, 0.35);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      margin: 2px 0 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #8C5D1E;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .same-location-box input[type="checkbox"] {
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent-gold);
+    }
+
+    .event-location-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .event-location-synced-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(31, 78, 91, 0.05);
+      border: 1px solid rgba(31, 78, 91, 0.18);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .event-location-synced-banner strong {
+      color: var(--primary);
     }
 
     .couple-save-bar {
@@ -1042,6 +1623,14 @@
         display: none;
       }
 
+      .workspace-section {
+        display: none;
+      }
+
+      .nav-section-header {
+        display: none;
+      }
+
       .nav-list {
         display: flex;
         flex-direction: row;
@@ -1056,7 +1645,7 @@
 
       .nav-btn {
         justify-content: center;
-        padding: 0 10px;
+        padding: 0 8px;
         min-height: 44px;
         height: 44px;
         font-size: 0.8rem;
@@ -1064,12 +1653,41 @@
         white-space: nowrap;
         border-radius: var(--radius-sm);
         gap: 6px;
+        transform: none !important;
+      }
+
+      .nav-icon-wrapper {
+        width: auto;
+        height: auto;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: inherit !important;
+      }
+
+      .nav-text-group {
+        display: inline-flex;
+        min-width: 0;
+      }
+
+      .nav-sub-desc {
+        display: none !important;
+      }
+
+      .nav-main-title {
+        font-size: 0.76rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: inherit !important;
       }
 
       .nav-btn.active {
         background: rgba(255, 255, 255, 0.16);
         border: 1px solid rgba(255, 255, 255, 0.12);
         color: #FFFFFF;
+        box-shadow: none;
       }
 
       /* 2. HIDE REDUNDANT DESKTOP TOPBAR */
@@ -1486,37 +2104,69 @@
           <p class="brand-sub">Management Studio</p>
         </div>
       </div>
-      <a href="index.html" target="_blank" class="mobile-live-link" title="Buka Undangan Live">
+      <a href="index.html" target="_blank" class="mobile-live-link" id="mobileLiveLink" title="Buka Undangan Live">
         <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
-        <span>Live</span>
+        <span id="mobileLiveLinkLabel">Live</span>
       </a>
     </div>
 
+    <!-- DESKTOP WORKSPACE SWITCHER -->
+    <div class="workspace-section">
+      <div class="workspace-section-header">
+        <span class="workspace-section-label">WORKSPACE UNDANGAN</span>
+        <button type="button" class="btn-add-workspace" id="btnOpenAddDashboard" title="Tambah Undangan Baru">
+          <i data-lucide="plus" style="width: 12px; height: 12px;"></i>
+          <span>Tambah</span>
+        </button>
+      </div>
+      <div class="workspace-list" id="workspaceList">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <div class="nav-section-header">
+      <span class="nav-section-label">MODUL UTAMA</span>
+    </div>
     <ul class="nav-list">
       <li>
         <button class="nav-btn active" data-tab="tab-guests-wa" type="button">
-          <i data-lucide="send" style="width: 16px; height: 16px;"></i>
-          <span>Penerima & Push WA</span>
+          <span class="nav-icon-wrapper">
+            <i data-lucide="send" style="width: 15px; height: 15px;"></i>
+          </span>
+          <div class="nav-text-group">
+            <span class="nav-main-title">Penerima &amp; Push WA</span>
+            <span class="nav-sub-desc">Daftar Tamu &amp; Broadcast</span>
+          </div>
         </button>
       </li>
       <li>
         <button class="nav-btn" data-tab="tab-wishes" type="button">
-          <i data-lucide="message-square" style="width: 16px; height: 16px;"></i>
-          <span>Control Buku Tamu</span>
+          <span class="nav-icon-wrapper">
+            <i data-lucide="message-square" style="width: 15px; height: 15px;"></i>
+          </span>
+          <div class="nav-text-group">
+            <span class="nav-main-title">Control Buku Tamu</span>
+            <span class="nav-sub-desc">Moderasi Ucapan &amp; Doa</span>
+          </div>
         </button>
       </li>
       <li>
         <button class="nav-btn" data-tab="tab-couple" type="button">
-          <i data-lucide="heart" style="width: 16px; height: 16px;"></i>
-          <span>Data Mempelai & Acara</span>
+          <span class="nav-icon-wrapper">
+            <i data-lucide="heart" style="width: 15px; height: 15px;"></i>
+          </span>
+          <div class="nav-text-group">
+            <span class="nav-main-title">Data Mempelai &amp; Acara</span>
+            <span class="nav-sub-desc">Profil, Jadwal &amp; Media</span>
+          </div>
         </button>
       </li>
     </ul>
 
     <div class="sidebar-footer">
-      <a href="index.html" target="_blank" class="btn-preview-link">
+      <a href="index.html" target="_blank" class="btn-preview-link" id="sidebarLiveLink">
         <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
-        <span>Buka Undangan Live</span>
+        <span id="sidebarLiveLinkLabel">Buka Undangan Live</span>
       </a>
     </div>
   </aside>
@@ -1525,8 +2175,19 @@
   <div class="main-wrapper">
     <!-- TOPBAR -->
     <header class="topbar">
-      <h2 class="topbar-title" id="pageHeaderTitle">Penerima Undangan & Push WhatsApp</h2>
-      <div class="topbar-actions">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div class="topbar-ws-pill pria" id="topbarWsIndicator">
+          <span class="dot"></span>
+          <span id="topbarWsTitle">Dashboard Pria</span>
+          <span style="opacity: 0.7; font-weight: 500;" id="topbarWsSlug">/pria</span>
+        </div>
+        <h2 class="topbar-title" id="pageHeaderTitle">Penerima Undangan & Push WhatsApp</h2>
+      </div>
+      <div class="topbar-actions" style="display: flex; align-items: center; gap: 10px;">
+        <a href="index.html" target="_blank" class="btn btn-sm btn-outline" id="topbarLiveLink">
+          <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
+          <span id="topbarLiveLinkLabel">Lihat Live /pria</span>
+        </a>
         <span class="badge-status">
           <i data-lucide="check-circle-2" style="width: 13px; height: 13px;"></i>
           Sinkronisasi Aktif
@@ -1562,8 +2223,8 @@
             <input type="text" id="quickName" class="form-input" placeholder="Nama Penerima *" required>
             <input type="text" id="quickPhone" class="form-input" placeholder="No. WhatsApp (opsional)" inputmode="tel">
             <select id="quickSide" class="form-select" title="Pihak Mempelai">
-              <option value="pria" selected>Pihak Pria (Nuruddin)</option>
-              <option value="wanita">Pihak Wanita (Silfiana)</option>
+              <option value="pria" selected>Pihak Pria</option>
+              <option value="wanita">Pihak Wanita</option>
             </select>
             <button type="submit" class="btn btn-primary" style="white-space: nowrap;">
               <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
@@ -1607,6 +2268,10 @@
                 <i data-lucide="link-2" style="width: 14px; height: 14px;"></i>
                 <span>Salin URL Saja</span>
               </button>
+              <button class="btn btn-outline" id="btnOpenDirectUrl" type="button" title="Buka Undangan Penerima Ini di Tab Baru">
+                <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                <span>Buka Undangan</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1633,8 +2298,8 @@
             <div class="filter-group">
               <select id="guestSideFilter" class="form-select filter-select">
                 <option value="ALL">Semua Pihak</option>
-                <option value="pria">Pihak Pria (Nuruddin)</option>
-                <option value="wanita">Pihak Wanita (Silfiana)</option>
+                <option value="pria">Pihak Pria</option>
+                <option value="wanita">Pihak Wanita</option>
               </select>
               <select id="guestStatusFilter" class="form-select filter-select">
                 <option value="ALL">Semua Status RSVP</option>
@@ -1734,11 +2399,33 @@
 
       <!-- ================= 3. TAB DATA & FOTO MEMPELAI ================= -->
       <section id="tab-couple" class="tab-section">
+        
+        <!-- ACTIVE WORKSPACE CONTEXT BANNER -->
+        <div class="active-dash-banner pria" id="activeDashBanner">
+          <div class="active-dash-banner-info">
+            <span class="active-dash-status-dot"></span>
+            <div class="active-dash-text-group">
+              <span class="active-dash-banner-label">Undangan Aktif:</span>
+              <strong class="active-dash-banner-title" id="activeDashBannerTitle">Pihak Pria (/pria)</strong>
+            </div>
+          </div>
+          <div class="active-dash-segmented-switch">
+            <button type="button" class="dash-seg-btn active" id="btnSwitchToPriaTab" title="Kelola Undangan Pihak Pria">
+              <span class="seg-dot pria"></span>
+              <span>Pria</span>
+            </button>
+            <button type="button" class="dash-seg-btn" id="btnSwitchToWanitaTab" title="Kelola Undangan Pihak Wanita">
+              <span class="seg-dot wanita"></span>
+              <span>Wanita</span>
+            </button>
+          </div>
+        </div>
+
         <form id="coupleForm">
           
           <div class="couple-grid">
             <!-- 1. KARTU MEMPELAI PRIA -->
-            <div class="panel" style="margin-bottom: 0;">
+            <div class="panel" id="panelMempelaiPria" style="margin-bottom: 0;">
               <div class="panel-header">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span class="couple-badge-tag pria">Pihak Pria</span>
@@ -1751,7 +2438,7 @@
                 <label class="form-label">Foto Profil Mempelai Pria (Avatar)</label>
                 <div class="avatar-upload-box">
                   <div class="avatar-preview-ring">
-                    <img id="groomAvatarPreview" src="1.jpg" alt="Foto Profil Mempelai Pria" onerror="this.onerror=null; this.src='1.jpg';">
+                    <img id="groomAvatarPreview" src="avatar-empty.svg" alt="Foto Profil Mempelai Pria" onerror="this.onerror=null; this.src='avatar-empty.svg';">
                   </div>
                   <div class="avatar-upload-ctrls">
                     <input type="file" id="groomAvatarFile" accept="image/*" style="display: none;">
@@ -1765,6 +2452,10 @@
                     </button>
                   </div>
                 </div>
+                <div class="media-slot-notice">
+                  <i data-lucide="database" style="width: 12px; height: 12px; color: var(--primary); flex-shrink: 0;"></i>
+                  <span><strong>Slot Media Efisien:</strong> Mengganti foto akan langsung menimpa file profil pria tanpa menumpuk di Supabase.</span>
+                </div>
               </div>
 
               <!-- 2. Foto Utama Undangan Pria (Cover & Background) -->
@@ -1772,7 +2463,7 @@
                 <label class="form-label">Foto Utama Undangan Pria (Cover / Hero)</label>
                 <div class="cover-upload-box">
                   <div class="cover-preview-rect">
-                    <img id="groomCoverPreview" src="bg.jpeg" alt="Foto Utama Undangan Pria" onerror="this.onerror=null; this.src='bg.jpeg';">
+                    <img id="groomCoverPreview" src="avatar-empty.svg" alt="Foto Utama Undangan Pria" onerror="this.onerror=null; this.src='avatar-empty.svg';">
                   </div>
                   <div class="cover-upload-ctrls">
                     <input type="file" id="groomCoverFile" accept="image/*" style="display: none;">
@@ -1786,83 +2477,55 @@
                     </button>
                   </div>
                 </div>
+                <div class="media-slot-notice">
+                  <i data-lucide="database" style="width: 12px; height: 12px; color: var(--primary); flex-shrink: 0;"></i>
+                  <span><strong>Slot Media Efisien:</strong> Mengganti foto utama akan langsung menimpa cover pria untuk menghemat kuota cloud.</span>
+                </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="inputGroomName">Nama Lengkap *</label>
-                <input type="text" id="inputGroomName" class="form-input" placeholder="Contoh: Nuruddin" required>
+                <input type="text" id="inputGroomName" class="form-input" placeholder="Masukkan nama lengkap mempelai pria" required>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="inputGroomNickname">Nama Panggilan *</label>
-                <input type="text" id="inputGroomNickname" class="form-input" placeholder="Contoh: Nuruddin" required>
+                <input type="text" id="inputGroomNickname" class="form-input" placeholder="Nama panggilan mempelai pria" required>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="inputGroomParents">Susunan Orang Tua / Keluarga *</label>
-                <input type="text" id="inputGroomParents" class="form-input" placeholder="Contoh: Putra Pertama dari Bpk. Misraji & Ibu Hasibah" required>
+                <input type="text" id="inputGroomParents" class="form-input" placeholder="Contoh: Putra pertama dari Bpk. ... & Ibu ..." required>
               </div>
 
               <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label" for="inputGroomIg">Username Instagram</label>
                 <div style="position: relative;">
                   <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-subtle); font-weight: 600;">@</span>
-                  <input type="text" id="inputGroomIg" class="form-input" style="padding-left: 28px;" placeholder="nuruddin_bin_aliman">
+                  <input type="text" id="inputGroomIg" class="form-input" style="padding-left: 28px;" placeholder="username_instagram">
                 </div>
               </div>
 
-              <!-- 3. Jadwal & Lokasi Acara Pihak Pria -->
-              <div class="couple-event-box">
-                <div class="couple-event-header">
-                  <i data-lucide="calendar" style="width: 15px; height: 15px; color: var(--primary);"></i>
-                  <span class="couple-event-title">Jadwal & Lokasi Acara (Pria)</span>
+              <!-- 3. Jadwal & Rangkaian Acara Pihak Pria -->
+              <div class="events-management-wrap">
+                <div class="events-management-header">
+                  <span class="events-management-title">
+                    <i data-lucide="calendar" style="width: 15px; height: 15px; color: var(--primary);"></i>
+                    <span>Rangkaian Acara (Pria)</span>
+                  </span>
+                  <button type="button" class="btn-add-event-action" id="btnAddPriaEvent" title="Tambah Acara Lainnya (Opsional)">
+                    <i data-lucide="plus" style="width: 13px; height: 13px;"></i>
+                    <span>Tambah Acara (Opsional)</span>
+                  </button>
                 </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputPriaEventType">Jenis Acara (Opsional)</label>
-                  <input type="text" id="inputPriaEventType" class="form-input" placeholder="Contoh: Resepsi Pernikahan (Walimatul 'Urs)">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputPriaEventBadge">Label Badge Acara</label>
-                  <input type="text" id="inputPriaEventBadge" class="form-input" placeholder="Contoh: Walimatul 'Urs">
-                </div>
-
-                <div class="form-grid-2">
-                  <div class="form-group">
-                    <label class="form-label" for="inputPriaEventDay">Hari Acara</label>
-                    <input type="text" id="inputPriaEventDay" class="form-input" placeholder="Contoh: Ahad">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="inputPriaEventDate">Tanggal Acara</label>
-                    <input type="text" id="inputPriaEventDate" class="form-input" placeholder="Contoh: 21 September 2026">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputPriaEventTime">Waktu / Jam Pelaksanaan</label>
-                  <input type="text" id="inputPriaEventTime" class="form-input" placeholder="Contoh: 10:00 WIB s/d Selesai">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputPriaEventVenue">Nama Lokasi / Tempat (Venue)</label>
-                  <input type="text" id="inputPriaEventVenue" class="form-input" placeholder="Contoh: Kediaman Mempelai Pria">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputPriaEventAddress">Alamat Lokasi Lengkap</label>
-                  <textarea id="inputPriaEventAddress" class="form-input" rows="2" style="min-height: 60px; resize: vertical; padding: 8px 12px; font-size: 0.85rem;" placeholder="Contoh: Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur"></textarea>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label class="form-label" for="inputPriaEventMaps">Link Google Maps (Opsional)</label>
-                  <input type="url" id="inputPriaEventMaps" class="form-input" placeholder="https://maps.app.goo.gl/...">
+                <div id="priaEventsList" class="events-cards-list">
+                  <!-- Rendered dynamically via JavaScript -->
                 </div>
               </div>
             </div>
 
             <!-- 2. KARTU MEMPELAI WANITA -->
-            <div class="panel" style="margin-bottom: 0;">
+            <div class="panel" id="panelMempelaiWanita" style="margin-bottom: 0;">
               <div class="panel-header">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span class="couple-badge-tag wanita">Pihak Wanita</span>
@@ -1875,7 +2538,7 @@
                 <label class="form-label">Foto Profil Mempelai Wanita (Avatar)</label>
                 <div class="avatar-upload-box">
                   <div class="avatar-preview-ring">
-                    <img id="brideAvatarPreview" src="2.jpg" alt="Foto Profil Mempelai Wanita" onerror="this.onerror=null; this.src='2.jpg';">
+                    <img id="brideAvatarPreview" src="avatar-empty.svg" alt="Foto Profil Mempelai Wanita" onerror="this.onerror=null; this.src='avatar-empty.svg';">
                   </div>
                   <div class="avatar-upload-ctrls">
                     <input type="file" id="brideAvatarFile" accept="image/*" style="display: none;">
@@ -1889,6 +2552,10 @@
                     </button>
                   </div>
                 </div>
+                <div class="media-slot-notice">
+                  <i data-lucide="database" style="width: 12px; height: 12px; color: var(--primary); flex-shrink: 0;"></i>
+                  <span><strong>Slot Media Efisien:</strong> Mengganti foto akan langsung menimpa file profil wanita tanpa menumpuk di Supabase.</span>
+                </div>
               </div>
 
               <!-- 2. Foto Utama Undangan Wanita (Cover & Background) -->
@@ -1896,7 +2563,7 @@
                 <label class="form-label">Foto Utama Undangan Wanita (Cover / Hero)</label>
                 <div class="cover-upload-box">
                   <div class="cover-preview-rect">
-                    <img id="brideCoverPreview" src="bg.jpeg" alt="Foto Utama Undangan Wanita" onerror="this.onerror=null; this.src='bg.jpeg';">
+                    <img id="brideCoverPreview" src="avatar-empty.svg" alt="Foto Utama Undangan Wanita" onerror="this.onerror=null; this.src='avatar-empty.svg';">
                   </div>
                   <div class="cover-upload-ctrls">
                     <input type="file" id="brideCoverFile" accept="image/*" style="display: none;">
@@ -1910,77 +2577,49 @@
                     </button>
                   </div>
                 </div>
+                <div class="media-slot-notice">
+                  <i data-lucide="database" style="width: 12px; height: 12px; color: var(--primary); flex-shrink: 0;"></i>
+                  <span><strong>Slot Media Efisien:</strong> Mengganti foto utama akan langsung menimpa cover wanita untuk menghemat kuota cloud.</span>
+                </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="inputBrideName">Nama Lengkap *</label>
-                <input type="text" id="inputBrideName" class="form-input" placeholder="Contoh: Silfiana" required>
+                <input type="text" id="inputBrideName" class="form-input" placeholder="Masukkan nama lengkap mempelai wanita" required>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="inputBrideNickname">Nama Panggilan *</label>
-                <input type="text" id="inputBrideNickname" class="form-input" placeholder="Contoh: Silfi" required>
+                <input type="text" id="inputBrideNickname" class="form-input" placeholder="Nama panggilan mempelai wanita" required>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="inputBrideParents">Susunan Orang Tua / Keluarga *</label>
-                <input type="text" id="inputBrideParents" class="form-input" placeholder="Contoh: Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah" required>
+                <input type="text" id="inputBrideParents" class="form-input" placeholder="Contoh: Putri kedua dari Bpk. ... & Ibu ..." required>
               </div>
 
               <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label" for="inputBrideIg">Username Instagram</label>
                 <div style="position: relative;">
                   <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-subtle); font-weight: 600;">@</span>
-                  <input type="text" id="inputBrideIg" class="form-input" style="padding-left: 28px;" placeholder="chilpy04">
+                  <input type="text" id="inputBrideIg" class="form-input" style="padding-left: 28px;" placeholder="username_instagram">
                 </div>
               </div>
 
-              <!-- 3. Jadwal & Lokasi Acara Pihak Wanita -->
-              <div class="couple-event-box">
-                <div class="couple-event-header">
-                  <i data-lucide="calendar" style="width: 15px; height: 15px; color: #BE123C;"></i>
-                  <span class="couple-event-title">Jadwal & Lokasi Acara (Wanita)</span>
+              <!-- 3. Jadwal & Rangkaian Acara Pihak Wanita -->
+              <div class="events-management-wrap">
+                <div class="events-management-header">
+                  <span class="events-management-title">
+                    <i data-lucide="calendar" style="width: 15px; height: 15px; color: #BE123C;"></i>
+                    <span>Rangkaian Acara (Wanita)</span>
+                  </span>
+                  <button type="button" class="btn-add-event-action wanita" id="btnAddWanitaEvent" title="Tambah Acara Lainnya (Opsional)">
+                    <i data-lucide="plus" style="width: 13px; height: 13px;"></i>
+                    <span>Tambah Acara (Opsional)</span>
+                  </button>
                 </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputWanitaEventType">Jenis Acara (Opsional)</label>
-                  <input type="text" id="inputWanitaEventType" class="form-input" placeholder="Contoh: Akad Nikah & Resepsi Pernikahan">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputWanitaEventBadge">Label Badge Acara</label>
-                  <input type="text" id="inputWanitaEventBadge" class="form-input" placeholder="Contoh: Akad & Resepsi">
-                </div>
-
-                <div class="form-grid-2">
-                  <div class="form-group">
-                    <label class="form-label" for="inputWanitaEventDay">Hari Acara</label>
-                    <input type="text" id="inputWanitaEventDay" class="form-input" placeholder="Contoh: Ahad">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="inputWanitaEventDate">Tanggal Acara</label>
-                    <input type="text" id="inputWanitaEventDate" class="form-input" placeholder="Contoh: 21 September 2026">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputWanitaEventTime">Waktu / Jam Pelaksanaan</label>
-                  <input type="text" id="inputWanitaEventTime" class="form-input" placeholder="Contoh: 08:00 WIB s/d Selesai">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputWanitaEventVenue">Nama Lokasi / Tempat (Venue)</label>
-                  <input type="text" id="inputWanitaEventVenue" class="form-input" placeholder="Contoh: Kediaman Mempelai Wanita">
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="inputWanitaEventAddress">Alamat Lokasi Lengkap</label>
-                  <textarea id="inputWanitaEventAddress" class="form-input" rows="2" style="min-height: 60px; resize: vertical; padding: 8px 12px; font-size: 0.85rem;" placeholder="Contoh: Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)"></textarea>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label class="form-label" for="inputWanitaEventMaps">Link Google Maps (Opsional)</label>
-                  <input type="url" id="inputWanitaEventMaps" class="form-input" placeholder="https://maps.app.goo.gl/...">
+                <div id="wanitaEventsList" class="events-cards-list">
+                  <!-- Rendered dynamically via JavaScript -->
                 </div>
               </div>
             </div>
@@ -1998,14 +2637,67 @@
             <div class="form-grid-2">
               <div class="form-group">
                 <label class="form-label" for="inputHostsPria">Shohibul Hajat Pihak Pria</label>
-                <input type="text" id="inputHostsPria" class="form-input" placeholder="Keluarga Bpk. Misraji & Ibu Hasibah">
+                <input type="text" id="inputHostsPria" class="form-input" placeholder="Contoh: Keluarga Besar Bpk. ... & Ibu ... (Pihak Pria)">
                 <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Tampil di varian undangan /pria</span>
               </div>
               <div class="form-group">
                 <label class="form-label" for="inputHostsWanita">Shohibul Hajat Pihak Wanita</label>
-                <input type="text" id="inputHostsWanita" class="form-input" placeholder="Keluarga Bpk. Paiman & Ibu Aliyah">
+                <input type="text" id="inputHostsWanita" class="form-input" placeholder="Contoh: Keluarga Besar Bpk. ... & Ibu ... (Pihak Wanita)">
                 <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 4px;">Tampil di varian undangan /wanita</span>
               </div>
+            </div>
+          </div>
+
+          <!-- 4. KARTU PENGATURAN MUSIK & AUDIO SOUNDTRACK -->
+          <div class="panel" style="margin-top: 16px; margin-bottom: 16px;">
+            <div class="panel-header" style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 class="panel-title" style="display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="music" style="width: 16px; height: 16px; color: var(--primary);"></i>
+                  <span>Musik &amp; Soundtrack Undangan</span>
+                </h3>
+              </div>
+              <span class="badge" id="audioStatusBadge" style="font-size: 0.72rem; padding: 3px 8px; border-radius: var(--radius-full); background: var(--bg-subtle); color: var(--text-muted); font-weight: 600;">Musik Bawaan</span>
+            </div>
+
+            <!-- Audio Player Preview Box -->
+            <div class="audio-preview-box" style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; margin-bottom: 12px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                  <div id="audioDiscIconWrap" style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-tint); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; transition: transform 0.4s ease;">
+                    <i data-lucide="disc" id="audioDiscIcon" style="width: 20px; height: 20px;"></i>
+                  </div>
+                  <div style="min-width: 0;">
+                    <div id="audioDisplayName" style="font-weight: 700; font-size: 0.86rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px;">janjisuci.mp3</div>
+                    <div id="audioSubInfo" style="font-size: 0.74rem; color: var(--text-muted);">Soundtrack Bawaan • Instrumen Romantis</div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" class="btn btn-outline btn-sm" id="btnToggleAudioPreview">
+                    <i data-lucide="play" id="previewPlayIcon" style="width: 13px; height: 13px;"></i>
+                    <span id="previewPlayLabel">Putar Pratinjau</span>
+                  </button>
+                </div>
+              </div>
+              <audio id="dashboardAudioPreview" preload="none" style="display: none;"></audio>
+            </div>
+
+            <!-- Audio Upload & Reset Controls -->
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+              <input type="file" id="weddingAudioFile" accept="audio/mp3,audio/mpeg,audio/m4a,audio/ogg" style="display: none;">
+              <button type="button" class="btn btn-outline" id="btnPickWeddingAudio">
+                <i data-lucide="upload-cloud" style="width: 14px; height: 14px;"></i>
+                <span>Unggah Lagu Baru (MP3/M4A)</span>
+              </button>
+              <button type="button" class="btn btn-outline" id="btnResetWeddingAudio" style="color: var(--text-muted);">
+                <i data-lucide="rotate-ccw" style="width: 13px; height: 13px;"></i>
+                <span>Reset Musik Bawaan</span>
+              </button>
+            </div>
+
+            <div class="media-slot-notice" style="margin-top: 10px;">
+              <i data-lucide="database" style="width: 12px; height: 12px; color: var(--primary); flex-shrink: 0;"></i>
+              <span><strong>Slot Media Efisien:</strong> Mengganti lagu akan langsung menimpa file audio sebelumnya di Supabase (slot <code>wedding_audio.mp3</code>) tanpa menumpuk dan tanpa memboroskan kuota cloud.</span>
             </div>
           </div>
 
@@ -2013,7 +2705,7 @@
           <div class="couple-save-bar">
             <button type="submit" class="btn btn-primary" id="btnSaveCouple" style="min-height: 44px; padding: 0 24px; font-weight: 700;">
               <i data-lucide="save" style="width: 16px; height: 16px;"></i>
-              <span>Simpan Data & Foto Mempelai</span>
+              <span>Simpan Data, Foto &amp; Lagu Mempelai</span>
             </button>
           </div>
 
@@ -2047,8 +2739,8 @@
         <div class="form-group">
           <label class="form-label" for="editGuestSide">Pihak Mempelai</label>
           <select id="editGuestSide" class="form-select">
-            <option value="pria">Pihak Pria (Nuruddin)</option>
-            <option value="wanita">Pihak Wanita (Silfiana)</option>
+            <option value="pria">Pihak Pria</option>
+            <option value="wanita">Pihak Wanita</option>
           </select>
         </div>
 
@@ -2124,6 +2816,66 @@
     </div>
   </div>
 
+  <!-- MODAL TAMBAH DASHBOARD UNDANGAN BARU -->
+  <div class="modal-backdrop" id="addDashboardModal">
+    <div class="modal-box" style="max-width: 480px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px;">Tambah Dashboard Undangan</h3>
+            <p style="font-size: 0.74rem; color: var(--text-muted);">Buat link dan pengelolaan terpisah untuk acara lain</p>
+          </div>
+        </div>
+        <button class="modal-close" id="closeAddDashboardModal" type="button">✕</button>
+      </div>
+
+      <form id="addDashboardForm">
+        <div class="form-group">
+          <label class="form-label" for="newDashTitle">Nama Dashboard / Acara *</label>
+          <input type="text" id="newDashTitle" class="form-input" placeholder="Contoh: Ngunduh Mantu" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="newDashSlug">Slug URL (Path Undangan) *</label>
+          <div style="display: flex; align-items: center;">
+            <span style="background: var(--bg-subtle); border: 1px solid var(--border); border-right: none; padding: 0 10px; height: 38px; display: flex; align-items: center; font-size: 0.82rem; color: var(--text-muted); border-radius: var(--radius-sm) 0 0 var(--radius-sm);">/</span>
+            <input type="text" id="newDashSlug" class="form-input" style="border-radius: 0 var(--radius-sm) var(--radius-sm) 0;" placeholder="mantu" required>
+          </div>
+          <small style="color: var(--text-subtle); font-size: 0.72rem; margin-top: 4px; display: block;">Link undangan live: <code id="slugPreviewText" style="color: var(--primary); font-weight: 600;">/mantu</code></small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="newDashBase">Basis Template Acara</label>
+          <select id="newDashBase" class="form-select">
+            <option value="pria" selected>Format Pihak Pria</option>
+            <option value="wanita">Format Pihak Wanita</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="newDashCouple">Judul Pasangan (Opsional)</label>
+          <input type="text" id="newDashCouple" class="form-input" placeholder="Contoh: Nama Pria & Nama Wanita">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="newDashHosts">Tuan Rumah / Keluarga (Opsional)</label>
+          <input type="text" id="newDashHosts" class="form-input" placeholder="Contoh: Keluarga Besar Bpk. ... & Ibu ...">
+        </div>
+
+        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-outline" id="btnCancelAddDashboard">Batal</button>
+          <button type="submit" class="btn btn-primary">
+            <i data-lucide="check" style="width: 14px; height: 14px;"></i>
+            <span>Buat Dashboard</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- CUSTOM CONFIRMATION MODAL -->
   <div class="modal-backdrop" id="confirmDialogModal">
     <div class="modal-box" style="max-width: 380px; text-align: center; padding: 24px;">
@@ -2168,6 +2920,7 @@
       let weddingData = storage.getWeddingData();
       let guests = storage.getGuests();
       let wishes = storage.getWishes();
+      let activeDashboardId = (storage.getActiveDashboardId && storage.getActiveDashboardId()) || 'pria';
 
       const toast = document.getElementById('dashboardToast');
       const toastMsg = document.getElementById('dashboardToastMsg');
@@ -2182,6 +2935,189 @@
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
           window.lucide.createIcons();
         }
+      }
+
+      function getActiveDashboard() {
+        const list = (storage.getDashboards && storage.getDashboards()) || [];
+        return list.find(d => d.id === activeDashboardId) || list[0] || { id: 'pria', title: 'Dashboard Pria', path: '/pria', side: 'pria' };
+      }
+
+      function updateActiveDashboardVisuals(dash) {
+        if (!dash) dash = getActiveDashboard();
+        const rawPath = dash.path ? (dash.path.startsWith('/') ? dash.path.slice(1) : dash.path) : (dash.id || 'pria');
+        const livePath = (rawPath === 'pria' || rawPath === 'wanita') ? rawPath : rawPath;
+
+        // Topbar Pill
+        const topbarWs = document.getElementById('topbarWsIndicator');
+        const topbarWsTitle = document.getElementById('topbarWsTitle');
+        const topbarWsSlug = document.getElementById('topbarWsSlug');
+        if (topbarWs && topbarWsTitle && topbarWsSlug) {
+          topbarWs.className = `topbar-ws-pill ${dash.id === 'wanita' ? 'wanita' : 'pria'}`;
+          topbarWsTitle.textContent = dash.title;
+          topbarWsSlug.textContent = `/${livePath}`;
+        }
+
+        // Live links (sidebar footer, mobile brand, topbar)
+        const isFileProtocol = (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:');
+        const targetHref = isFileProtocol ? `index.html?side=${encodeURIComponent(livePath)}` : `/${livePath}`;
+
+        const topbarLiveLink = document.getElementById('topbarLiveLink');
+        const topbarLiveLinkLabel = document.getElementById('topbarLiveLinkLabel');
+        if (topbarLiveLink) {
+          topbarLiveLink.href = targetHref;
+          if (topbarLiveLinkLabel) topbarLiveLinkLabel.textContent = `Lihat Live /${livePath}`;
+        }
+
+        const sidebarLiveLink = document.getElementById('sidebarLiveLink');
+        const sidebarLiveLinkLabel = document.getElementById('sidebarLiveLinkLabel');
+        if (sidebarLiveLink) {
+          sidebarLiveLink.href = targetHref;
+          if (sidebarLiveLinkLabel) sidebarLiveLinkLabel.textContent = `Buka Live /${livePath}`;
+        }
+
+        const mobileLiveLink = document.getElementById('mobileLiveLink');
+        const mobileLiveLinkLabel = document.getElementById('mobileLiveLinkLabel');
+        if (mobileLiveLink) {
+          mobileLiveLink.href = targetHref;
+          if (mobileLiveLinkLabel) mobileLiveLinkLabel.textContent = `Live /${livePath}`;
+        }
+
+        // Active context banner in Tab Mempelai
+        const banner = document.getElementById('activeDashBanner');
+        const bannerTitle = document.getElementById('activeDashBannerTitle');
+        if (banner && bannerTitle) {
+          banner.className = `active-dash-banner ${dash.id === 'wanita' ? 'wanita' : 'pria'}`;
+          bannerTitle.textContent = `${dash.title} (/${livePath})`;
+        }
+        const btnTabPria = document.getElementById('btnSwitchToPriaTab');
+        const btnTabWanita = document.getElementById('btnSwitchToWanitaTab');
+        if (btnTabPria) btnTabPria.classList.toggle('active', dash.id === 'pria');
+        if (btnTabWanita) btnTabWanita.classList.toggle('active', dash.id === 'wanita');
+
+        // Highlight active couple panel
+        const panelPria = document.getElementById('panelMempelaiPria');
+        const panelWanita = document.getElementById('panelMempelaiWanita');
+        if (dash.id === 'wanita') {
+          if (panelWanita) {
+            panelWanita.style.borderColor = 'rgba(190, 18, 60, 0.4)';
+            panelWanita.style.boxShadow = '0 0 0 1px rgba(190, 18, 60, 0.2)';
+          }
+          if (panelPria) {
+            panelPria.style.borderColor = 'var(--border)';
+            panelPria.style.boxShadow = 'none';
+          }
+        } else {
+          if (panelPria) {
+            panelPria.style.borderColor = 'rgba(31, 78, 91, 0.4)';
+            panelPria.style.boxShadow = '0 0 0 1px rgba(31, 78, 91, 0.2)';
+          }
+          if (panelWanita) {
+            panelWanita.style.borderColor = 'var(--border)';
+            panelWanita.style.boxShadow = 'none';
+          }
+        }
+      }
+
+      function renderWorkspaceSwitcher() {
+        const dashboards = (storage.getDashboards && storage.getDashboards()) || [];
+        const currentActiveId = (storage.getActiveDashboardId && storage.getActiveDashboardId()) || 'pria';
+        activeDashboardId = currentActiveId;
+        const activeDash = dashboards.find(d => d.id === activeDashboardId) || dashboards[0] || { id: 'pria', title: 'Dashboard Pria', path: '/pria' };
+
+        // 1. Desktop Sidebar List
+        const wsList = document.getElementById('workspaceList');
+        if (wsList) {
+          wsList.innerHTML = dashboards.map(d => {
+            const isActive = d.id === activeDashboardId;
+            const sideClass = d.id === 'wanita' ? 'wanita' : 'pria';
+            const badgeText = d.badge || (d.id === 'pria' ? 'Pria' : (d.id === 'wanita' ? 'Wanita' : 'Kustom'));
+            return `
+              <button type="button" class="workspace-item-btn ${sideClass} ${isActive ? 'active' : ''}" data-id="${d.id}" title="${d.title} (${d.path || '/' + d.id})">
+                <div class="ws-left">
+                  <span class="ws-icon-dot"></span>
+                  <span class="ws-name">${d.title}</span>
+                </div>
+                <span class="ws-badge">${badgeText}</span>
+              </button>
+            `;
+          }).join('');
+
+          wsList.querySelectorAll('.workspace-item-btn').forEach(btn => {
+            btn.onclick = function() {
+              const targetId = this.getAttribute('data-id');
+              switchActiveDashboard(targetId);
+            };
+          });
+        }
+
+        // 2. Quick side select in Add Guest inline form
+        const quickSide = document.getElementById('quickSide');
+        if (quickSide) {
+          quickSide.innerHTML = dashboards.map(d => {
+            const isSelected = d.id === activeDashboardId ? 'selected' : '';
+            return `<option value="${d.id}" ${isSelected}>Pihak ${d.title}</option>`;
+          }).join('');
+        }
+
+        // 4. Guest side filter in Table toolbar
+        const sideFilter = document.getElementById('guestSideFilter');
+        if (sideFilter) {
+          const currentFilterVal = sideFilter.value;
+          sideFilter.innerHTML = `
+            <option value="ALL">Semua Pihak & Dashboard</option>
+            ${dashboards.map(d => `<option value="${d.id}">Pihak ${d.title}</option>`).join('')}
+          `;
+          sideFilter.value = (currentFilterVal && currentFilterVal !== 'ALL') ? currentFilterVal : activeDashboardId;
+        }
+
+        // 5. Edit Guest Side select in modal
+        const editSide = document.getElementById('editGuestSide');
+        if (editSide) {
+          const currentEditVal = editSide.value;
+          editSide.innerHTML = dashboards.map(d => `<option value="${d.id}">Pihak ${d.title}</option>`).join('');
+          if (currentEditVal) editSide.value = currentEditVal;
+        }
+
+        updateActiveDashboardVisuals(activeDash);
+      }
+
+      function switchActiveDashboard(targetId) {
+        if (!targetId) return;
+        if (storage.setActiveDashboardId) {
+          storage.setActiveDashboardId(targetId);
+        }
+        activeDashboardId = targetId;
+        const dashboards = (storage.getDashboards && storage.getDashboards()) || [];
+        const dash = dashboards.find(d => d.id === targetId) || dashboards[0];
+
+        // Update desktop sidebar buttons
+        document.querySelectorAll('.workspace-item-btn').forEach(btn => {
+          if (btn.getAttribute('data-id') === targetId) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        // Update default quickSide
+        const quickSide = document.getElementById('quickSide');
+        if (quickSide) {
+          quickSide.value = targetId;
+        }
+
+        // Update table filter to this dashboard
+        const sideFilter = document.getElementById('guestSideFilter');
+        if (sideFilter) {
+          sideFilter.value = targetId;
+        }
+
+        updateActiveDashboardVisuals(dash);
+        updateStats();
+        renderGuestsTable();
+        renderBroadcastOptions();
+
+        showToast(`Beralih ke: ${dash.title} (/${dash.path ? dash.path.replace(/^\//, '') : dash.id})`);
+        refreshIcons();
       }
 
       // Tab Switching
@@ -2224,12 +3160,18 @@
         return cleaned;
       }
 
-      // Update Summary Stats
+      // Update Summary Stats (Context-aware per dashboard)
       function updateStats() {
-        const stats = storage.getStats();
-        document.getElementById('statTotalGuests').textContent = stats.totalGuests;
-        document.getElementById('statConfirmedPax').textContent = stats.totalPaxConfirmed;
-        document.getElementById('statTotalWishes').textContent = stats.totalWishes;
+        const sideFilter = document.getElementById('guestSideFilter') ? document.getElementById('guestSideFilter').value : activeDashboardId;
+        const targetSide = (sideFilter && sideFilter !== 'ALL') ? sideFilter : null;
+
+        const relevantGuests = targetSide ? guests.filter(g => (g.side || 'pria') === targetSide) : guests;
+        const hadirGuests = relevantGuests.filter(g => g.status === 'hadir');
+        const totalPaxConfirmed = hadirGuests.reduce((acc, curr) => acc + (parseInt(curr.pax, 10) || 1), 0);
+
+        document.getElementById('statTotalGuests').textContent = relevantGuests.length;
+        document.getElementById('statConfirmedPax').textContent = totalPaxConfirmed;
+        document.getElementById('statTotalWishes').textContent = wishes.length;
 
         // Wishes stats
         const wishesData = storage.getWishes();
@@ -2242,7 +3184,7 @@
         document.getElementById('statWishesRagu').textContent = raguW;
         document.getElementById('statWishesTidakHadir').textContent = tidakW;
 
-        document.getElementById('guestCountBadge').textContent = guests.length;
+        document.getElementById('guestCountBadge').textContent = relevantGuests.length;
       }
 
       // Render Guests Table
@@ -2331,8 +3273,18 @@
           return;
         }
 
-        select.innerHTML = guests.map(g => {
-          const sideTag = (g.side || 'pria') === 'wanita' ? ' [Wanita]' : ' [Pria]';
+        // Sort so guests matching activeDashboardId appear first
+        const sortedGuests = [...guests].sort((a, b) => {
+          const aMatch = (a.side || 'pria') === activeDashboardId;
+          const bMatch = (b.side || 'pria') === activeDashboardId;
+          if (aMatch && !bMatch) return -1;
+          if (!aMatch && bMatch) return 1;
+          return 0;
+        });
+
+        select.innerHTML = sortedGuests.map(g => {
+          const guestSide = g.side || 'pria';
+          const sideTag = guestSide === 'wanita' ? ' [Wanita]' : (guestSide === 'pria' ? ' [Pria]' : ` [${guestSide}]`);
           return `<option value="${g.id}">${g.name}${sideTag}${g.phone ? ` (${g.phone})` : ''}</option>`;
         }).join('');
         updateBroadcastPreview();
@@ -2343,7 +3295,7 @@
         const guest = guests.find(g => g.id === selectedId) || guests[0];
         if (!guest) return;
 
-        const guestSide = guest.side || 'pria';
+        const guestSide = guest.side || activeDashboardId || 'pria';
         const inviteUrl = storage.generateInvitationUrl(guest.name, guestSide);
         const guestWeddingData = storage.getWeddingData(guestSide);
         const msg = storage.generateWhatsAppMessage(guest, guestWeddingData, inviteUrl);
@@ -2630,7 +3582,10 @@
       document.getElementById('guestSearchInput').oninput = renderGuestsTable;
       document.getElementById('guestStatusFilter').onchange = renderGuestsTable;
       if (document.getElementById('guestSideFilter')) {
-        document.getElementById('guestSideFilter').onchange = renderGuestsTable;
+        document.getElementById('guestSideFilter').onchange = function() {
+          updateStats();
+          renderGuestsTable();
+        };
       }
       document.getElementById('broadcastGuestSelect').onchange = updateBroadcastPreview;
       document.getElementById('broadcastPreviewText').oninput = function() {
@@ -2659,7 +3614,7 @@
         const selectedId = document.getElementById('broadcastGuestSelect').value;
         const guest = guests.find(g => g.id === selectedId) || guests[0];
         if (!guest) return;
-        const guestSide = guest.side || 'pria';
+        const guestSide = guest.side || activeDashboardId || 'pria';
         const url = storage.generateInvitationUrl(guest.name, guestSide);
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(url).then(() => showToast(`URL undangan "${guest.name}" disalin!`));
@@ -2667,6 +3622,24 @@
           showToast(`URL disalin: ${url}`);
         }
       };
+
+      const btnOpenDirect = document.getElementById('btnOpenDirectUrl');
+      if (btnOpenDirect) {
+        btnOpenDirect.onclick = function() {
+          const selectedId = document.getElementById('broadcastGuestSelect').value;
+          const guest = guests.find(g => g.id === selectedId) || guests[0];
+          const guestSide = guest ? (guest.side || activeDashboardId || 'pria') : (activeDashboardId || 'pria');
+          const guestName = guest ? guest.name : '';
+          const isFileProtocol = (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:');
+          let targetUrl = '';
+          if (isFileProtocol) {
+            targetUrl = `index.html?side=${encodeURIComponent(guestSide)}` + (guestName ? `&to=${encodeURIComponent(guestName).replace(/%20/g, '+')}` : '');
+          } else {
+            targetUrl = guestName ? `/${encodeURIComponent(guestSide)}/to/${encodeURIComponent(guestName).replace(/%20/g, '+')}` : `/${encodeURIComponent(guestSide)}`;
+          }
+          window.open(targetUrl, '_blank');
+        };
+      }
 
       // Export CSV
       document.getElementById('btnExportCsv').onclick = function() {
@@ -2686,10 +3659,50 @@
       };
 
       // Couple Data Management & Image Compression
-      let currentGroomAvatar = (weddingData.couple && weddingData.couple.groom && weddingData.couple.groom.avatar) || '1.jpg';
-      let currentBrideAvatar = (weddingData.couple && weddingData.couple.bride && weddingData.couple.bride.avatar) || '2.jpg';
-      let currentGroomCover = weddingData.coverImagePria || 'bg.jpeg';
-      let currentBrideCover = weddingData.coverImageWanita || 'bg.jpeg';
+      let currentGroomAvatar = (weddingData.couple && weddingData.couple.groom && weddingData.couple.groom.avatar && weddingData.couple.groom.avatar !== '1.jpg' && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : 'avatar-empty.svg';
+      let currentBrideAvatar = (weddingData.couple && weddingData.couple.bride && weddingData.couple.bride.avatar && weddingData.couple.bride.avatar !== '2.jpg' && !weddingData.couple.bride.avatar.includes('bride-clara')) ? weddingData.couple.bride.avatar : 'avatar-empty.svg';
+      let currentGroomCover = (weddingData.coverImagePria && weddingData.coverImagePria !== 'bg.jpeg') ? weddingData.coverImagePria : '';
+      let currentBrideCover = (weddingData.coverImageWanita && weddingData.coverImageWanita !== 'bg.jpeg') ? weddingData.coverImageWanita : '';
+      let currentAudioUrl = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : 'janjisuci.mp3';
+      let selectedAudioFile = null;
+      let groomAvatarFileObj = null;
+      let brideAvatarFileObj = null;
+      let groomCoverFileObj = null;
+      let brideCoverFileObj = null;
+
+      function updateAudioDisplay(urlOrPath, fileObj = null) {
+        const nameEl = document.getElementById('audioDisplayName');
+        const subInfoEl = document.getElementById('audioSubInfo');
+        const badgeEl = document.getElementById('audioStatusBadge');
+        const previewAudio = document.getElementById('dashboardAudioPreview');
+        if (!nameEl || !subInfoEl || !badgeEl || !previewAudio) return;
+
+        const isDefault = !urlOrPath || urlOrPath === 'janjisuci.mp3' || urlOrPath.endsWith('/janjisuci.mp3');
+        if (isDefault) {
+          nameEl.textContent = 'janjisuci.mp3';
+          subInfoEl.textContent = 'Soundtrack Bawaan • Instrumen Romantis';
+          badgeEl.textContent = 'Musik Bawaan';
+          badgeEl.style.background = 'var(--bg-subtle)';
+          badgeEl.style.color = 'var(--text-muted)';
+        } else if (fileObj) {
+          nameEl.textContent = fileObj.name;
+          const sizeKb = Math.round(fileObj.size / 1024);
+          subInfoEl.textContent = `Lagu Dipilih (${sizeKb} KB) • Siap disimpan ke Supabase`;
+          badgeEl.textContent = 'Lagu Baru';
+          badgeEl.style.background = 'var(--primary-tint)';
+          badgeEl.style.color = 'var(--primary)';
+        } else {
+          const cleanName = urlOrPath.split('/').pop().split('?')[0];
+          nameEl.textContent = cleanName || 'wedding_audio.mp3';
+          subInfoEl.textContent = 'Soundtrack Kustom Tersimpan di Supabase';
+          badgeEl.textContent = 'Musik Kustom';
+          badgeEl.style.background = 'var(--primary-tint)';
+          badgeEl.style.color = 'var(--primary)';
+        }
+
+        const audioSrc = fileObj ? (window.URL.createObjectURL(fileObj)) : (isDefault ? (window.location.protocol === 'file:' ? 'janjisuci.mp3' : '/janjisuci.mp3') : urlOrPath);
+        previewAudio.src = audioSrc;
+      }
 
       function loadCoupleForm() {
         const wData = storage.getWeddingData();
@@ -2698,52 +3711,313 @@
         const groom = wData.couple.groom || {};
         const bride = wData.couple.bride || {};
 
-        document.getElementById('inputGroomName').value = groom.name || 'Nuruddin';
-        document.getElementById('inputGroomNickname').value = groom.nickname || 'Nuruddin';
-        document.getElementById('inputGroomParents').value = groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';
-        document.getElementById('inputGroomIg').value = groom.instagram || 'nuruddin_bin_aliman';
+        document.getElementById('inputGroomName').value = groom.name || '';
+        document.getElementById('inputGroomNickname').value = groom.nickname || '';
+        document.getElementById('inputGroomParents').value = groom.parents || '';
+        document.getElementById('inputGroomIg').value = groom.instagram || '';
 
-        currentGroomAvatar = groom.avatar || '1.jpg';
+        currentGroomAvatar = (groom.avatar && groom.avatar !== '1.jpg' && !groom.avatar.includes('groom-andra')) ? groom.avatar : 'avatar-empty.svg';
         document.getElementById('groomAvatarPreview').src = currentGroomAvatar;
 
-        currentGroomCover = wData.coverImagePria || 'bg.jpeg';
-        document.getElementById('groomCoverPreview').src = currentGroomCover;
+        currentGroomCover = (wData.coverImagePria && wData.coverImagePria !== 'bg.jpeg') ? wData.coverImagePria : '';
+        document.getElementById('groomCoverPreview').src = currentGroomCover || 'avatar-empty.svg';
 
-        document.getElementById('inputBrideName').value = bride.name || 'Silfiana';
-        document.getElementById('inputBrideNickname').value = bride.nickname || 'Silfi';
-        document.getElementById('inputBrideParents').value = bride.parents || 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah';
-        document.getElementById('inputBrideIg').value = bride.instagram || 'chilpy04';
+        document.getElementById('inputBrideName').value = bride.name || '';
+        document.getElementById('inputBrideNickname').value = bride.nickname || '';
+        document.getElementById('inputBrideParents').value = bride.parents || '';
+        document.getElementById('inputBrideIg').value = bride.instagram || '';
 
-        currentBrideAvatar = bride.avatar || '2.jpg';
+        currentBrideAvatar = (bride.avatar && bride.avatar !== '2.jpg' && !bride.avatar.includes('bride-clara')) ? bride.avatar : 'avatar-empty.svg';
         document.getElementById('brideAvatarPreview').src = currentBrideAvatar;
 
-        currentBrideCover = wData.coverImageWanita || 'bg.jpeg';
-        document.getElementById('brideCoverPreview').src = currentBrideCover;
+        currentBrideCover = (wData.coverImageWanita && wData.coverImageWanita !== 'bg.jpeg') ? wData.coverImageWanita : '';
+        document.getElementById('brideCoverPreview').src = currentBrideCover || 'avatar-empty.svg';
 
-        document.getElementById('inputHostsPria').value = wData.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah';
-        document.getElementById('inputHostsWanita').value = wData.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah';
+        currentAudioUrl = (wData.audioUrl && !wData.audioUrl.includes('romantic-wedding-soundtrack')) ? wData.audioUrl : 'janjisuci.mp3';
+        selectedAudioFile = null;
+        updateAudioDisplay(currentAudioUrl);
 
-        // Jadwal & Lokasi Acara Pihak Pria
-        const schedPria = (wData.schedulesPria && wData.schedulesPria[0]) || {};
-        document.getElementById('inputPriaEventType').value = schedPria.title || 'Resepsi Pernikahan (Walimatul \'Urs)';
-        document.getElementById('inputPriaEventBadge').value = schedPria.badge || 'Walimatul \'Urs';
-        document.getElementById('inputPriaEventDay').value = schedPria.day || 'Ahad';
-        document.getElementById('inputPriaEventDate').value = schedPria.date || '21 September 2026';
-        document.getElementById('inputPriaEventTime').value = schedPria.time || '10:00 WIB s/d Selesai';
-        document.getElementById('inputPriaEventVenue').value = schedPria.venue || 'Kediaman Mempelai Pria';
-        document.getElementById('inputPriaEventAddress').value = schedPria.address || 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur';
-        document.getElementById('inputPriaEventMaps').value = schedPria.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
+        document.getElementById('inputHostsPria').value = wData.hostsPria || '';
+        document.getElementById('inputHostsWanita').value = wData.hostsWanita || '';
 
-        // Jadwal & Lokasi Acara Pihak Wanita
-        const schedWanita = (wData.schedulesWanita && wData.schedulesWanita[0]) || {};
-        document.getElementById('inputWanitaEventType').value = schedWanita.title || 'Akad Nikah & Resepsi Pernikahan';
-        document.getElementById('inputWanitaEventBadge').value = schedWanita.badge || 'Akad & Resepsi';
-        document.getElementById('inputWanitaEventDay').value = schedWanita.day || 'Ahad';
-        document.getElementById('inputWanitaEventDate').value = schedWanita.date || '21 September 2026';
-        document.getElementById('inputWanitaEventTime').value = schedWanita.time || '08:00 WIB s/d Selesai';
-        document.getElementById('inputWanitaEventVenue').value = schedWanita.venue || 'Kediaman Mempelai Wanita';
-        document.getElementById('inputWanitaEventAddress').value = schedWanita.address || 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)';
-        document.getElementById('inputWanitaEventMaps').value = schedWanita.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
+        // Load dynamic schedules for Pria and Wanita
+        const rawPria = (wData.schedulesPria && wData.schedulesPria.length > 0) ? wData.schedulesPria : (wData.schedules || []);
+        currentPriaSchedules = storage.normalizeSchedulesList(rawPria, 'Resepsi Pernikahan (Walimatul \'Urs)');
+
+        const rawWanita = (wData.schedulesWanita && wData.schedulesWanita.length > 0) ? wData.schedulesWanita : (wData.schedules || []);
+        currentWanitaSchedules = storage.normalizeSchedulesList(rawWanita, 'Akad Nikah & Resepsi');
+
+        renderEventsList('pria');
+        renderEventsList('wanita');
+      }
+
+      // Dynamic schedules state
+      let currentPriaSchedules = [];
+      let currentWanitaSchedules = [];
+
+      function renderEventsList(side) {
+        const container = document.getElementById(side === 'pria' ? 'priaEventsList' : 'wanitaEventsList');
+        if (!container) return;
+
+        const list = side === 'pria' ? currentPriaSchedules : currentWanitaSchedules;
+        const isWanita = side === 'wanita';
+
+        if (!list || list.length === 0) {
+          container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 14px; font-size: 0.8rem;">Belum ada jadwal acara. Klik Tambah Acara di atas.</div>`;
+          return;
+        }
+
+        container.innerHTML = list.map((ev, idx) => {
+          const isPrimary = idx === 0;
+          const tagLabel = isPrimary ? 'Acara 1 (Utama)' : `Acara ${idx + 1} (Tambahan)`;
+          const tagClass = isPrimary ? (isWanita ? 'wanita' : 'pria') : 'secondary';
+          const defaultTitlePlaceholder = isPrimary ? (isWanita ? 'Akad Nikah / Resepsi' : 'Resepsi Pernikahan (Walimatul \'Urs)') : 'Resepsi / Temu Manten';
+
+          // Same location toggle for event #2+
+          let sameLocCheckboxHtml = '';
+          let primaryName = '';
+          let isSameLoc = false;
+          if (!isPrimary) {
+            const primaryEv = list[0] || {};
+            primaryName = (primaryEv.title && primaryEv.title.trim()) ? primaryEv.title.trim() : (isWanita ? 'Akad Nikah' : 'Acara Utama');
+            isSameLoc = Boolean(ev.venue && primaryEv.venue && ev.venue === primaryEv.venue && ev.address === primaryEv.address);
+            sameLocCheckboxHtml = `
+              <label class="same-location-box" title="Salin tempat, alamat, dan peta dari ${primaryName}">
+                <input type="checkbox" class="event-same-loc-check" data-side="${side}" data-idx="${idx}" ${isSameLoc ? 'checked' : ''}>
+                <span class="same-loc-label-text">✓ Samakan Lokasi &amp; Alamat dengan <strong>${primaryName}</strong></span>
+              </label>
+            `;
+          }
+
+          const removeBtnHtml = !isPrimary ? `
+            <button type="button" class="btn-remove-event" data-side="${side}" data-idx="${idx}" title="Hapus Acara Ini">
+              <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
+              <span>Hapus</span>
+            </button>
+          ` : '';
+
+          return `
+            <div class="event-card-item" data-side="${side}" data-idx="${idx}">
+              <div class="event-card-header">
+                <span class="event-card-tag ${tagClass}">
+                  <i data-lucide="calendar" style="width: 11px; height: 11px;"></i>
+                  <span>${tagLabel}</span>
+                </span>
+                ${removeBtnHtml}
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Nama / Jenis Acara *</label>
+                  <input type="text" class="form-input ev-input-title" data-side="${side}" data-idx="${idx}" value="${ev.title || ''}" placeholder="Contoh: ${defaultTitlePlaceholder}" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Label Badge Acara</label>
+                  <input type="text" class="form-input ev-input-badge" data-side="${side}" data-idx="${idx}" value="${ev.badge || ''}" placeholder="Contoh: Akad / Resepsi">
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Hari Acara</label>
+                  <input type="text" class="form-input ev-input-day" data-side="${side}" data-idx="${idx}" value="${ev.day || 'Ahad'}" placeholder="Contoh: Ahad">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Tanggal Acara</label>
+                  <input type="text" class="form-input ev-input-date" data-side="${side}" data-idx="${idx}" value="${ev.date || '21 September 2026'}" placeholder="Contoh: 21 September 2026">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Waktu / Jam Pelaksanaan</label>
+                <input type="text" class="form-input ev-input-time" data-side="${side}" data-idx="${idx}" value="${ev.time || '10:00 WIB s/d Selesai'}" placeholder="Contoh: 08:00 WIB s/d Selesai">
+              </div>
+
+              ${sameLocCheckboxHtml}
+
+              <div class="event-location-fields" style="${(!isPrimary && isSameLoc) ? 'display: none;' : ''}">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Nama Lokasi / Tempat (Venue)</label>
+                  <input type="text" class="form-input ev-input-venue" data-side="${side}" data-idx="${idx}" value="${ev.venue || ''}" placeholder="Contoh: Kediaman Mempelai / Gedung Serbaguna">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Alamat Lokasi Lengkap</label>
+                  <textarea class="form-input ev-input-address" data-side="${side}" data-idx="${idx}" rows="2" style="min-height: 52px; resize: vertical; padding: 7px 10px; font-size: 0.82rem;" placeholder="Alamat lengkap">${ev.address || ''}</textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label">Link Google Maps (Opsional)</label>
+                  <input type="url" class="form-input ev-input-maps" data-side="${side}" data-idx="${idx}" value="${ev.mapsUrl || ''}" placeholder="https://maps.app.goo.gl/...">
+                </div>
+              </div>
+
+              ${!isPrimary ? `
+                <div class="event-location-synced-banner" style="${isSameLoc ? '' : 'display: none;'}">
+                  <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--primary); flex-shrink: 0;"></i>
+                  <span class="synced-loc-text">Lokasi &amp; Google Maps otomatis mengikuti <strong>${primaryName}</strong>.</span>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+
+        // Real-time synchronization
+        container.querySelectorAll('input, textarea').forEach(input => {
+          input.addEventListener('input', function() {
+            const sideAttr = this.dataset.side;
+            const idx = parseInt(this.dataset.idx, 10);
+            const targetList = sideAttr === 'pria' ? currentPriaSchedules : currentWanitaSchedules;
+            if (!targetList[idx]) return;
+
+            if (this.classList.contains('ev-input-title')) targetList[idx].title = this.value;
+            if (this.classList.contains('ev-input-badge')) targetList[idx].badge = this.value;
+            if (this.classList.contains('ev-input-day')) targetList[idx].day = this.value;
+            if (this.classList.contains('ev-input-date')) {
+              targetList[idx].date = this.value;
+              targetList[idx].fullDate = (targetList[idx].day && this.value) ? `${targetList[idx].day}, ${this.value}` : this.value;
+            }
+            if (this.classList.contains('ev-input-time')) targetList[idx].time = this.value;
+            if (this.classList.contains('ev-input-venue')) targetList[idx].venue = this.value;
+            if (this.classList.contains('ev-input-address')) targetList[idx].address = this.value;
+            if (this.classList.contains('ev-input-maps')) targetList[idx].mapsUrl = this.value;
+
+            // Propagate event 0 updates to secondary events
+            if (idx === 0) {
+              const currentTitle = this.value.trim() || (sideAttr === 'wanita' ? 'Akad Nikah' : 'Acara Utama');
+
+              if (this.classList.contains('ev-input-title')) {
+                // Update checkbox labels & synced banner text across all secondary event cards
+                container.querySelectorAll('.same-location-box .same-loc-label-text').forEach(lbl => {
+                  lbl.innerHTML = `✓ Samakan Lokasi &amp; Alamat dengan <strong>${currentTitle}</strong>`;
+                });
+                container.querySelectorAll('.event-location-synced-banner .synced-loc-text').forEach(el => {
+                  el.innerHTML = `Lokasi &amp; Google Maps otomatis mengikuti <strong>${currentTitle}</strong>.`;
+                });
+              }
+
+              // Propagate venue/address/maps to checked secondary events
+              container.querySelectorAll('.event-same-loc-check:checked').forEach(cb => {
+                const sIdx = parseInt(cb.dataset.idx, 10);
+                if (targetList[sIdx]) {
+                  targetList[sIdx].venue = targetList[0].venue;
+                  targetList[sIdx].address = targetList[0].address;
+                  targetList[sIdx].mapsUrl = targetList[0].mapsUrl;
+                  const sCard = container.querySelector(`.event-card-item[data-idx="${sIdx}"]`);
+                  if (sCard) {
+                    const vInput = sCard.querySelector('.ev-input-venue');
+                    const aInput = sCard.querySelector('.ev-input-address');
+                    const mInput = sCard.querySelector('.ev-input-maps');
+                    if (vInput) vInput.value = targetList[0].venue || '';
+                    if (aInput) aInput.value = targetList[0].address || '';
+                    if (mInput) mInput.value = targetList[0].mapsUrl || '';
+                  }
+                }
+              });
+            }
+          });
+        });
+
+        // Same location toggle change handler
+        container.querySelectorAll('.event-same-loc-check').forEach(cb => {
+          cb.addEventListener('change', function() {
+            const sideAttr = this.dataset.side;
+            const idx = parseInt(this.dataset.idx, 10);
+            const targetList = sideAttr === 'pria' ? currentPriaSchedules : currentWanitaSchedules;
+            const card = this.closest('.event-card-item');
+            const locFields = card ? card.querySelector('.event-location-fields') : null;
+            const syncedBanner = card ? card.querySelector('.event-location-synced-banner') : null;
+            const primaryTitle = (targetList[0] && targetList[0].title && targetList[0].title.trim()) ? targetList[0].title.trim() : (sideAttr === 'wanita' ? 'Akad Nikah' : 'Acara Utama');
+
+            if (this.checked && targetList[0] && targetList[idx]) {
+              targetList[idx].venue = targetList[0].venue;
+              targetList[idx].address = targetList[0].address;
+              targetList[idx].mapsUrl = targetList[0].mapsUrl;
+              if (card) {
+                const vInput = card.querySelector('.ev-input-venue');
+                const aInput = card.querySelector('.ev-input-address');
+                const mInput = card.querySelector('.ev-input-maps');
+                if (vInput) vInput.value = targetList[0].venue || '';
+                if (aInput) aInput.value = targetList[0].address || '';
+                if (mInput) mInput.value = targetList[0].mapsUrl || '';
+                if (locFields) locFields.style.display = 'none';
+                if (syncedBanner) {
+                  syncedBanner.style.display = 'flex';
+                  const sText = syncedBanner.querySelector('.synced-loc-text');
+                  if (sText) sText.innerHTML = `Lokasi &amp; Google Maps otomatis mengikuti <strong>${primaryTitle}</strong>.`;
+                }
+              }
+              showToast(`Lokasi & alamat disamakan dengan ${primaryTitle}`);
+            } else {
+              if (locFields) locFields.style.display = 'flex';
+              if (syncedBanner) syncedBanner.style.display = 'none';
+            }
+            refreshIcons();
+          });
+        });
+
+        // Remove button handler
+        container.querySelectorAll('.btn-remove-event').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const sideAttr = this.dataset.side;
+            const idx = parseInt(this.dataset.idx, 10);
+            const targetList = sideAttr === 'pria' ? currentPriaSchedules : currentWanitaSchedules;
+            if (idx > 0 && targetList.length > 1) {
+              const removedTitle = targetList[idx].title || `Acara #${idx+1}`;
+              targetList.splice(idx, 1);
+              renderEventsList(sideAttr);
+              refreshIcons();
+              showToast(`"${removedTitle}" berhasil dihapus`);
+            }
+          });
+        });
+
+        refreshIcons();
+      }
+
+      // Add event buttons
+      const btnAddPria = document.getElementById('btnAddPriaEvent');
+      if (btnAddPria) {
+        btnAddPria.onclick = function() {
+          const baseEvent = currentPriaSchedules[0] || {};
+          currentPriaSchedules.push({
+            id: 'pria-acara-' + Date.now(),
+            title: 'Resepsi Pernikahan',
+            badge: 'Resepsi',
+            day: baseEvent.day || 'Ahad',
+            date: baseEvent.date || '21 September 2026',
+            fullDate: baseEvent.fullDate || 'Ahad, 21 September 2026',
+            time: '13:00 WIB s/d Selesai',
+            venue: baseEvent.venue || 'Kediaman Mempelai Pria',
+            address: baseEvent.address || '',
+            mapsUrl: baseEvent.mapsUrl || '',
+            calendarUrl: '#'
+          });
+          renderEventsList('pria');
+          showToast('Acara tambahan pria berhasil ditambahkan!');
+        };
+      }
+
+      const btnAddWanita = document.getElementById('btnAddWanitaEvent');
+      if (btnAddWanita) {
+        btnAddWanita.onclick = function() {
+          const baseEvent = currentWanitaSchedules[0] || {};
+          currentWanitaSchedules.push({
+            id: 'wanita-acara-' + Date.now(),
+            title: 'Resepsi Pernikahan',
+            badge: 'Resepsi',
+            day: 'Ahad',
+            date: '21 September 2026',
+            fullDate: 'Ahad, 21 September 2026',
+            time: '10:00 WIB s/d Selesai',
+            venue: baseEvent.venue || 'Kediaman Mempelai Wanita',
+            address: baseEvent.address || '',
+            mapsUrl: baseEvent.mapsUrl || '',
+            calendarUrl: '#'
+          });
+          renderEventsList('wanita');
+          showToast('Acara tambahan wanita berhasil ditambahkan!');
+        };
       }
 
       // High-performance canvas-based client compression for mobile devices
@@ -2788,20 +4062,22 @@
         if (file) {
           try {
             showToast('Mengompresi foto profil mempelai pria...');
-            const compressedBase64 = await compressImageFile(file, 500, 0.82);
+            const compressedBase64 = await compressImageFile(file, 400, 0.82);
+            groomAvatarFileObj = file;
             currentGroomAvatar = compressedBase64;
             document.getElementById('groomAvatarPreview').src = compressedBase64;
-            showToast('Foto profil mempelai pria siap disimpan!');
+            showToast('Foto profil pria siap disimpan!');
           } catch (err) {
             showToast('Gagal memproses foto: ' + err.message);
           }
         }
       };
       document.getElementById('btnResetGroomAvatar').onclick = function() {
-        currentGroomAvatar = '1.jpg';
-        document.getElementById('groomAvatarPreview').src = '1.jpg';
+        currentGroomAvatar = 'avatar-empty.svg';
+        groomAvatarFileObj = null;
+        document.getElementById('groomAvatarPreview').src = 'avatar-empty.svg';
         document.getElementById('groomAvatarFile').value = '';
-        showToast('Foto profil mempelai pria direset ke bawaan');
+        showToast('Foto profil pria direset ke avatar kosong');
       };
 
       // Groom cover photo events
@@ -2814,19 +4090,21 @@
           try {
             showToast('Mengompresi foto utama undangan pria...');
             const compressedBase64 = await compressImageFile(file, 1280, 0.80);
+            groomCoverFileObj = file;
             currentGroomCover = compressedBase64;
             document.getElementById('groomCoverPreview').src = compressedBase64;
-            showToast('Foto utama undangan pria siap disimpan!');
+            showToast('Foto utama pria siap disimpan!');
           } catch (err) {
             showToast('Gagal memproses foto: ' + err.message);
           }
         }
       };
       document.getElementById('btnResetGroomCover').onclick = function() {
-        currentGroomCover = 'bg.jpeg';
-        document.getElementById('groomCoverPreview').src = 'bg.jpeg';
+        currentGroomCover = '';
+        groomCoverFileObj = null;
+        document.getElementById('groomCoverPreview').src = 'avatar-empty.svg';
         document.getElementById('groomCoverFile').value = '';
-        showToast('Foto utama undangan pria direset ke bawaan');
+        showToast('Foto utama undangan pria direset ke bawaan netral');
       };
 
       // Bride avatar events
@@ -2838,20 +4116,22 @@
         if (file) {
           try {
             showToast('Mengompresi foto profil mempelai wanita...');
-            const compressedBase64 = await compressImageFile(file, 500, 0.82);
+            const compressedBase64 = await compressImageFile(file, 400, 0.82);
+            brideAvatarFileObj = file;
             currentBrideAvatar = compressedBase64;
             document.getElementById('brideAvatarPreview').src = compressedBase64;
-            showToast('Foto profil mempelai wanita siap disimpan!');
+            showToast('Foto profil wanita siap disimpan!');
           } catch (err) {
             showToast('Gagal memproses foto: ' + err.message);
           }
         }
       };
       document.getElementById('btnResetBrideAvatar').onclick = function() {
-        currentBrideAvatar = '2.jpg';
-        document.getElementById('brideAvatarPreview').src = '2.jpg';
+        currentBrideAvatar = 'avatar-empty.svg';
+        brideAvatarFileObj = null;
+        document.getElementById('brideAvatarPreview').src = 'avatar-empty.svg';
         document.getElementById('brideAvatarFile').value = '';
-        showToast('Foto profil mempelai wanita direset ke bawaan');
+        showToast('Foto profil wanita direset ke avatar kosong');
       };
 
       // Bride cover photo events
@@ -2864,23 +4144,89 @@
           try {
             showToast('Mengompresi foto utama undangan wanita...');
             const compressedBase64 = await compressImageFile(file, 1280, 0.80);
+            brideCoverFileObj = file;
             currentBrideCover = compressedBase64;
             document.getElementById('brideCoverPreview').src = compressedBase64;
-            showToast('Foto utama undangan wanita siap disimpan!');
+            showToast('Foto utama wanita siap disimpan!');
           } catch (err) {
             showToast('Gagal memproses foto: ' + err.message);
           }
         }
       };
       document.getElementById('btnResetBrideCover').onclick = function() {
-        currentBrideCover = 'bg.jpeg';
-        document.getElementById('brideCoverPreview').src = 'bg.jpeg';
+        currentBrideCover = '';
+        brideCoverFileObj = null;
+        document.getElementById('brideCoverPreview').src = 'avatar-empty.svg';
         document.getElementById('brideCoverFile').value = '';
-        showToast('Foto utama undangan wanita direset ke bawaan');
+        showToast('Foto utama undangan wanita direset ke bawaan netral');
       };
 
-      // Couple form submission
-      document.getElementById('coupleForm').onsubmit = function(e) {
+      // Audio events
+      const btnPickAudio = document.getElementById('btnPickWeddingAudio');
+      const audioFileInput = document.getElementById('weddingAudioFile');
+      const btnResetAudio = document.getElementById('btnResetWeddingAudio');
+      const btnTogglePreview = document.getElementById('btnToggleAudioPreview');
+      const previewAudioEl = document.getElementById('dashboardAudioPreview');
+      const discWrap = document.getElementById('audioDiscIconWrap');
+      const previewLabel = document.getElementById('previewPlayLabel');
+
+      if (btnPickAudio && audioFileInput) {
+        btnPickAudio.onclick = function() {
+          audioFileInput.click();
+        };
+        audioFileInput.onchange = function(e) {
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            if (file.size > 10 * 1024 * 1024) {
+              showToast('Ukuran file lagu terlalu besar (maksimal 10 MB)');
+              return;
+            }
+            selectedAudioFile = file;
+            updateAudioDisplay('', file);
+            showToast(`Lagu "${file.name}" dipilih! Klik simpan untuk menimpa file di cloud.`);
+          }
+        };
+      }
+
+      if (btnResetAudio) {
+        btnResetAudio.onclick = function() {
+          selectedAudioFile = null;
+          currentAudioUrl = 'janjisuci.mp3';
+          if (previewAudioEl) {
+            previewAudioEl.pause();
+            previewAudioEl.currentTime = 0;
+          }
+          if (discWrap) discWrap.style.transform = 'none';
+          if (previewLabel) previewLabel.textContent = 'Putar Pratinjau';
+          if (audioFileInput) audioFileInput.value = '';
+          updateAudioDisplay('janjisuci.mp3');
+          showToast('Lagu direset ke instrumen bawaan (janjisuci.mp3)');
+        };
+      }
+
+      if (btnTogglePreview && previewAudioEl) {
+        btnTogglePreview.onclick = function() {
+          if (previewAudioEl.paused) {
+            previewAudioEl.play().then(() => {
+              if (previewLabel) previewLabel.textContent = 'Jeda Musik';
+              if (discWrap) discWrap.style.transform = 'rotate(180deg)';
+            }).catch(err => {
+              showToast('Tidak dapat memutar audio: ' + err.message);
+            });
+          } else {
+            previewAudioEl.pause();
+            if (previewLabel) previewLabel.textContent = 'Putar Pratinjau';
+            if (discWrap) discWrap.style.transform = 'none';
+          }
+        };
+        previewAudioEl.onended = function() {
+          if (previewLabel) previewLabel.textContent = 'Putar Pratinjau';
+          if (discWrap) discWrap.style.transform = 'none';
+        };
+      }
+
+      // Couple form submission with automatic Supabase overwrite
+      document.getElementById('coupleForm').onsubmit = async function(e) {
         e.preventDefault();
 
         const groomName = document.getElementById('inputGroomName').value.trim();
@@ -2896,104 +4242,217 @@
         const hostsPria = document.getElementById('inputHostsPria').value.trim();
         const hostsWanita = document.getElementById('inputHostsWanita').value.trim();
 
-        // Data Acara Pihak Pria
-        const priaTitle = document.getElementById('inputPriaEventType').value.trim() || 'Resepsi Pernikahan (Walimatul \'Urs)';
-        const priaBadge = document.getElementById('inputPriaEventBadge').value.trim() || 'Walimatul \'Urs';
-        const priaDay = document.getElementById('inputPriaEventDay').value.trim() || 'Ahad';
-        const priaDate = document.getElementById('inputPriaEventDate').value.trim() || '21 September 2026';
-        const priaTime = document.getElementById('inputPriaEventTime').value.trim() || '10:00 WIB s/d Selesai';
-        const priaVenue = document.getElementById('inputPriaEventVenue').value.trim() || 'Kediaman Mempelai Pria';
-        const priaAddress = document.getElementById('inputPriaEventAddress').value.trim();
-        const priaMaps = document.getElementById('inputPriaEventMaps').value.trim();
-
-        // Data Acara Pihak Wanita
-        const wanitaTitle = document.getElementById('inputWanitaEventType').value.trim() || 'Akad Nikah & Resepsi Pernikahan';
-        const wanitaBadge = document.getElementById('inputWanitaEventBadge').value.trim() || 'Akad & Resepsi';
-        const wanitaDay = document.getElementById('inputWanitaEventDay').value.trim() || 'Ahad';
-        const wanitaDate = document.getElementById('inputWanitaEventDate').value.trim() || '21 September 2026';
-        const wanitaTime = document.getElementById('inputWanitaEventTime').value.trim() || '08:00 WIB s/d Selesai';
-        const wanitaVenue = document.getElementById('inputWanitaEventVenue').value.trim() || 'Kediaman Mempelai Wanita';
-        const wanitaAddress = document.getElementById('inputWanitaEventAddress').value.trim();
-        const wanitaMaps = document.getElementById('inputWanitaEventMaps').value.trim();
-
         if (!groomName || !brideName) {
           showToast('Nama mempelai pria dan wanita wajib diisi');
           return;
         }
 
-        const currentW = storage.getWeddingData();
-        const existingPriaSched = (currentW.schedulesPria && currentW.schedulesPria[0]) || {};
-        const existingWanitaSched = (currentW.schedulesWanita && currentW.schedulesWanita[0]) || {};
+        const btnSave = document.getElementById('btnSaveCouple');
+        btnSave.disabled = true;
+        const originalBtnHtml = btnSave.innerHTML;
+        btnSave.innerHTML = '<i data-lucide="loader-2" style="width: 16px; height: 16px;"></i><span>Menyimpan &amp; Menimpa Media...</span>';
+        refreshIcons();
 
-        const updatedSchedulesPria = [
-          {
-            ...existingPriaSched,
-            id: existingPriaSched.id || 'resepsi-pria',
-            title: priaTitle,
-            badge: priaBadge,
-            day: priaDay,
-            date: priaDate,
-            fullDate: (priaDay && priaDate) ? `${priaDay}, ${priaDate}` : (priaDate || 'Ahad, 21 September 2026'),
-            time: priaTime,
-            venue: priaVenue,
-            address: priaAddress || 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
-            mapsUrl: priaMaps || existingPriaSched.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
-            calendarUrl: existingPriaSched.calendarUrl || '#'
-          }
-        ];
-
-        const updatedSchedulesWanita = [
-          {
-            ...existingWanitaSched,
-            id: existingWanitaSched.id || 'resepsi-wanita',
-            title: wanitaTitle,
-            badge: wanitaBadge,
-            day: wanitaDay,
-            date: wanitaDate,
-            fullDate: (wanitaDay && wanitaDate) ? `${wanitaDay}, ${wanitaDate}` : (wanitaDate || 'Ahad, 21 September 2026'),
-            time: wanitaTime,
-            venue: wanitaVenue,
-            address: wanitaAddress || 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
-            mapsUrl: wanitaMaps || existingWanitaSched.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
-            calendarUrl: existingWanitaSched.calendarUrl || '#'
-          }
-        ];
-
-        const updatedWeddingData = {
-          ...currentW,
-          hostsPria: hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
-          hostsWanita: hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-          coverImagePria: currentGroomCover,
-          coverImageWanita: currentBrideCover,
-          schedulesPria: updatedSchedulesPria,
-          schedulesWanita: updatedSchedulesWanita,
-          couple: {
-            ...currentW.couple,
-            groom: {
-              ...((currentW.couple && currentW.couple.groom) || {}),
-              name: groomName,
-              nickname: groomNickname || groomName,
-              parents: groomParents,
-              avatar: currentGroomAvatar,
-              instagram: groomIg,
-              instagramUrl: groomIg ? `https://instagram.com/${groomIg}` : ''
-            },
-            bride: {
-              ...((currentW.couple && currentW.couple.bride) || {}),
-              name: brideName,
-              nickname: brideNickname || brideName,
-              parents: brideParents,
-              avatar: currentBrideAvatar,
-              instagram: brideIg,
-              instagramUrl: brideIg ? `https://instagram.com/${brideIg}` : ''
+        try {
+          // 1. Upload Groom Avatar jika ada foto baru
+          if (groomAvatarFileObj && currentGroomAvatar && currentGroomAvatar.startsWith('data:')) {
+            showToast('Menyimpan foto profil pria ke Supabase...');
+            const resPria = await storage.uploadMedia(currentGroomAvatar, 'groom_avatar');
+            if (resPria && resPria.ok && resPria.url) {
+              currentGroomAvatar = resPria.url;
             }
+          }
+
+          // 2. Upload Bride Avatar jika ada foto baru
+          if (brideAvatarFileObj && currentBrideAvatar && currentBrideAvatar.startsWith('data:')) {
+            showToast('Menyimpan foto profil wanita ke Supabase...');
+            const resWanita = await storage.uploadMedia(currentBrideAvatar, 'bride_avatar');
+            if (resWanita && resWanita.ok && resWanita.url) {
+              currentBrideAvatar = resWanita.url;
+            }
+          }
+
+          // 3. Upload Groom Cover jika ada foto baru
+          if (groomCoverFileObj && currentGroomCover && currentGroomCover.startsWith('data:')) {
+            showToast('Menyimpan foto utama pria ke Supabase...');
+            const resCovPria = await storage.uploadMedia(currentGroomCover, 'cover_pria');
+            if (resCovPria && resCovPria.ok && resCovPria.url) {
+              currentGroomCover = resCovPria.url;
+            }
+          }
+
+          // 4. Upload Bride Cover jika ada foto baru
+          if (brideCoverFileObj && currentBrideCover && currentBrideCover.startsWith('data:')) {
+            showToast('Menyimpan foto utama wanita ke Supabase...');
+            const resCovWanita = await storage.uploadMedia(currentBrideCover, 'cover_wanita');
+            if (resCovWanita && resCovWanita.ok && resCovWanita.url) {
+              currentBrideCover = resCovWanita.url;
+            }
+          }
+
+          // 5. Upload Audio jika ada file baru dipilih
+          if (selectedAudioFile) {
+            showToast('Mengunggah lagu latar ke slot Supabase Storage...');
+            const resAudio = await storage.uploadMedia(selectedAudioFile, 'audio');
+            if (resAudio && resAudio.ok && resAudio.url) {
+              currentAudioUrl = resAudio.url;
+            }
+          }
+
+          const currentW = storage.getWeddingData();
+
+          const updatedWeddingData = {
+            ...currentW,
+            hostsPria: hostsPria || (currentW.hostsPria || 'Keluarga Besar Pria'),
+            hostsWanita: hostsWanita || (currentW.hostsWanita || 'Keluarga Besar Wanita'),
+            coverImagePria: currentGroomCover,
+            coverImageWanita: currentBrideCover,
+            audioUrl: currentAudioUrl,
+            schedulesPria: currentPriaSchedules,
+            schedulesWanita: currentWanitaSchedules,
+            couple: {
+              ...currentW.couple,
+              groom: {
+                ...((currentW.couple && currentW.couple.groom) || {}),
+                name: groomName,
+                nickname: groomNickname || groomName,
+                parents: groomParents,
+                avatar: currentGroomAvatar,
+                instagram: groomIg,
+                instagramUrl: groomIg ? `https://instagram.com/${groomIg}` : ''
+              },
+              bride: {
+                ...((currentW.couple && currentW.couple.bride) || {}),
+                name: brideName,
+                nickname: brideNickname || brideName,
+                parents: brideParents,
+                avatar: currentBrideAvatar,
+                instagram: brideIg,
+                instagramUrl: brideIg ? `https://instagram.com/${brideIg}` : ''
+              }
+            }
+          };
+
+          storage.saveWeddingData(updatedWeddingData);
+          weddingData = updatedWeddingData;
+
+          // Reset temporary file flags setelah sukses simpan
+          groomAvatarFileObj = null;
+          brideAvatarFileObj = null;
+          groomCoverFileObj = null;
+          brideCoverFileObj = null;
+          selectedAudioFile = null;
+
+          updateAudioDisplay(currentAudioUrl);
+          showToast('Data, foto, dan lagu kedua mempelai berhasil disimpan!');
+        } catch (err) {
+          showToast('Terjadi kesalahan saat menyimpan: ' + err.message);
+        } finally {
+          btnSave.disabled = false;
+          btnSave.innerHTML = originalBtnHtml;
+          refreshIcons();
+        }
+      };
+
+      // --- MULTI-DASHBOARD WORKSPACE & MODAL EVENT HANDLERS ---
+      const btnTabPria = document.getElementById('btnSwitchToPriaTab');
+      if (btnTabPria) {
+        btnTabPria.onclick = function() { switchActiveDashboard('pria'); };
+      }
+      const btnTabWanita = document.getElementById('btnSwitchToWanitaTab');
+      if (btnTabWanita) {
+        btnTabWanita.onclick = function() { switchActiveDashboard('wanita'); };
+      }
+
+      // Add Dashboard Modal Controls
+      const addDashModal = document.getElementById('addDashboardModal');
+      const addDashForm = document.getElementById('addDashboardForm');
+      const newDashTitle = document.getElementById('newDashTitle');
+      const newDashSlug = document.getElementById('newDashSlug');
+      const newDashBase = document.getElementById('newDashBase');
+      const newDashCouple = document.getElementById('newDashCouple');
+      const newDashHosts = document.getElementById('newDashHosts');
+      const slugPreviewText = document.getElementById('slugPreviewText');
+
+      function openAddDashboardModal() {
+        if (!addDashModal) return;
+        addDashForm.reset();
+        newDashBase.value = 'pria';
+        if (newDashSlug) delete newDashSlug.dataset.manual;
+        if (slugPreviewText) slugPreviewText.textContent = '/mantu';
+        addDashModal.classList.add('open');
+        refreshIcons();
+      }
+
+      function closeAddDashboardModal() {
+        if (addDashModal) addDashModal.classList.remove('open');
+      }
+
+      const btnOpenAddDash = document.getElementById('btnOpenAddDashboard');
+      if (btnOpenAddDash) btnOpenAddDash.onclick = openAddDashboardModal;
+      const closeAddDash = document.getElementById('closeAddDashboardModal');
+      if (closeAddDash) closeAddDash.onclick = closeAddDashboardModal;
+      const cancelAddDash = document.getElementById('btnCancelAddDashboard');
+      if (cancelAddDash) cancelAddDash.onclick = closeAddDashboardModal;
+
+      if (newDashTitle && newDashSlug) {
+        newDashTitle.oninput = function() {
+          if (!newDashSlug.dataset.manual) {
+            const slugified = this.value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            newDashSlug.value = slugified;
+            if (slugPreviewText) slugPreviewText.textContent = '/' + (slugified || 'undangan');
           }
         };
 
-        storage.saveWeddingData(updatedWeddingData);
-        weddingData = updatedWeddingData;
-        showToast('Data, foto, dan jadwal acara kedua mempelai berhasil disimpan!');
-      };
+        newDashSlug.oninput = function() {
+          this.dataset.manual = '1';
+          const cleanSlug = this.value.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+          this.value = cleanSlug;
+          if (slugPreviewText) slugPreviewText.textContent = '/' + (cleanSlug || 'undangan');
+        };
+      }
+
+      if (addDashForm) {
+        addDashForm.onsubmit = function(e) {
+          e.preventDefault();
+          const title = newDashTitle.value.trim();
+          let slug = newDashSlug.value.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+          if (!slug) {
+            slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          }
+          if (!title || !slug) {
+            showToast('Nama dashboard dan slug URL wajib diisi');
+            return;
+          }
+
+          const base = newDashBase.value || 'pria';
+          const coupleTitle = newDashCouple.value.trim() || (base === 'pria' ? 'Mempelai Pria & Wanita' : 'Mempelai Wanita & Pria');
+          const hostsTitle = newDashHosts.value.trim() || (base === 'pria' ? 'Keluarga Besar Pria' : 'Keluarga Besar Wanita');
+
+          const created = storage.addDashboard({
+            id: slug,
+            title,
+            shortTitle: title,
+            badge: 'Kustom',
+            side: slug,
+            path: `/${slug}`,
+            baseTemplate: base,
+            coupleTitle,
+            hostsTitle,
+            isSystem: false
+          });
+
+          if (!created) {
+            showToast('Gagal: Slug/ID dashboard tersebut sudah terdaftar!');
+            return;
+          }
+
+          closeAddDashboardModal();
+          renderWorkspaceSwitcher();
+          switchActiveDashboard(slug);
+          showToast(`Dashboard "${title}" berhasil dibuat! Output live di /${slug}`);
+        };
+      }
 
       // Real-time Event Listeners
       window.addEventListener('guests_data_updated', function(e) {
@@ -3014,7 +4473,19 @@
         loadCoupleForm();
       });
 
+      window.addEventListener('dashboards_list_updated', function() {
+        renderWorkspaceSwitcher();
+      });
+
+      window.addEventListener('active_dashboard_changed', function(e) {
+        if (e.detail && e.detail.id && e.detail.id !== activeDashboardId) {
+          switchActiveDashboard(e.detail.id);
+        }
+      });
+
       // Initial execution
+      renderWorkspaceSwitcher();
+      switchActiveDashboard(activeDashboardId);
       updateStats();
       renderGuestsTable();
       renderBroadcastOptions();

@@ -6,17 +6,20 @@
 (function(root, factory) {
   const exportsObj = factory();
   if (typeof module !== 'undefined' && module.exports) {
+    Object.assign(module.exports, exportsObj);
     module.exports = exportsObj;
   }
   if (typeof define === 'function' && define.amd) {
     define(function() { return exportsObj; });
   }
   if (typeof window !== 'undefined') {
+    window.DEFAULT_DASHBOARDS = exportsObj.DEFAULT_DASHBOARDS;
     window.DEFAULT_WEDDING_DATA = exportsObj.DEFAULT_WEDDING_DATA;
     window.DEFAULT_GUESTS = exportsObj.DEFAULT_GUESTS;
     window.DEFAULT_WISHES = exportsObj.DEFAULT_WISHES;
     window.WeddingStorage = exportsObj.WeddingStorage;
   } else if (typeof root !== 'undefined') {
+    root.DEFAULT_DASHBOARDS = exportsObj.DEFAULT_DASHBOARDS;
     root.DEFAULT_WEDDING_DATA = exportsObj.DEFAULT_WEDDING_DATA;
     root.DEFAULT_GUESTS = exportsObj.DEFAULT_GUESTS;
     root.DEFAULT_WISHES = exportsObj.DEFAULT_WISHES;
@@ -28,8 +31,37 @@
     WEDDING: 'wevitation_khusus_wedding_data',
     GUESTS: 'wevitation_khusus_guests_data',
     WISHES: 'wevitation_khusus_wishes_data',
-    SETTINGS: 'wevitation_khusus_settings'
+    SETTINGS: 'wevitation_khusus_settings',
+    DASHBOARDS: 'wevitation_khusus_dashboards',
+    ACTIVE_DASHBOARD: 'wevitation_khusus_active_dashboard'
   };
+
+  const DEFAULT_DASHBOARDS = [
+    {
+      id: 'pria',
+      title: 'Undangan Pihak Pria',
+      shortTitle: 'Pria',
+      badge: 'Mempelai Pria',
+      side: 'pria',
+      path: '/pria',
+      coupleTitle: 'Nuruddin & Silfiana',
+      tagline: 'The Wedding of Nuruddin & Silfi',
+      hostsTitle: 'Keluarga Bpk. Misraji & Ibu Hasibah',
+      isSystem: true
+    },
+    {
+      id: 'wanita',
+      title: 'Undangan Pihak Wanita',
+      shortTitle: 'Wanita',
+      badge: 'Mempelai Wanita',
+      side: 'wanita',
+      path: '/wanita',
+      coupleTitle: 'Silfiana & Nuruddin',
+      tagline: 'The Wedding of Silfi & Nuruddin',
+      hostsTitle: 'Keluarga Bpk. Paiman & Ibu Aliyah',
+      isSystem: true
+    }
+  ];
 
   const DEFAULT_WEDDING_DATA = {
     couple: {
@@ -37,7 +69,7 @@
         name: 'Nuruddin',
         nickname: 'Nuruddin',
         parents: 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah',
-        avatar: '1.jpg',
+        avatar: 'avatar-empty.svg',
         instagram: 'nuruddin_bin_aliman',
         instagramUrl: 'https://instagram.com/nuruddin_bin_aliman'
       },
@@ -45,7 +77,7 @@
         name: 'Silfiana',
         nickname: 'Silfi',
         parents: 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah',
-        avatar: '2.jpg',
+        avatar: 'avatar-empty.svg',
         instagram: 'chilpy04',
         instagramUrl: 'https://instagram.com/chilpy04'
       },
@@ -92,23 +124,36 @@
     ],
     schedulesWanita: [
       {
-        id: 'resepsi-wanita',
-        title: 'Akad Nikah & Resepsi Pernikahan',
-        badge: 'Akad & Resepsi',
-        day: 'Ahad',
-        date: '21 September 2026',
-        fullDate: 'Ahad, 21 September 2026',
-        time: '08:00 WIB s/d Selesai',
+        id: 'akad-wanita',
+        title: 'Akad Nikah',
+        badge: 'Akad Nikah',
+        day: 'Sabtu',
+        date: '20 September 2026',
+        fullDate: 'Sabtu, 20 September 2026',
+        time: '08:00 WIB s/d 10:00 WIB',
         venue: 'Kediaman Mempelai Wanita',
         address: 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
         mapsUrl: 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
-        calendarUrl: 'https://www.google.com/calendar/event?action=TEMPLATE&text=Akad+%26+Resepsi+Silfi+%26+Nuruddin&details=Kediaman+Mempelai+Wanita&dates=20260921T010000Z/20260921T060000Z'
+        calendarUrl: 'https://www.google.com/calendar/event?action=TEMPLATE&text=Akad+Nikah+Silfi+%26+Nuruddin&details=Kediaman+Mempelai+Wanita&dates=20260920T010000Z/20260920T030000Z'
+      },
+      {
+        id: 'resepsi-wanita',
+        title: 'Resepsi Pernikahan',
+        badge: 'Resepsi',
+        day: 'Ahad',
+        date: '21 September 2026',
+        fullDate: 'Ahad, 21 September 2026',
+        time: '10:00 WIB s/d Selesai',
+        venue: 'Kediaman Mempelai Wanita',
+        address: 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
+        mapsUrl: 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+        calendarUrl: 'https://www.google.com/calendar/event?action=TEMPLATE&text=Resepsi+Pernikahan+Silfi+%26+Nuruddin&details=Kediaman+Mempelai+Wanita&dates=20260921T030000Z/20260921T080000Z'
       }
     ],
     hostsPria: 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hostsWanita: 'Keluarga Bpk. Paiman & Ibu Aliyah',
-    coverImagePria: 'bg.jpeg',
-    coverImageWanita: 'bg.jpeg',
+    coverImagePria: '',
+    coverImageWanita: '',
     loveStories: [
       {
         id: 'story-1',
@@ -305,6 +350,71 @@
       }
     },
 
+    /**
+     * Upload media ke Supabase Storage dengan slot tetap & x-upsert: true
+     * Menjamin file selalu menimpa slot yang ada tanpa menumpuk penyimpanan
+     */
+    async uploadMedia(fileOrBlob, slotKey) {
+      try {
+        if (!SUPABASE_CONFIG.url || !SUPABASE_CONFIG.key) {
+          return { ok: false, fallback: true, error: 'Konfigurasi Supabase tidak tersedia' };
+        }
+
+        const slotMap = {
+          'groom_avatar': 'avatars/avatar_pria.webp',
+          'bride_avatar': 'avatars/avatar_wanita.webp',
+          'cover_pria': 'covers/cover_pria.webp',
+          'cover_wanita': 'covers/cover_wanita.webp',
+          'audio': 'audio/wedding_audio.mp3'
+        };
+
+        const targetPath = slotMap[slotKey] || `misc/${slotKey}`;
+        let uploadBlob = fileOrBlob;
+        let mimeType = (slotKey === 'audio') ? 'audio/mpeg' : 'image/webp';
+
+        // Jika input berupa data URL base64, konversi ke Blob biner
+        if (typeof fileOrBlob === 'string' && fileOrBlob.startsWith('data:')) {
+          const parts = fileOrBlob.split(',');
+          const mimeMatch = parts[0].match(/:(.*?);/);
+          mimeType = mimeMatch ? mimeMatch[1] : mimeType;
+          const binaryStr = atob(parts[1]);
+          const len = binaryStr.length;
+          const u8arr = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            u8arr[i] = binaryStr.charCodeAt(i);
+          }
+          uploadBlob = new Blob([u8arr], { type: mimeType });
+        } else if (fileOrBlob && fileOrBlob.type) {
+          mimeType = fileOrBlob.type;
+        }
+
+        const endpoint = `${SUPABASE_CONFIG.url}/storage/v1/object/wedding-media/${targetPath}`;
+        const headers = {
+          'apikey': SUPABASE_CONFIG.key,
+          'Authorization': `Bearer ${SUPABASE_CONFIG.key}`,
+          'Content-Type': mimeType,
+          'x-upsert': 'true'
+        };
+
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body: uploadBlob
+        });
+
+        if (res.ok) {
+          // Public URL dengan timestamp cache-buster agar perangkat pengunjung langsung melihat foto/lagu baru
+          const publicUrl = `${SUPABASE_CONFIG.url}/storage/v1/object/public/wedding-media/${targetPath}?v=${Date.now()}`;
+          return { ok: true, url: publicUrl, method: 'storage' };
+        } else {
+          const errDetail = await res.text().catch(() => '');
+          return { ok: false, fallback: true, error: `Supabase Storage ${res.status}: ${errDetail}` };
+        }
+      } catch (err) {
+        return { ok: false, fallback: true, error: err.message };
+      }
+    },
+
     async syncFromCloud() {
       // 1. Sync Guests
       try {
@@ -400,8 +510,9 @@
             ...currentWedding,
             hostsPria: info.hosts_pria || currentWedding.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
             hostsWanita: info.hosts_wanita || currentWedding.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-            coverImagePria: info.cover_image_pria || currentWedding.coverImagePria || 'bg.jpeg',
-            coverImageWanita: info.cover_image_wanita || currentWedding.coverImageWanita || 'bg.jpeg',
+            coverImagePria: (info.cover_image_pria && info.cover_image_pria !== 'bg.jpeg') ? info.cover_image_pria : (currentWedding.coverImagePria && currentWedding.coverImagePria !== 'bg.jpeg' ? currentWedding.coverImagePria : ''),
+            coverImageWanita: (info.cover_image_wanita && info.cover_image_wanita !== 'bg.jpeg') ? info.cover_image_wanita : (currentWedding.coverImageWanita && currentWedding.coverImageWanita !== 'bg.jpeg' ? currentWedding.coverImageWanita : ''),
+            audioUrl: info.audio_url || currentWedding.audioUrl || 'janjisuci.mp3',
             schedulesPria: sPria,
             schedulesWanita: sWanita,
             couple: {
@@ -411,7 +522,7 @@
                 name: info.groom_name || currentWedding.couple.groom.name,
                 nickname: info.groom_nickname || currentWedding.couple.groom.nickname,
                 parents: info.groom_parents || currentWedding.couple.groom.parents,
-                avatar: info.groom_avatar || currentWedding.couple.groom.avatar,
+                avatar: (info.groom_avatar && info.groom_avatar !== '1.jpg') ? info.groom_avatar : (currentWedding.couple.groom.avatar && currentWedding.couple.groom.avatar !== '1.jpg' ? currentWedding.couple.groom.avatar : 'avatar-empty.svg'),
                 instagram: info.groom_instagram || currentWedding.couple.groom.instagram
               },
               bride: {
@@ -419,7 +530,7 @@
                 name: info.bride_name || currentWedding.couple.bride.name,
                 nickname: info.bride_nickname || currentWedding.couple.bride.nickname,
                 parents: info.bride_parents || currentWedding.couple.bride.parents,
-                avatar: info.bride_avatar || currentWedding.couple.bride.avatar,
+                avatar: (info.bride_avatar && info.bride_avatar !== '2.jpg') ? info.bride_avatar : (currentWedding.couple.bride.avatar && currentWedding.couple.bride.avatar !== '2.jpg' ? currentWedding.couple.bride.avatar : 'avatar-empty.svg'),
                 instagram: info.bride_instagram || currentWedding.couple.bride.instagram
               },
               combinedTitle: info.combined_title || currentWedding.couple.combinedTitle
@@ -436,6 +547,86 @@
       } catch (e) {}
     },
 
+    normalizeSchedulesList(rawList, defaultTitle = 'Resepsi') {
+      if (!Array.isArray(rawList) || rawList.length === 0) {
+        return [
+          {
+            id: 'acara-1',
+            title: defaultTitle,
+            badge: 'Acara',
+            day: 'Ahad',
+            date: '21 September 2026',
+            fullDate: 'Ahad, 21 September 2026',
+            time: '10:00 WIB s/d Selesai',
+            venue: 'Kediaman',
+            address: 'Lumajang, Jawa Timur',
+            mapsUrl: 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+            calendarUrl: '#'
+          }
+        ];
+      }
+
+      return rawList.map((s, idx) => {
+        const dateStr = s.fullDate || (s.day && s.date ? `${s.day}, ${s.date}` : s.date) || '21 September 2026';
+        let calUrl = s.calendarUrl;
+        if (!calUrl || calUrl === '#') {
+          const detailStr = `${s.venue || ''} - ${s.address || ''}`.trim();
+          let dates = '20260921T030000Z/20260921T080000Z';
+          if (dateStr && dateStr.includes('20')) {
+            dates = '20260920T010000Z/20260920T040000Z';
+          }
+          calUrl = `https://www.google.com/calendar/event?action=TEMPLATE&text=${encodeURIComponent(s.title || 'Acara Pernikahan')}&details=${encodeURIComponent(detailStr)}&dates=${dates}`;
+        }
+        return {
+          ...s,
+          id: s.id || `acara-${idx + 1}`,
+          title: s.title || `Acara ${idx + 1}`,
+          badge: s.badge || (idx === 0 ? 'Utama' : 'Acara'),
+          day: s.day || 'Ahad',
+          date: s.date || '21 September 2026',
+          fullDate: dateStr,
+          time: s.time || '10:00 WIB s/d Selesai',
+          venue: s.venue || 'Kediaman',
+          address: s.address || '',
+          mapsUrl: s.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+          calendarUrl: calUrl
+        };
+      });
+    },
+
+    formatScheduleDateSummary(normalizedList) {
+      if (!normalizedList || normalizedList.length === 0) {
+        return { formattedDate: '21 September 2026', dayName: 'Ahad' };
+      }
+      if (normalizedList.length === 1) {
+        return {
+          formattedDate: normalizedList[0].fullDate || normalizedList[0].date || '21 September 2026',
+          dayName: normalizedList[0].day || 'Ahad'
+        };
+      }
+      const uniqueDays = [...new Set(normalizedList.map(s => s.day).filter(Boolean))];
+      const uniqueDates = [...new Set(normalizedList.map(s => s.date).filter(Boolean))];
+      
+      const daySummary = uniqueDays.join(' & ') || normalizedList[0].day || 'Ahad';
+      let dateSummary = normalizedList[0].date;
+      if (uniqueDates.length > 1) {
+        const dayNums = uniqueDates.map(d => {
+          const m = String(d).match(/\b(\d{1,2})\b/);
+          return m ? m[1] : null;
+        }).filter(Boolean);
+        if (dayNums.length === uniqueDates.length) {
+          const monthYear = String(uniqueDates[0]).replace(/^\d{1,2}\s*/, '').replace(/^[A-Za-z]+,\s*/, '');
+          dateSummary = `${dayNums.join(' & ')} ${monthYear}`.trim();
+        } else {
+          dateSummary = uniqueDates.join(' & ');
+        }
+      }
+      return {
+        formattedDate: dateSummary,
+        dayName: daySummary
+      };
+    },
+
     getWeddingData(side = '') {
       let data = null;
       try {
@@ -445,52 +636,98 @@
         data = DEFAULT_WEDDING_DATA;
       }
 
-      const activeSide = (side === 'pria' || side === 'wanita') ? side : '';
+      const activeSide = (side === 'pria' || side === 'wanita') ? side : (side || '');
+
+      const rawGroomAvatar = (data.couple && data.couple.groom && data.couple.groom.avatar) || '';
+      const rawBrideAvatar = (data.couple && data.couple.bride && data.couple.bride.avatar) || '';
+      const cleanGroomAvatar = (rawGroomAvatar && rawGroomAvatar !== '1.jpg' && !rawGroomAvatar.includes('groom-andra')) ? rawGroomAvatar : 'avatar-empty.svg';
+      const cleanBrideAvatar = (rawBrideAvatar && rawBrideAvatar !== '2.jpg' && !rawBrideAvatar.includes('bride-clara')) ? rawBrideAvatar : 'avatar-empty.svg';
+
+      const normalizedCouple = {
+        ...data.couple,
+        groom: {
+          ...((data.couple && data.couple.groom) || {}),
+          avatar: cleanGroomAvatar
+        },
+        bride: {
+          ...((data.couple && data.couple.bride) || {}),
+          avatar: cleanBrideAvatar
+        }
+      };
+
       if (activeSide === 'pria') {
         const rawList = (data.schedulesPria && data.schedulesPria.length > 0) ? data.schedulesPria : data.schedules;
-        const normalized = (rawList || []).map(s => {
-          const dateStr = s.fullDate || (s.day && s.date ? `${s.day}, ${s.date}` : s.date) || 'Ahad, 21 September 2026';
-          return { ...s, date: dateStr };
-        });
-        const primary = normalized[0] || {};
+        const normalized = this.normalizeSchedulesList(rawList, 'Resepsi Pernikahan (Walimatul \'Urs)');
+        const dateSum = this.formatScheduleDateSummary(normalized);
+        const gNick = (data.couple && data.couple.groom && (data.couple.groom.nickname || data.couple.groom.name)) || '';
+        const bNick = (data.couple && data.couple.bride && (data.couple.bride.nickname || data.couple.bride.name)) || '';
+        const combined = (gNick && bNick) ? `${gNick} & ${bNick}` : ((data.couple && data.couple.combinedTitle) || 'Mempelai Pria & Wanita');
+        const tag = (gNick && bNick) ? `The Wedding of ${gNick} & ${bNick}` : 'The Wedding Celebration';
         return {
           ...data,
+          couple: normalizedCouple,
           activeSide: 'pria',
-          combinedTitle: 'Nuruddin & Silfiana',
-          tagline: 'The Wedding of Nuruddin & Silfi',
-          hostsTitle: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
-          coverImage: data.coverImagePria || 'bg.jpeg',
-          formattedDate: primary.date || data.formattedDate,
-          dayName: primary.day || data.dayName || 'Ahad',
+          combinedTitle: combined,
+          tagline: tag,
+          hostsTitle: data.hostsPria || 'Keluarga Besar Pria',
+          coverImage: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : '',
+          formattedDate: dateSum.formattedDate || data.formattedDate,
+          dayName: dateSum.dayName || data.dayName || 'Ahad',
           schedules: normalized
         };
       } else if (activeSide === 'wanita') {
         const rawList = (data.schedulesWanita && data.schedulesWanita.length > 0) ? data.schedulesWanita : data.schedules;
-        const normalized = (rawList || []).map(s => {
-          const dateStr = s.fullDate || (s.day && s.date ? `${s.day}, ${s.date}` : s.date) || 'Ahad, 21 September 2026';
-          return { ...s, date: dateStr };
-        });
-        const primary = normalized[0] || {};
+        const normalized = this.normalizeSchedulesList(rawList, 'Akad Nikah & Resepsi');
+        const dateSum = this.formatScheduleDateSummary(normalized);
+        const gNick = (data.couple && data.couple.groom && (data.couple.groom.nickname || data.couple.groom.name)) || '';
+        const bNick = (data.couple && data.couple.bride && (data.couple.bride.nickname || data.couple.bride.name)) || '';
+        const combined = (bNick && gNick) ? `${bNick} & ${gNick}` : ((data.couple && data.couple.combinedTitle) || 'Mempelai Wanita & Pria');
+        const tag = (bNick && gNick) ? `The Wedding of ${bNick} & ${gNick}` : 'The Wedding Celebration';
         return {
           ...data,
+          couple: normalizedCouple,
           activeSide: 'wanita',
-          combinedTitle: 'Silfiana & Nuruddin',
-          tagline: 'The Wedding of Silfi & Nuruddin',
-          hostsTitle: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-          coverImage: data.coverImageWanita || 'bg.jpeg',
-          formattedDate: primary.date || data.formattedDate,
-          dayName: primary.day || data.dayName || 'Ahad',
+          combinedTitle: combined,
+          tagline: tag,
+          hostsTitle: data.hostsWanita || 'Keluarga Besar Wanita',
+          coverImage: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : '',
+          formattedDate: dateSum.formattedDate || data.formattedDate,
+          dayName: dateSum.dayName || data.dayName || 'Ahad',
           schedules: normalized
         };
+      } else if (activeSide && activeSide !== 'default') {
+        // Custom Dashboard lookup
+        const customDash = this.getDashboards().find(d => d.id === activeSide);
+        if (customDash) {
+          const isGroomBase = (customDash.baseTemplate || 'pria') === 'pria';
+          const baseList = isGroomBase ? (data.schedulesPria || data.schedules) : (data.schedulesWanita || data.schedules);
+          const normalized = this.normalizeSchedulesList(baseList, customDash.title || 'Acara Pernikahan');
+          const dateSum = this.formatScheduleDateSummary(normalized);
+          const rawCustomCover = (data.customMedia && data.customMedia[activeSide] && data.customMedia[activeSide].cover) || (isGroomBase ? data.coverImagePria : data.coverImageWanita) || '';
+          const customCover = (rawCustomCover && rawCustomCover !== 'bg.jpeg') ? rawCustomCover : '';
+          return {
+            ...data,
+            couple: normalizedCouple,
+            activeSide,
+            combinedTitle: customDash.coupleTitle || (isGroomBase ? 'Mempelai Pria & Wanita' : 'Mempelai Wanita & Pria'),
+            tagline: customDash.tagline || (customDash.coupleTitle ? `The Wedding of ${customDash.coupleTitle}` : 'The Wedding Celebration'),
+            hostsTitle: customDash.hostsTitle || (isGroomBase ? (data.hostsPria || 'Keluarga Besar Pria') : (data.hostsWanita || 'Keluarga Besar Wanita')),
+            coverImage: customCover,
+            formattedDate: dateSum.formattedDate || data.formattedDate,
+            dayName: dateSum.dayName || data.dayName || 'Ahad',
+            schedules: normalized
+          };
+        }
       }
 
       return {
         ...data,
+        couple: normalizedCouple,
         activeSide: 'default',
-        combinedTitle: (data.couple && data.couple.combinedTitle) || 'Silfi & Nuruddin',
-        tagline: (data.couple && data.couple.tagline) || 'The Wedding of Silfi & Nuruddin',
+        combinedTitle: (data.couple && data.couple.combinedTitle) || 'Mempelai Pria & Wanita',
+        tagline: (data.couple && data.couple.tagline) || 'The Wedding Celebration',
         hostsTitle: 'Keluarga Besar Kedua Mempelai',
-        coverImage: data.coverImagePria || 'bg.jpeg',
+        coverImage: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : '',
         schedules: data.schedules
       };
     },
@@ -510,22 +747,23 @@
           const schedW = (data.schedulesWanita && data.schedulesWanita[0]) || {};
 
           const payload = {
-            groom_name: (data.couple.groom && data.couple.groom.name) || 'Nuruddin',
-            groom_nickname: (data.couple.groom && data.couple.groom.nickname) || 'Nuruddin',
+            groom_name: (data.couple.groom && data.couple.groom.name) || '',
+            groom_nickname: (data.couple.groom && data.couple.groom.nickname) || '',
             groom_parents: (data.couple.groom && data.couple.groom.parents) || '',
-            groom_avatar: (data.couple.groom && data.couple.groom.avatar) || '1.jpg',
+            groom_avatar: (data.couple.groom && data.couple.groom.avatar && data.couple.groom.avatar !== '1.jpg') ? data.couple.groom.avatar : 'avatar-empty.svg',
             groom_instagram: (data.couple.groom && data.couple.groom.instagram) || '',
-            bride_name: (data.couple.bride && data.couple.bride.name) || 'Silfiana',
-            bride_nickname: (data.couple.bride && data.couple.bride.nickname) || 'Silfi',
+            bride_name: (data.couple.bride && data.couple.bride.name) || '',
+            bride_nickname: (data.couple.bride && data.couple.bride.nickname) || '',
             bride_parents: (data.couple.bride && data.couple.bride.parents) || '',
-            bride_avatar: (data.couple.bride && data.couple.bride.avatar) || '2.jpg',
+            bride_avatar: (data.couple.bride && data.couple.bride.avatar && data.couple.bride.avatar !== '2.jpg') ? data.couple.bride.avatar : 'avatar-empty.svg',
             bride_instagram: (data.couple.bride && data.couple.bride.instagram) || '',
-            combined_title: data.couple.combinedTitle || 'Silfi & Nuruddin',
+            combined_title: data.couple.combinedTitle || '',
             wedding_date: data.weddingDate || '2026-09-21 08:00:00+07',
-            hosts_pria: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
-            hosts_wanita: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-            cover_image_pria: data.coverImagePria || 'bg.jpeg',
-            cover_image_wanita: data.coverImageWanita || 'bg.jpeg',
+            hosts_pria: data.hostsPria || '',
+            hosts_wanita: data.hostsWanita || '',
+            cover_image_pria: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : '',
+            cover_image_wanita: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : '',
+            audio_url: data.audioUrl || 'janjisuci.mp3',
             // Acara Pria
             event_type_pria: schedP.title || 'Resepsi Pernikahan (Walimatul \'Urs)',
             event_day_pria: schedP.day || 'Ahad',
@@ -548,22 +786,29 @@
           this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payload)
             .then(res => {
               if (!res) {
-                // Retry without new hosts / cover / event columns in case remote DB hasn't run schema migration yet
-                const fallbackPayload = {
-                  groom_name: payload.groom_name,
-                  groom_nickname: payload.groom_nickname,
-                  groom_parents: payload.groom_parents,
-                  groom_avatar: (payload.groom_avatar && payload.groom_avatar.length > 200) ? '1.jpg' : payload.groom_avatar,
-                  groom_instagram: payload.groom_instagram,
-                  bride_name: payload.bride_name,
-                  bride_nickname: payload.bride_nickname,
-                  bride_parents: payload.bride_parents,
-                  bride_avatar: (payload.bride_avatar && payload.bride_avatar.length > 200) ? '2.jpg' : payload.bride_avatar,
-                  bride_instagram: payload.bride_instagram,
-                  combined_title: payload.combined_title,
-                  wedding_date: payload.wedding_date
-                };
-                return this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', fallbackPayload);
+                // Percobaan 1: Kirim tanpa kolom audio_url jika skema database remote belum menambahkan kolom audio_url
+                const payloadNoAudio = { ...payload };
+                delete payloadNoAudio.audio_url;
+                return this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payloadNoAudio).then(res2 => {
+                  if (!res2) {
+                    // Percobaan 2: Fallback minimal kolom dasar
+                    const fallbackPayload = {
+                      groom_name: payload.groom_name,
+                      groom_nickname: payload.groom_nickname,
+                      groom_parents: payload.groom_parents,
+                      groom_avatar: (payload.groom_avatar && payload.groom_avatar.length > 500) ? 'avatar-empty.svg' : payload.groom_avatar,
+                      groom_instagram: payload.groom_instagram,
+                      bride_name: payload.bride_name,
+                      bride_nickname: payload.bride_nickname,
+                      bride_parents: payload.bride_parents,
+                      bride_avatar: (payload.bride_avatar && payload.bride_avatar.length > 500) ? 'avatar-empty.svg' : payload.bride_avatar,
+                      bride_instagram: payload.bride_instagram,
+                      combined_title: payload.combined_title,
+                      wedding_date: payload.wedding_date
+                    };
+                    return this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', fallbackPayload);
+                  }
+                });
               }
             })
             .catch(() => {});
@@ -812,7 +1057,7 @@
 
     generateInvitationUrl(guestName, side = 'pria') {
       const cleanName = (guestName || '').trim();
-      const targetSide = (side === 'wanita') ? 'wanita' : 'pria';
+      const targetSide = (side && side !== 'default') ? encodeURIComponent(side) : 'pria';
       let origin = '';
       if (typeof window !== 'undefined' && window.location) {
         origin = window.location.origin;
@@ -866,20 +1111,122 @@ Terima kasih.
 *${coupleName}*`;
 
       return this.sanitizeWhatsAppMessage(template);
+    },
+
+    // --- MULTI-DASHBOARD WORKSPACE REGISTRY ---
+    getDashboards() {
+      try {
+        const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.DASHBOARDS) : null;
+        if (!stored) return DEFAULT_DASHBOARDS;
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const hasPria = parsed.some(d => d.id === 'pria');
+          const hasWanita = parsed.some(d => d.id === 'wanita');
+          let list = [...parsed];
+          if (!hasPria) list.unshift(DEFAULT_DASHBOARDS[0]);
+          if (!hasWanita) list.splice(1, 0, DEFAULT_DASHBOARDS[1]);
+          return list;
+        }
+        return DEFAULT_DASHBOARDS;
+      } catch (e) {
+        return DEFAULT_DASHBOARDS;
+      }
+    },
+
+    getActiveDashboardId() {
+      try {
+        const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.ACTIVE_DASHBOARD) : null;
+        if (stored) {
+          const list = this.getDashboards();
+          if (list.some(d => d.id === stored)) return stored;
+        }
+      } catch (e) {}
+      return 'pria';
+    },
+
+    setActiveDashboardId(id) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(STORAGE_KEYS.ACTIVE_DASHBOARD, id);
+        }
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('active_dashboard_changed', { detail: { id } }));
+        }
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    addDashboard(item) {
+      if (!item || !item.id) return false;
+      const cleanId = String(item.id).trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+      if (!cleanId) return false;
+      const list = this.getDashboards();
+      if (list.some(d => d.id === cleanId)) {
+        return false;
+      }
+      const newDashboard = {
+        id: cleanId,
+        title: item.title || `Undangan ${cleanId}`,
+        shortTitle: item.shortTitle || item.title || cleanId,
+        badge: item.badge || 'Acara Tambahan',
+        side: cleanId,
+        path: `/${cleanId}`,
+        coupleTitle: item.coupleTitle || 'Mempelai Pria & Wanita',
+        tagline: item.tagline || (item.coupleTitle ? `The Wedding of ${item.coupleTitle}` : 'The Wedding Celebration'),
+        hostsTitle: item.hostsTitle || 'Keluarga Besar Mempelai',
+        isSystem: false,
+        createdAt: new Date().toISOString()
+      };
+      list.push(newDashboard);
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(STORAGE_KEYS.DASHBOARDS, JSON.stringify(list));
+        }
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('dashboards_list_updated', { detail: list }));
+        }
+        return newDashboard;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    deleteDashboard(id) {
+      if (id === 'pria' || id === 'wanita') return false;
+      let list = this.getDashboards().filter(d => d.id !== id);
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(STORAGE_KEYS.DASHBOARDS, JSON.stringify(list));
+          if (this.getActiveDashboardId() === id) {
+            this.setActiveDashboardId('pria');
+          }
+        }
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('dashboards_list_updated', { detail: list }));
+        }
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
   };
 
   // Auto initialize cloud sync on load & when online
   if (typeof window !== 'undefined') {
-    window.addEventListener('online', () => {
-      WeddingStorage.syncFromCloud();
-    });
+    if (window.addEventListener) {
+      window.addEventListener('online', () => {
+        WeddingStorage.syncFromCloud();
+      });
+    }
     setTimeout(() => {
       WeddingStorage.syncFromCloud();
     }, 100);
   }
 
   return {
+    DEFAULT_DASHBOARDS,
     DEFAULT_WEDDING_DATA,
     DEFAULT_GUESTS,
     DEFAULT_WISHES,

@@ -12,19 +12,20 @@ CREATE TABLE IF NOT EXISTS wedding_info (
     groom_name VARCHAR(150) NOT NULL DEFAULT 'Nuruddin',
     groom_nickname VARCHAR(50) NOT NULL DEFAULT 'Nuruddin',
     groom_parents VARCHAR(255) DEFAULT 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah',
-    groom_avatar TEXT DEFAULT '1.jpg',
+    groom_avatar TEXT DEFAULT 'avatar-empty.svg',
     groom_instagram VARCHAR(100) DEFAULT 'nuruddin_bin_aliman',
     bride_name VARCHAR(150) NOT NULL DEFAULT 'Silfiana',
     bride_nickname VARCHAR(50) NOT NULL DEFAULT 'Silfi',
     bride_parents VARCHAR(255) DEFAULT 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah',
-    bride_avatar TEXT DEFAULT '2.jpg',
+    bride_avatar TEXT DEFAULT 'avatar-empty.svg',
     bride_instagram VARCHAR(100) DEFAULT 'chilpy04',
     combined_title VARCHAR(150) NOT NULL DEFAULT 'Silfi & Nuruddin',
     wedding_date TIMESTAMPTZ NOT NULL DEFAULT '2026-09-21 08:00:00+07',
     hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah',
-    cover_image_pria TEXT DEFAULT 'bg.jpeg',
-    cover_image_wanita TEXT DEFAULT 'bg.jpeg',
+    cover_image_pria TEXT DEFAULT '',
+    cover_image_wanita TEXT DEFAULT '',
+    audio_url TEXT DEFAULT 'janjisuci.mp3',
     event_venue VARCHAR(200) DEFAULT 'Kediaman Mempelai Pria',
     event_address TEXT,
     event_maps_url TEXT,
@@ -55,8 +56,9 @@ ALTER TABLE wedding_info ALTER COLUMN groom_avatar TYPE TEXT;
 ALTER TABLE wedding_info ALTER COLUMN bride_avatar TYPE TEXT;
 ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah';
 ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah';
-ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_pria TEXT DEFAULT 'bg.jpeg';
-ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_wanita TEXT DEFAULT 'bg.jpeg';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_pria TEXT DEFAULT '';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_wanita TEXT DEFAULT '';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS audio_url TEXT DEFAULT 'janjisuci.mp3';
 ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_type_pria VARCHAR(150) DEFAULT 'Resepsi Pernikahan (Walimatul ''Urs)';
 ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_day_pria VARCHAR(50) DEFAULT 'Ahad';
 ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_date_pria VARCHAR(100) DEFAULT '21 September 2026';
@@ -219,3 +221,28 @@ CREATE POLICY "Public access wishes" ON wishes FOR ALL USING (true) WITH CHECK (
 DROP POLICY IF EXISTS "Public read admin_users" ON admin_users;
 CREATE POLICY "Public read admin_users" ON admin_users FOR SELECT USING (true);
 
+-- ----------------------------------------------------------
+-- 6. SUPABASE STORAGE: BUCKET MEDIA UNDANGAN & POLICIES
+-- ----------------------------------------------------------
+-- Siapkan bucket 'wedding-media' agar upload foto & audio tersimpan
+-- dan dapat di-upsert (ditimpa otomatis) langsung dari Dashboard Studio.
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('wedding-media', 'wedding-media', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+-- Policy penyimpanan media:
+-- Catatan: Bucket 'wedding-media' sudah berstatus PUBLIC (dapat dibaca langsung tanpa SELECT policy).
+-- Kebijakan ini khusus memberi izin INSERT & UPDATE agar anon dapat mengunggah dan menimpa file
+-- tanpa memicu peringatan security 'Clients can list all files in this bucket'.
+DROP POLICY IF EXISTS "Public media access" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public uploads" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public updates" ON storage.objects;
+
+CREATE POLICY "Allow public uploads" ON storage.objects
+FOR INSERT TO anon, authenticated
+WITH CHECK (bucket_id = 'wedding-media');
+
+CREATE POLICY "Allow public updates" ON storage.objects
+FOR UPDATE TO anon, authenticated
+USING (bucket_id = 'wedding-media')
+WITH CHECK (bucket_id = 'wedding-media');
