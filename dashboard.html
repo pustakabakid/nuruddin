@@ -354,7 +354,7 @@
 
     .quick-guest-inline-form {
       display: grid;
-      grid-template-columns: 1.4fr 1.1fr 1fr 1fr 85px auto;
+      grid-template-columns: 1.4fr 1.1fr auto;
       gap: 8px;
       align-items: center;
       width: 100%;
@@ -910,7 +910,7 @@
       /* 5. QUICK ADD GUEST FORM (TOUCH FRIENDLY RESPONSIVE GRID) */
       .quick-guest-inline-form {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 8px;
         width: 100%;
       }
@@ -1339,26 +1339,11 @@
           </div>
         </div>
 
-        <!-- FORM INPUT PENERIMA UNDANGAN (LENGKAP VIP, MEJA & PAX) -->
+        <!-- FORM INPUT PENERIMA UNDANGAN (CEPAT & RINGKAS) -->
         <div class="panel" style="padding: 12px 16px; margin-bottom: 16px;">
           <form id="quickGuestForm" class="quick-guest-inline-form">
             <input type="text" id="quickName" class="form-input" placeholder="Nama Penerima *" required>
             <input type="text" id="quickPhone" class="form-input" placeholder="No. WhatsApp (opsional)" inputmode="tel">
-            <select id="quickCategory" class="form-select" title="Kategori Tamu">
-              <option value="Umum" selected>Kategori: Umum</option>
-              <option value="VIP">⭐ VIP</option>
-              <option value="Keluarga">Keluarga</option>
-              <option value="Sahabat">Sahabat</option>
-              <option value="Rekan Kerja">Rekan Kerja</option>
-            </select>
-            <input type="text" id="quickTable" class="form-input" placeholder="Meja / VIP 01">
-            <select id="quickPax" class="form-select" title="Jumlah Pax">
-              <option value="1">1 Pax</option>
-              <option value="2" selected>2 Pax</option>
-              <option value="3">3 Pax</option>
-              <option value="4">4 Pax</option>
-              <option value="5">5+ Pax</option>
-            </select>
             <button type="submit" class="btn btn-primary" style="white-space: nowrap;">
               <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
               <span>Tambah</span>
@@ -1422,17 +1407,9 @@
           <div class="table-toolbar">
             <div class="search-input-wrap">
               <i data-lucide="search" class="search-icon"></i>
-              <input type="text" id="guestSearchInput" class="form-input" placeholder="Cari nama, no WhatsApp, meja...">
+              <input type="text" id="guestSearchInput" class="form-input" placeholder="Cari nama atau no WhatsApp...">
             </div>
             <div class="filter-group">
-              <select id="guestCategoryFilter" class="form-select filter-select">
-                <option value="ALL">Semua Kategori</option>
-                <option value="VIP">VIP</option>
-                <option value="Keluarga">Keluarga</option>
-                <option value="Sahabat">Sahabat</option>
-                <option value="Rekan Kerja">Rekan Kerja</option>
-                <option value="Umum">Umum</option>
-              </select>
               <select id="guestStatusFilter" class="form-select filter-select">
                 <option value="ALL">Semua Status RSVP</option>
                 <option value="hadir">Pasti Hadir</option>
@@ -1553,33 +1530,15 @@
           <input type="text" id="editGuestPhone" class="form-input" placeholder="6281234567890" inputmode="tel">
         </div>
 
-        <div class="form-grid-2">
-          <div class="form-group">
-            <label class="form-label" for="editGuestCategory">Kategori</label>
-            <select id="editGuestCategory" class="form-select">
-              <option value="VIP">VIP</option>
-              <option value="Keluarga">Keluarga</option>
-              <option value="Sahabat">Sahabat</option>
-              <option value="Rekan Kerja">Rekan Kerja</option>
-              <option value="Umum">Umum</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="editGuestPax">Jumlah Pax</label>
-            <select id="editGuestPax" class="form-select">
-              <option value="1">1 Orang</option>
-              <option value="2" selected>2 Orang</option>
-              <option value="3">3 Orang</option>
-              <option value="4">4 Orang</option>
-              <option value="5">5+ Orang</option>
-            </select>
-          </div>
-        </div>
-
         <div class="form-group">
-          <label class="form-label" for="editGuestTable">Meja / Sesi</label>
-          <input type="text" id="editGuestTable" class="form-input" placeholder="VIP 01">
+          <label class="form-label" for="editGuestPax">Jumlah Pax</label>
+          <select id="editGuestPax" class="form-select">
+            <option value="1">1 Orang</option>
+            <option value="2" selected>2 Orang</option>
+            <option value="3">3 Orang</option>
+            <option value="4">4 Orang</option>
+            <option value="5">5+ Orang</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -1609,7 +1568,7 @@
       
       <div id="qrCodeContainer" style="margin: 0 auto 14px; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; background: #FFF; padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border);"></div>
 
-      <p style="font-size: 0.78rem; color: var(--text-muted);" id="qrGuestDetailInfo">Meja VIP 01 • 2 Pax</p>
+      <p style="font-size: 0.78rem; color: var(--text-muted);" id="qrGuestDetailInfo">2 Pax</p>
     </div>
   </div>
 
@@ -1766,16 +1725,13 @@
       // Render Guests Table
       function renderGuestsTable() {
         const search = document.getElementById('guestSearchInput').value.toLowerCase();
-        const catFilter = document.getElementById('guestCategoryFilter').value;
         const statusFilter = document.getElementById('guestStatusFilter').value;
 
         const filtered = guests.filter(g => {
           const matchesSearch = g.name.toLowerCase().includes(search) || 
-                                (g.phone && g.phone.includes(search)) || 
-                                (g.table && g.table.toLowerCase().includes(search));
-          const matchesCat = catFilter === 'ALL' || g.category === catFilter;
+                                (g.phone && g.phone.includes(search));
           const matchesStatus = statusFilter === 'ALL' || g.status === statusFilter;
-          return matchesSearch && matchesCat && matchesStatus;
+          return matchesSearch && matchesStatus;
         });
 
         const tbody = document.getElementById('guestsTableBody');
@@ -1786,7 +1742,7 @@
 
         tbody.innerHTML = filtered.map(g => {
           const cleanPhone = normalizePhoneForWa(g.phone);
-          const inviteUrl = storage.generateInvitationUrl(g.name, g.pax, g.table);
+          const inviteUrl = storage.generateInvitationUrl(g.name, g.pax);
           const waMsg = storage.generateWhatsAppMessage(g, weddingData, inviteUrl);
           const waLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMsg)}` : `https://wa.me/?text=${encodeURIComponent(waMsg)}`;
 
@@ -1799,7 +1755,7 @@
                     ${g.phone ? `<span class="guest-code">${g.phone}</span>` : ''}
                   </div>
                   <div class="guest-meta">
-                    ${g.category && g.category !== 'Umum' ? `<span style="font-weight: 700; color: var(--accent-gold);">${g.category}</span> · ` : ''}${g.table || 'Meja Umum'} · ${g.pax || 2} pax
+                    ${g.pax || 1} pax
                   </div>
                 </div>
               </td>
@@ -1816,7 +1772,7 @@
                   <a href="${waLink}" target="_blank" class="btn-whatsapp-pill" title="Kirim Pesan WhatsApp" aria-label="Kirim Pesan WhatsApp">
                     <i data-lucide="send" style="width: 13px; height: 13px;"></i>
                   </a>
-                  <button class="icon-btn btn-copy-link" data-name="${g.name}" data-seat="${g.table || ''}" data-pax="${g.pax}" title="Salin Tautan Undangan" aria-label="Salin Tautan Undangan" type="button">
+                  <button class="icon-btn btn-copy-link" data-name="${g.name}" data-pax="${g.pax}" title="Salin Tautan Undangan" aria-label="Salin Tautan Undangan" type="button">
                     <i data-lucide="copy" style="width: 13px; height: 13px;"></i>
                   </button>
                   <button class="icon-btn btn-show-qr" data-id="${g.id}" title="Lihat QR Check-in" aria-label="Lihat QR Check-in" type="button">
@@ -1846,7 +1802,7 @@
           return;
         }
 
-        select.innerHTML = guests.map(g => `<option value="${g.id}">${g.name} (${g.category || 'Umum'} • ${g.table || 'Meja Umum'})</option>`).join('');
+        select.innerHTML = guests.map(g => `<option value="${g.id}">${g.name}${g.phone ? ` (${g.phone})` : ''}</option>`).join('');
         updateBroadcastPreview();
       }
 
@@ -1855,7 +1811,7 @@
         const guest = guests.find(g => g.id === selectedId) || guests[0];
         if (!guest) return;
 
-        const inviteUrl = storage.generateInvitationUrl(guest.name, guest.pax, guest.table);
+        const inviteUrl = storage.generateInvitationUrl(guest.name, guest.pax);
         const msg = storage.generateWhatsAppMessage(guest, weddingData, inviteUrl);
         document.getElementById('broadcastPreviewText').value = msg;
 
@@ -1908,9 +1864,6 @@
         e.preventDefault();
         const name = document.getElementById('quickName').value.trim();
         const phone = document.getElementById('quickPhone').value.trim();
-        const category = document.getElementById('quickCategory').value || 'Umum';
-        const table = document.getElementById('quickTable').value.trim() || (category === 'VIP' ? 'Meja VIP' : 'Meja Umum');
-        const pax = parseInt(document.getElementById('quickPax').value, 10) || 2;
 
         if (!name) {
           showToast('Nama penerima undangan wajib diisi');
@@ -1920,17 +1873,13 @@
         const newGuest = storage.addGuest({
           name,
           phone,
-          category,
-          pax,
-          table,
+          pax: 1,
           status: 'pending'
         });
 
         guests = storage.getGuests();
         quickGuestForm.reset();
-        document.getElementById('quickCategory').value = 'Umum';
-        document.getElementById('quickPax').value = '2';
-        showToast(`Penerima "${name}" (${category}) berhasil ditambahkan!`);
+        showToast(`Penerima "${name}" berhasil ditambahkan!`);
 
         updateStats();
         renderGuestsTable();
@@ -1954,9 +1903,7 @@
         const id = document.getElementById('editGuestId').value;
         const name = document.getElementById('editGuestName').value.trim();
         const phone = document.getElementById('editGuestPhone').value.trim();
-        const category = document.getElementById('editGuestCategory').value;
-        const pax = parseInt(document.getElementById('editGuestPax').value, 10);
-        const table = document.getElementById('editGuestTable').value.trim();
+        const pax = parseInt(document.getElementById('editGuestPax').value, 10) || 1;
         const status = document.getElementById('editGuestStatus').value;
 
         if (!name) {
@@ -1964,7 +1911,7 @@
           return;
         }
 
-        storage.updateGuest(id, { name, phone, category, pax, table, status });
+        storage.updateGuest(id, { name, phone, pax, status });
         guests = storage.getGuests();
         guestModal.classList.remove('open');
         showToast('Data penerima undangan berhasil diperbarui');
@@ -2011,9 +1958,8 @@
         const copyBtn = e.target.closest('.btn-copy-link');
         if (copyBtn) {
           const name = copyBtn.getAttribute('data-name');
-          const seat = copyBtn.getAttribute('data-seat');
           const pax = copyBtn.getAttribute('data-pax');
-          const url = storage.generateInvitationUrl(name, pax, seat);
+          const url = storage.generateInvitationUrl(name, pax);
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(url).then(() => showToast(`Link undangan untuk "${name}" berhasil disalin!`));
           } else {
@@ -2044,9 +1990,7 @@
             document.getElementById('editGuestId').value = g.id;
             document.getElementById('editGuestName').value = g.name;
             document.getElementById('editGuestPhone').value = g.phone || '';
-            document.getElementById('editGuestCategory').value = g.category || 'Umum';
             document.getElementById('editGuestPax').value = g.pax || '2';
-            document.getElementById('editGuestTable').value = g.table || '';
             document.getElementById('editGuestStatus').value = g.status || 'pending';
             guestModal.classList.add('open');
           }
@@ -2104,10 +2048,10 @@
           const g = guests.find(item => item.id === id);
           if (g && window.qrcode) {
             document.getElementById('qrGuestNameTitle').textContent = g.name;
-            document.getElementById('qrGuestDetailInfo').textContent = `${g.table || 'Meja Umum'} • ${g.pax} Pax • Status: ${formatStatus(g.status)}`;
+            document.getElementById('qrGuestDetailInfo').textContent = `${g.pax || 1} Pax • Status: ${formatStatus(g.status)}`;
             
             const qr = qrcode(0, 'M');
-            const passPayload = JSON.stringify({ id: g.id, name: g.name, pax: g.pax, seat: g.table });
+            const passPayload = JSON.stringify({ id: g.id, name: g.name, pax: g.pax });
             qr.addData(passPayload);
             qr.make();
             document.getElementById('qrCodeContainer').innerHTML = qr.createImgTag(5, 10);
@@ -2145,7 +2089,6 @@
 
       // Search & Filters
       document.getElementById('guestSearchInput').oninput = renderGuestsTable;
-      document.getElementById('guestCategoryFilter').onchange = renderGuestsTable;
       document.getElementById('guestStatusFilter').onchange = renderGuestsTable;
       document.getElementById('broadcastGuestSelect').onchange = updateBroadcastPreview;
       document.getElementById('broadcastPreviewText').oninput = function() {
@@ -2174,7 +2117,7 @@
         const selectedId = document.getElementById('broadcastGuestSelect').value;
         const guest = guests.find(g => g.id === selectedId) || guests[0];
         if (!guest) return;
-        const url = storage.generateInvitationUrl(guest.name, guest.pax, guest.table);
+        const url = storage.generateInvitationUrl(guest.name, guest.pax);
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(url).then(() => showToast(`URL undangan "${guest.name}" disalin!`));
         } else {
@@ -2184,9 +2127,9 @@
 
       // Export CSV
       document.getElementById('btnExportCsv').onclick = function() {
-        let csvContent = 'data:text/csv;charset=utf-8,Nama,Kategori,Pax,Meja,No HP,Status,CheckIn\n';
+        let csvContent = 'data:text/csv;charset=utf-8,Nama,Pax,No HP,Status,CheckIn\n';
         guests.forEach(g => {
-          csvContent += `"${g.name}","${g.category || 'Umum'}","${g.pax || 1}","${g.table || '-'}","${g.phone || '-'}","${g.status}","${g.checkedIn ? 'Ya' : 'Tidak'}"\n`;
+          csvContent += `"${g.name}","${g.pax || 1}","${g.phone || '-'}","${g.status}","${g.checkedIn ? 'Ya' : 'Tidak'}"\n`;
         });
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement('a');

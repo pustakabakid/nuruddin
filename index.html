@@ -26,8 +26,8 @@
   <meta name="twitter:image" content="https://nuruddin-ten.vercel.app/thumbnail.jpg">
 
   <!-- Favicon & Touch Icon -->
-  <link rel="icon" type="image/jpeg" href="thumbnail.jpg">
-  <link rel="apple-touch-icon" href="thumbnail.jpg">
+  <link rel="icon" type="image/jpeg" href="/thumbnail.jpg">
+  <link rel="apple-touch-icon" href="/thumbnail.jpg">
   <link rel="image_src" href="https://nuruddin-ten.vercel.app/thumbnail.jpg">
 
   <!-- Google Fonts -->
@@ -40,7 +40,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- Shared Data Script -->
-  <script src="data.js"></script>
+  <script src="/data.js"></script>
 
   <style>
     :root {
@@ -122,7 +122,7 @@
       inset: 0;
       z-index: 9999;
       background: linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%),
-                  url('bg.jpeg') center/cover no-repeat;
+                  url('/bg.jpeg') center/cover no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -186,16 +186,6 @@
       font-weight: 700;
       color: #FFFFFF;
       margin-bottom: 4px;
-    }
-
-    .gate-guest-seat {
-      display: inline-block;
-      font-size: 0.75rem;
-      background: rgba(185, 139, 78, 0.4);
-      border: 1px solid rgba(212, 175, 55, 0.6);
-      padding: 3px 10px;
-      border-radius: 20px;
-      color: #FFECC7;
     }
 
     .btn-open-invitation {
@@ -345,7 +335,7 @@
       position: absolute;
       inset: -35% -20%;
       background: linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%),
-                  url('bg.jpeg') center/cover no-repeat;
+                  url('/bg.jpeg') center/cover no-repeat;
       z-index: 0;
       transform: translate3d(0, 0, 0);
       will-change: transform;
@@ -936,9 +926,9 @@
 </head>
 <body>
 
-  <!-- Audio Element -->
-  <audio id="bgAudio" loop preload="auto">
-    <source src="janjisuci.mp3" type="audio/mp3">
+  <!-- Background Audio Player -->
+  <audio id="bgAudio" preload="auto" loop>
+    <source src="/janjisuci.mp3" type="audio/mp3">
   </audio>
 
   <!-- Toast Notification -->
@@ -961,7 +951,6 @@
       <div class="gate-guest-card">
         <p class="gate-guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
         <h2 class="gate-guest-name" id="gateGuestName">Tamu Undangan</h2>
-        <span class="gate-guest-seat" id="gateGuestSeat">VIP Guest</span>
       </div>
 
       <button class="btn-open-invitation" id="btnOpenInvitation" type="button">
@@ -994,8 +983,8 @@
     <!-- 1. HERO SECTION -->
     <section id="hero">
       <div class="hero-bg-parallax"></div>
-      <img src="corner-top-left.png" class="hero-watermark-tl" alt="ornament">
-      <img src="corner-bottom-right.png" class="hero-watermark-br" alt="ornament">
+      <img src="/corner-top-left.png" class="hero-watermark-tl" alt="ornament">
+      <img src="/corner-bottom-right.png" class="hero-watermark-br" alt="ornament">
 
       <div class="hero-content">
         <p style="font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);">Walimatul 'Urs</p>
@@ -1052,7 +1041,7 @@
       <div class="couple-card">
         <div class="couple-avatar-wrap">
           <div class="couple-avatar-ring"></div>
-          <img src="1.jpg" id="groomAvatar" class="couple-avatar" alt="Groom" onerror="this.src='1.jpg'">
+          <img src="/1.jpg" id="groomAvatar" class="couple-avatar" alt="Groom" onerror="this.src='/1.jpg'">
         </div>
         <h3 class="couple-name font-serif" id="groomName">Nuruddin</h3>
         <p class="couple-parents" id="groomParents">Putra Pertama dari Bpk. Misraji & Ibu Hasibah</p>
@@ -1068,7 +1057,7 @@
       <div class="couple-card">
         <div class="couple-avatar-wrap">
           <div class="couple-avatar-ring"></div>
-          <img src="2.jpg" id="brideAvatar" class="couple-avatar" alt="Bride" onerror="this.src='2.jpg'">
+          <img src="/2.jpg" id="brideAvatar" class="couple-avatar" alt="Bride" onerror="this.src='/2.jpg'">
         </div>
         <h3 class="couple-name font-serif" id="brideName">Silfiana</h3>
         <p class="couple-parents" id="brideParents">Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah</p>
@@ -1173,8 +1162,20 @@
 
       let weddingData = storage.getWeddingData();
       const urlParams = new URLSearchParams(window.location.search);
-      const guestParamName = urlParams.get('to') || 'Tamu Undangan';
-      const guestParamSeat = urlParams.get('seat') || urlParams.get('table') || 'VIP Guest';
+      let guestParamName = urlParams.get('to');
+      if (!guestParamName && typeof window !== 'undefined' && window.location.pathname) {
+        const match = window.location.pathname.match(/\/to\/([^/?#]+)/i);
+        if (match && match[1]) {
+          try {
+            guestParamName = decodeURIComponent(match[1].replace(/\+/g, ' ')).trim();
+          } catch(e) {
+            guestParamName = match[1].replace(/\+/g, ' ').trim();
+          }
+        }
+      }
+      if (!guestParamName) {
+        guestParamName = 'Tamu Undangan';
+      }
 
       // Elements
       const gateCover = document.getElementById('gateCover');
@@ -1207,14 +1208,13 @@
         document.title = `The Wedding of ${combined} — Undangan Pernikahan Digital`;
 
         document.getElementById('gateGuestName').textContent = guestParamName;
-        document.getElementById('gateGuestSeat').textContent = guestParamSeat;
         document.getElementById('gateDateFormatted').textContent = weddingData.formattedDate || 'Ahad, 21 September 2026';
         document.getElementById('heroDateBadge').textContent = weddingData.formattedDate || 'Ahad, 21 September 2026';
 
         if (weddingData.couple.groom) {
           document.getElementById('groomName').textContent = weddingData.couple.groom.name || 'Nuruddin';
           document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';
-          const gAvatar = (weddingData.couple.groom.avatar && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : '1.jpg';
+          const gAvatar = (weddingData.couple.groom.avatar && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : '/1.jpg';
           document.getElementById('groomAvatar').src = gAvatar;
           document.getElementById('groomIgHandle').textContent = '@' + (weddingData.couple.groom.instagram || 'nuruddin_bin_aliman');
           document.getElementById('groomIgLink').href = weddingData.couple.groom.instagramUrl || 'https://instagram.com/nuruddin_bin_aliman';
@@ -1223,7 +1223,7 @@
         if (weddingData.couple.bride) {
           document.getElementById('brideName').textContent = weddingData.couple.bride.name || 'Silfiana';
           document.getElementById('brideParents').textContent = weddingData.couple.bride.parents || 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah';
-          const bAvatar = (weddingData.couple.bride.avatar && !weddingData.couple.bride.avatar.includes('bride-eviana')) ? weddingData.couple.bride.avatar : '2.jpg';
+          const bAvatar = (weddingData.couple.bride.avatar && !weddingData.couple.bride.avatar.includes('bride-clara')) ? weddingData.couple.bride.avatar : '/2.jpg';
           document.getElementById('brideAvatar').src = bAvatar;
           document.getElementById('brideIgHandle').textContent = '@' + (weddingData.couple.bride.instagram || 'chilpy04');
           document.getElementById('brideIgLink').href = weddingData.couple.bride.instagramUrl || 'https://instagram.com/chilpy04';
@@ -1235,7 +1235,7 @@
           document.getElementById('quoteSource').textContent = weddingData.quote.source || '';
         }
 
-        const audioSrc = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : 'janjisuci.mp3';
+        const audioSrc = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : '/janjisuci.mp3';
         bgAudio.src = audioSrc;
 
         // Schedules

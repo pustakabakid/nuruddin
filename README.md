@@ -6,7 +6,7 @@ Sistem **Undangan Pernikahan Digital Interaktif**, **Animasi Parallax**, **Musik
 
 ## 🌐 Live Production URL
 * **Undangan Publik**: [https://nuruddin-ten.vercel.app/](https://nuruddin-ten.vercel.app/)
-* **Contoh Undangan VIP**: [https://nuruddin-ten.vercel.app/?to=Bpk.+Haji+Slamet&seat=Meja+VIP+01&pax=2](https://nuruddin-ten.vercel.app/?to=Bpk.+Haji+Slamet&seat=Meja+VIP+01&pax=2)
+* **Contoh Undangan Personal Ringkas**: [https://nuruddin-ten.vercel.app/to/Yunus](https://nuruddin-ten.vercel.app/to/Yunus)
 * **Dashboard Admin**: [https://nuruddin-ten.vercel.app/dashboard.html](https://nuruddin-ten.vercel.app/dashboard.html)
 
 ---
@@ -14,6 +14,7 @@ Sistem **Undangan Pernikahan Digital Interaktif**, **Animasi Parallax**, **Musik
 ## 📁 Struktur File Project
 
 ```text
+├── vercel.json       # Konfigurasi URL Rewrites Vercel (/to/:name -> /index.html)
 ├── index.html        # Halaman Undangan Pernikahan Digital (Tampilan Tamu + Parallax)
 ├── dashboard.html    # Halaman Dashboard Manajemen Tamu & WhatsApp (Tampilan Admin)
 ├── data.js           # State Store, Integrasi Supabase REST API, & Helper Generator
@@ -43,7 +44,7 @@ Sistem **Undangan Pernikahan Digital Interaktif**, **Animasi Parallax**, **Musik
 ## 🌟 Fitur Halaman Undangan (`index.html`)
 
 1. **Cover / Gate Envelope Screen (`Buka Undangan`)**:
-   - Membaca nama tamu personal secara dinamis dari URL (`?to=Nama+Tamu&seat=VIP+01&pax=2`).
+   - Membaca nama tamu personal secara dinamis dari URL (`?to=Nama+Tamu`).
    - Tombol buka undangan dengan transisi buka gerbang yang halus dan auto-play instrumen `janjisuci.mp3`.
 2. **Hero Header & Real-Time Countdown**:
    - Multi-layer Parallax effect saat scroll.
@@ -65,8 +66,8 @@ Sistem **Undangan Pernikahan Digital Interaktif**, **Animasi Parallax**, **Musik
 
 ## 📊 Fitur Dashboard Admin (`dashboard.html`)
 
-1. **Form Tambah Tamu Lengkap (1 Baris)**:
-   - Nama Penerima, No. WhatsApp, Kategori (`Umum`, `VIP`, `Keluarga`, `Sahabat`, `Rekan Kerja`), Meja (`VIP 01`, dll.), dan Pax (`1-5+`).
+1. **Form Tambah Tamu Cepat (1 Baris)**:
+   - Nama Penerima dan No. WhatsApp (opsional).
 2. **Manajemen Tamu (Compact SaaS Table)**:
    - Tombol kirim pesan WhatsApp langsung ke nomor tamu.
    - Tombol salin link undangan personal.

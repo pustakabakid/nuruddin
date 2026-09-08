@@ -35,9 +35,7 @@ CREATE TABLE IF NOT EXISTS guests (
     id VARCHAR(64) PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     phone VARCHAR(30) DEFAULT NULL,
-    category VARCHAR(50) DEFAULT 'Umum' CHECK (category IN ('VIP', 'Keluarga', 'Sahabat', 'Rekan Kerja', 'Umum')),
     pax INT DEFAULT 1,
-    table_seat VARCHAR(50) DEFAULT 'Meja Umum',
     status VARCHAR(30) DEFAULT 'pending' CHECK (status IN ('pending', 'hadir', 'ragu', 'tidak_hadir')),
     checked_in BOOLEAN DEFAULT FALSE,
     checked_in_at TIMESTAMPTZ DEFAULT NULL,
@@ -46,6 +44,10 @@ CREATE TABLE IF NOT EXISTS guests (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Migrasi (jika tabel guests sudah pernah dibuat di database):
+-- ALTER TABLE guests DROP COLUMN IF EXISTS category;
+-- ALTER TABLE guests DROP COLUMN IF EXISTS table_seat;
 
 CREATE INDEX IF NOT EXISTS idx_guests_phone ON guests (phone);
 CREATE INDEX IF NOT EXISTS idx_guests_status ON guests (status);
@@ -102,12 +104,12 @@ INSERT INTO wedding_info (
 ) ON CONFLICT DO NOTHING;
 
 -- 2. Seed Data Tamu Contoh
-INSERT INTO guests (id, name, phone, category, pax, table_seat, status, checked_in, created_at) VALUES
-('g-1', 'Bapak Ahmad Sanusi & Keluarga', '6281234567890', 'Keluarga', 2, 'Meja Keluarga 01', 'hadir', FALSE, '2026-09-01 10:00:00+07'),
-('g-2', 'Dimas Prasetyo & Partner', '6281398765432', 'Sahabat', 2, 'Meja 04', 'hadir', FALSE, '2026-09-02 11:20:00+07'),
-('g-3', 'Clarissa Maharani', '6285712349988', 'Rekan Kerja', 1, 'Meja 08', 'ragu', FALSE, '2026-09-03 15:40:00+07'),
-('g-4', 'dr. Hendra Setiawan, Sp.A', '6281122334455', 'VIP', 2, 'Meja VIP 02', 'hadir', FALSE, '2026-09-04 09:15:00+07'),
-('g-5', 'Rian Pratama & Tim', '6289876543210', 'Rekan Kerja', 4, 'Meja 12', 'tidak_hadir', FALSE, '2026-09-05 14:10:00+07')
+INSERT INTO guests (id, name, phone, pax, status, checked_in, created_at) VALUES
+('g-1', 'Bapak Ahmad Sanusi & Keluarga', '6281234567890', 2, 'hadir', FALSE, '2026-09-01 10:00:00+07'),
+('g-2', 'Dimas Prasetyo & Partner', '6281398765432', 2, 'hadir', FALSE, '2026-09-02 11:20:00+07'),
+('g-3', 'Clarissa Maharani', '6285712349988', 1, 'ragu', FALSE, '2026-09-03 15:40:00+07'),
+('g-4', 'dr. Hendra Setiawan, Sp.A', '6281122334455', 2, 'hadir', FALSE, '2026-09-04 09:15:00+07'),
+('g-5', 'Rian Pratama & Tim', '6289876543210', 4, 'tidak_hadir', FALSE, '2026-09-05 14:10:00+07')
 ON CONFLICT (id) DO NOTHING;
 
 -- 3. Seed Pesan Masuk / Ucapan Contoh

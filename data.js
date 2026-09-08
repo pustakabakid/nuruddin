@@ -56,7 +56,7 @@
     dayName: 'Ahad',
     formattedDate: 'Ahad, 21 September 2026',
     formattedDateShort: '21 • 09 • 2026',
-    audioUrl: 'janjisuci.mp3',
+    audioUrl: '/janjisuci.mp3',
     quote: {
       arabic: 'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ',
       translation: '"Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."',
@@ -136,9 +136,7 @@
       id: 'g-1',
       name: 'Bapak Ahmad Sanusi & Keluarga',
       phone: '6281234567891',
-      category: 'VIP',
       pax: 2,
-      table: 'Meja VIP 01',
       status: 'hadir',
       wishes: 'Selamat untuk kedua mempelai, semoga rukun bahagia selalu sampai kakek nenek.',
       checkedIn: true,
@@ -148,9 +146,7 @@
       id: 'g-2',
       name: 'Dimas Prasetyo & Partner',
       phone: '6281398765432',
-      category: 'Sahabat',
       pax: 2,
-      table: 'Meja 04',
       status: 'hadir',
       wishes: 'Selamat menempuh hidup baru bro Nuruddin & Mbak Silfi! Lancar acaranya.',
       checkedIn: false,
@@ -160,9 +156,7 @@
       id: 'g-3',
       name: 'Clarissa Maharani',
       phone: '6285712349988',
-      category: 'Rekan Kerja',
       pax: 1,
-      table: 'Meja 08',
       status: 'ragu',
       wishes: 'Happy wedding Silfi cantik & Mas Nuruddin! Semoga menjadi keluarga yang sakinah mawaddah warahmah.',
       checkedIn: false,
@@ -172,9 +166,7 @@
       id: 'g-4',
       name: 'dr. Hendra Setiawan, Sp.A',
       phone: '6281122334455',
-      category: 'VIP',
       pax: 2,
-      table: 'Meja VIP 02',
       status: 'hadir',
       wishes: 'Barakallah Silfi dan Nuruddin, semoga senantiasa dalam limpahan berkah.',
       checkedIn: false,
@@ -184,9 +176,7 @@
       id: 'g-5',
       name: 'Rian Pratama & Tim IT',
       phone: '6289876543210',
-      category: 'Rekan Kerja',
       pax: 4,
-      table: 'Meja 12',
       status: 'tidak_hadir',
       wishes: 'Selamat Mas Nuruddin & Mbak Silfi! Mohon maaf belum bisa hadir langsung, doa terbaik dari kami.',
       checkedIn: false,
@@ -241,14 +231,6 @@
   const WeddingStorage = {
     supabaseConfig: SUPABASE_CONFIG,
 
-    normalizeCategory(cat) {
-      if (!cat) return 'Umum';
-      const c = String(cat).trim();
-      const valid = ['VIP', 'Keluarga', 'Sahabat', 'Rekan Kerja', 'Umum'];
-      const matched = valid.find(v => v.toLowerCase() === c.toLowerCase());
-      return matched || 'Umum';
-    },
-
     normalizeStatus(st) {
       if (!st) return 'pending';
       const s = String(st).trim().toLowerCase();
@@ -292,9 +274,7 @@
             id: g.id,
             name: g.name,
             phone: g.phone || '',
-            category: this.normalizeCategory(g.category),
             pax: g.pax || 1,
-            table: g.table_seat || 'Meja Umum',
             status: this.normalizeStatus(g.status),
             checkedIn: !!g.checked_in,
             createdAt: g.created_at
@@ -447,16 +427,13 @@
         id: 'g-' + Date.now(),
         name: (guest.name || 'Tamu Undangan').trim(),
         phone: guest.phone || '',
-        category: this.normalizeCategory(guest.category),
         pax: parseInt(guest.pax, 10) || 1,
-        table: guest.table || 'Meja Umum',
         status: this.normalizeStatus(guest.status),
         wishes: guest.wishes || '',
         checkedIn: !!guest.checkedIn,
         createdAt: new Date().toISOString(),
         ...guest
       };
-      newGuest.category = this.normalizeCategory(newGuest.category);
       newGuest.status = this.normalizeStatus(newGuest.status);
 
       guests.unshift(newGuest);
@@ -467,9 +444,7 @@
         id: newGuest.id,
         name: newGuest.name,
         phone: newGuest.phone || null,
-        category: newGuest.category,
         pax: newGuest.pax,
-        table_seat: newGuest.table,
         status: newGuest.status,
         checked_in: newGuest.checkedIn
       }, { 'Prefer': 'resolution=merge-duplicates,return=representation' }).catch(() => {});
@@ -482,7 +457,6 @@
       const idx = guests.findIndex(g => g.id === id);
       if (idx !== -1) {
         guests[idx] = { ...guests[idx], ...updatedFields };
-        if (updatedFields.category !== undefined) guests[idx].category = this.normalizeCategory(guests[idx].category);
         if (updatedFields.status !== undefined) guests[idx].status = this.normalizeStatus(guests[idx].status);
         this.saveGuests(guests);
 
@@ -492,9 +466,7 @@
           id: g.id,
           name: g.name,
           phone: g.phone || null,
-          category: this.normalizeCategory(g.category),
           pax: g.pax,
-          table_seat: g.table,
           status: this.normalizeStatus(g.status),
           checked_in: g.checkedIn,
           checked_in_at: g.checkedIn ? new Date().toISOString() : null
@@ -628,17 +600,23 @@
       };
     },
 
-    generateInvitationUrl(guestName, pax = 1, seat = '', customParam = '') {
-      let baseUrl = 'index.html';
+    generateInvitationUrl(guestName) {
+      const cleanName = (guestName || '').trim();
+      let origin = '';
       if (typeof window !== 'undefined' && window.location) {
-        baseUrl = window.location.href.split('?')[0].replace(/dashboard\.html$/i, 'index.html');
+        origin = window.location.origin;
+        if (!origin || origin === 'null' || origin.startsWith('file:')) {
+          origin = 'https://nuruddin-ten.vercel.app';
+        }
+      } else {
+        origin = 'https://nuruddin-ten.vercel.app';
       }
-      const params = new URLSearchParams();
-      if (guestName) params.set('to', guestName);
-      if (pax > 1) params.set('pax', pax);
-      if (seat && seat !== '-') params.set('seat', seat);
-      if (customParam) params.set('k', customParam);
-      return `${baseUrl}?${params.toString()}`;
+
+      if (!cleanName || cleanName === 'Tamu Undangan') {
+        return `${origin}/`;
+      }
+      const encoded = encodeURIComponent(cleanName).replace(/%20/g, '+');
+      return `${origin}/to/${encoded}`;
     },
 
     sanitizeWhatsAppMessage(message) {
@@ -657,19 +635,9 @@
       const dateFormatted = (weddingData && weddingData.formattedDate) || 'Ahad, 21 September 2026';
 
       const guestName = (guest && guest.name) ? guest.name.trim() : 'Tamu Undangan';
-      const rawTable = (guest && guest.table && guest.table !== '-') ? guest.table.trim() : '';
-      const paxNum = (guest && guest.pax) ? Number(guest.pax) : 0;
-
-      let seatPart = '';
-      if (rawTable) {
-        seatPart = rawTable.toLowerCase().startsWith('meja') ? rawTable : `Meja ${rawTable}`;
-      }
-      const paxPart = paxNum > 0 ? `${paxNum} Pax` : '';
-      const seatInfo = [seatPart, paxPart].filter(Boolean).join(' • ');
-      const seatLine = seatInfo ? `_(${seatInfo})_\n` : '';
 
       const template = `Kepada Yth. Bapak/Ibu/Saudara/i *${guestName}*
-${seatLine}
+
 Assalamu’alaikum Warahmatullahi Wabarakatuh.
 
 Dengan hormat, kami mengundang Anda untuk hadir di pernikahan:
