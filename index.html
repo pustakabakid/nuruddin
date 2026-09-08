@@ -1231,6 +1231,15 @@
           hostEl.textContent = weddingData.hostsTitle || 'Keluarga Bpk. Misraji & Ibu Hasibah';
         }
 
+        const coverImg = weddingData.coverImage || '/bg.jpeg';
+        if (gateCover && coverImg) {
+          gateCover.style.backgroundImage = `linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%), url('${coverImg}')`;
+        }
+        const heroBg = document.querySelector('.hero-bg-parallax');
+        if (heroBg && coverImg) {
+          heroBg.style.backgroundImage = `linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%), url('${coverImg}')`;
+        }
+
         if (weddingData.couple.groom) {
           document.getElementById('groomName').textContent = weddingData.couple.groom.name || 'Nuruddin';
           document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';

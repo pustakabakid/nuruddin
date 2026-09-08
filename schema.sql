@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS wedding_info (
     wedding_date TIMESTAMPTZ NOT NULL DEFAULT '2026-09-21 08:00:00+07',
     hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah',
+    cover_image_pria TEXT DEFAULT 'bg.jpeg',
+    cover_image_wanita TEXT DEFAULT 'bg.jpeg',
     event_venue VARCHAR(200) DEFAULT 'Kediaman Mempelai Pria',
     event_address TEXT,
     event_maps_url TEXT,
@@ -35,6 +37,8 @@ CREATE TABLE IF NOT EXISTS wedding_info (
 -- ALTER TABLE wedding_info ALTER COLUMN bride_avatar TYPE TEXT;
 -- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah';
 -- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah';
+-- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_pria TEXT DEFAULT 'bg.jpeg';
+-- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_wanita TEXT DEFAULT 'bg.jpeg';
 
 -- ----------------------------------------------------------
 -- 2. TABEL: DAFTAR TAMU PENERIMA UNDANGAN (GUESTS)

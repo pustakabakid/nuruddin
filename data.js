@@ -103,6 +103,8 @@
     ],
     hostsPria: 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hostsWanita: 'Keluarga Bpk. Paiman & Ibu Aliyah',
+    coverImagePria: '/bg.jpeg',
+    coverImageWanita: '/bg.jpeg',
     loveStories: [
       {
         id: 'story-1',
@@ -351,6 +353,8 @@
             ...currentWedding,
             hostsPria: info.hosts_pria || currentWedding.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
             hostsWanita: info.hosts_wanita || currentWedding.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
+            coverImagePria: info.cover_image_pria || currentWedding.coverImagePria || '/bg.jpeg',
+            coverImageWanita: info.cover_image_wanita || currentWedding.coverImageWanita || '/bg.jpeg',
             couple: {
               ...currentWedding.couple,
               groom: {
@@ -400,6 +404,7 @@
           combinedTitle: 'Nuruddin & Silfiana',
           tagline: 'The Wedding of Nuruddin & Silfi',
           hostsTitle: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
+          coverImage: data.coverImagePria || '/bg.jpeg',
           schedules: (data.schedulesPria && data.schedulesPria.length > 0) ? data.schedulesPria : data.schedules
         };
       } else if (activeSide === 'wanita') {
@@ -409,6 +414,7 @@
           combinedTitle: 'Silfiana & Nuruddin',
           tagline: 'The Wedding of Silfi & Nuruddin',
           hostsTitle: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
+          coverImage: data.coverImageWanita || '/bg.jpeg',
           schedules: (data.schedulesWanita && data.schedulesWanita.length > 0) ? data.schedulesWanita : data.schedules
         };
       }
@@ -419,6 +425,7 @@
         combinedTitle: (data.couple && data.couple.combinedTitle) || 'Silfi & Nuruddin',
         tagline: (data.couple && data.couple.tagline) || 'The Wedding of Silfi & Nuruddin',
         hostsTitle: 'Keluarga Besar Kedua Mempelai',
+        coverImage: data.coverImagePria || '/bg.jpeg',
         schedules: data.schedules
       };
     },
@@ -448,12 +455,14 @@
             combined_title: data.couple.combinedTitle || 'Silfi & Nuruddin',
             wedding_date: data.weddingDate || '2026-09-21 08:00:00+07',
             hosts_pria: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
-            hosts_wanita: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah'
+            hosts_wanita: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
+            cover_image_pria: data.coverImagePria || '/bg.jpeg',
+            cover_image_wanita: data.coverImageWanita || '/bg.jpeg'
           };
           this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payload)
             .then(res => {
               if (!res) {
-                // Retry without new hosts columns in case remote DB hasn't run schema migration yet
+                // Retry without new hosts / cover columns in case remote DB hasn't run schema migration yet
                 const fallbackPayload = {
                   groom_name: payload.groom_name,
                   groom_nickname: payload.groom_nickname,
