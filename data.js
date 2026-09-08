@@ -349,6 +349,8 @@
           const currentWedding = this.getWeddingData();
           const merged = {
             ...currentWedding,
+            hostsPria: info.hosts_pria || currentWedding.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
+            hostsWanita: info.hosts_wanita || currentWedding.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
             couple: {
               ...currentWedding.couple,
               groom: {
@@ -444,9 +446,32 @@
             bride_avatar: (data.couple.bride && data.couple.bride.avatar) || '2.jpg',
             bride_instagram: (data.couple.bride && data.couple.bride.instagram) || '',
             combined_title: data.couple.combinedTitle || 'Silfi & Nuruddin',
-            wedding_date: data.weddingDate || '2026-09-21 08:00:00+07'
+            wedding_date: data.weddingDate || '2026-09-21 08:00:00+07',
+            hosts_pria: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
+            hosts_wanita: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah'
           };
-          this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payload).catch(() => {});
+          this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payload)
+            .then(res => {
+              if (!res) {
+                // Retry without new hosts columns in case remote DB hasn't run schema migration yet
+                const fallbackPayload = {
+                  groom_name: payload.groom_name,
+                  groom_nickname: payload.groom_nickname,
+                  groom_parents: payload.groom_parents,
+                  groom_avatar: (payload.groom_avatar && payload.groom_avatar.length > 200) ? '1.jpg' : payload.groom_avatar,
+                  groom_instagram: payload.groom_instagram,
+                  bride_name: payload.bride_name,
+                  bride_nickname: payload.bride_nickname,
+                  bride_parents: payload.bride_parents,
+                  bride_avatar: (payload.bride_avatar && payload.bride_avatar.length > 200) ? '2.jpg' : payload.bride_avatar,
+                  bride_instagram: payload.bride_instagram,
+                  combined_title: payload.combined_title,
+                  wedding_date: payload.wedding_date
+                };
+                return this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', fallbackPayload);
+              }
+            })
+            .catch(() => {});
         }
         return true;
       } catch (e) {

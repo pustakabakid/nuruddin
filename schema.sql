@@ -12,21 +12,29 @@ CREATE TABLE IF NOT EXISTS wedding_info (
     groom_name VARCHAR(150) NOT NULL DEFAULT 'Nuruddin',
     groom_nickname VARCHAR(50) NOT NULL DEFAULT 'Nuruddin',
     groom_parents VARCHAR(255) DEFAULT 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah',
-    groom_avatar VARCHAR(255) DEFAULT '1.jpg',
+    groom_avatar TEXT DEFAULT '1.jpg',
     groom_instagram VARCHAR(100) DEFAULT 'nuruddin_bin_aliman',
     bride_name VARCHAR(150) NOT NULL DEFAULT 'Silfiana',
     bride_nickname VARCHAR(50) NOT NULL DEFAULT 'Silfi',
     bride_parents VARCHAR(255) DEFAULT 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah',
-    bride_avatar VARCHAR(255) DEFAULT '2.jpg',
+    bride_avatar TEXT DEFAULT '2.jpg',
     bride_instagram VARCHAR(100) DEFAULT 'chilpy04',
     combined_title VARCHAR(150) NOT NULL DEFAULT 'Silfi & Nuruddin',
     wedding_date TIMESTAMPTZ NOT NULL DEFAULT '2026-09-21 08:00:00+07',
+    hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah',
+    hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah',
     event_venue VARCHAR(200) DEFAULT 'Kediaman Mempelai Pria',
     event_address TEXT,
     event_maps_url TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Migrasi jika tabel wedding_info sudah pernah dibuat di database:
+-- ALTER TABLE wedding_info ALTER COLUMN groom_avatar TYPE TEXT;
+-- ALTER TABLE wedding_info ALTER COLUMN bride_avatar TYPE TEXT;
+-- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah';
+-- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah';
 
 -- ----------------------------------------------------------
 -- 2. TABEL: DAFTAR TAMU PENERIMA UNDANGAN (GUESTS)
