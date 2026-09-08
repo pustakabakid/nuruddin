@@ -141,16 +141,24 @@ CREATE TABLE IF NOT EXISTS admin_users (
 
 -- 1. Seed Informasi Acara
 INSERT INTO wedding_info (
+    id,
     groom_name, groom_nickname, groom_parents, groom_avatar, groom_instagram,
     bride_name, bride_nickname, bride_parents, bride_avatar, bride_instagram,
-    combined_title, wedding_date, event_venue, event_address, event_maps_url
+    combined_title, wedding_date,
+    hosts_pria, hosts_wanita, cover_image_pria, cover_image_wanita,
+    event_venue, event_address, event_maps_url,
+    event_type_pria, event_day_pria, event_date_pria, event_time_pria, event_venue_pria, event_address_pria, event_maps_pria,
+    event_type_wanita, event_day_wanita, event_date_wanita, event_time_wanita, event_venue_wanita, event_address_wanita, event_maps_wanita
 ) VALUES (
+    1,
     'Nuruddin', 'Nuruddin', 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah', '1.jpg', 'nuruddin_bin_aliman',
     'Silfiana', 'Silfi', 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah', '2.jpg', 'chilpy04',
-    'Silfi & Nuruddin', '2026-09-21 08:00:00+07', 'Kediaman Mempelai Pria',
-    'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
-    'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8'
-) ON CONFLICT DO NOTHING;
+    'Silfi & Nuruddin', '2026-09-21 08:00:00+07',
+    'Keluarga Bpk. Misraji & Ibu Hasibah', 'Keluarga Bpk. Paiman & Ibu Aliyah', 'bg.jpeg', 'bg.jpeg',
+    'Kediaman Mempelai Pria', 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur', 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+    'Resepsi Pernikahan (Walimatul ''Urs)', 'Ahad', '21 September 2026', '10:00 WIB s/d Selesai', 'Kediaman Mempelai Pria', 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur', 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+    'Akad Nikah & Resepsi Pernikahan', 'Ahad', '21 September 2026', '08:00 WIB s/d Selesai', 'Kediaman Mempelai Wanita', 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)', 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8'
+) ON CONFLICT (id) DO NOTHING;
 
 -- 2. Seed Data Tamu Contoh
 INSERT INTO guests (id, name, phone, pax, side, status, checked_in, created_at) VALUES
@@ -183,7 +191,8 @@ ALTER TABLE wishes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Public read wedding_info" ON wedding_info;
-CREATE POLICY "Public read wedding_info" ON wedding_info FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Public access wedding_info" ON wedding_info;
+CREATE POLICY "Public access wedding_info" ON wedding_info FOR ALL USING (true) WITH CHECK (true);
 
 DROP POLICY IF EXISTS "Public access guests" ON guests;
 CREATE POLICY "Public access guests" ON guests FOR ALL USING (true) WITH CHECK (true);
