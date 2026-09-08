@@ -1370,9 +1370,16 @@
         }
 
         const audioSrc = resolveAssetUrl((weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : 'janjisuci.mp3');
-        if (!bgAudio.src || (!bgAudio.src.endsWith(audioSrc) && !bgAudio.src.endsWith('/janjisuci.mp3') && !bgAudio.src.endsWith('janjisuci.mp3'))) {
+        const currentCleanSrc = bgAudio.src ? bgAudio.src.split('?')[0] : '';
+        const targetCleanSrc = audioSrc ? audioSrc.split('?')[0] : '';
+        const isAudioIdentical = currentCleanSrc.endsWith(targetCleanSrc) || (targetCleanSrc && currentCleanSrc === targetCleanSrc);
+        if (!isAudioIdentical) {
+          const wasPlaying = !bgAudio.paused && bgAudio.currentTime > 0;
           bgAudio.src = audioSrc;
           bgAudio.load();
+          if (wasPlaying) {
+            bgAudio.play().catch(() => {});
+          }
         }
 
         // Schedules

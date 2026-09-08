@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    pin_code VARCHAR(10) DEFAULT '210926',
+    pin_code VARCHAR(20) DEFAULT 'wedding26',
     role VARCHAR(30) DEFAULT 'superadmin' CHECK (role IN ('superadmin', 'panitia_checkin', 'viewer')),
     last_login TIMESTAMPTZ DEFAULT NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
@@ -197,8 +197,8 @@ ON CONFLICT (id) DO NOTHING;
 
 -- 4. Seed Akun Admin
 INSERT INTO admin_users (username, password_hash, pin_code, role) VALUES
-('admin', '$2y$10$e8q4m3F3r9E5K6P8s7V1eOK8YkH/0g1X2J3T4L5N6M7P8Q9R0S1T2', '210926', 'superadmin')
-ON CONFLICT (username) DO NOTHING;
+('admin', '$2y$10$e8q4m3F3r9E5K6P8s7V1eOK8YkH/0g1X2J3T4L5N6M7P8Q9R0S1T2', 'wedding26', 'superadmin')
+ON CONFLICT (username) DO UPDATE SET pin_code = 'wedding26';
 
 -- ----------------------------------------------------------
 -- 5. ROW LEVEL SECURITY (RLS) UNTUK SUPABASE ANON ACCESS
@@ -219,7 +219,8 @@ DROP POLICY IF EXISTS "Public access wishes" ON wishes;
 CREATE POLICY "Public access wishes" ON wishes FOR ALL USING (true) WITH CHECK (true);
 
 DROP POLICY IF EXISTS "Public read admin_users" ON admin_users;
-CREATE POLICY "Public read admin_users" ON admin_users FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Public access admin_users" ON admin_users;
+CREATE POLICY "Public access admin_users" ON admin_users FOR ALL USING (true) WITH CHECK (true);
 
 -- ----------------------------------------------------------
 -- 6. SUPABASE STORAGE: BUCKET MEDIA UNDANGAN & POLICIES
@@ -235,8 +236,13 @@ ON CONFLICT (id) DO UPDATE SET public = true;
 -- Kebijakan ini khusus memberi izin INSERT & UPDATE agar anon dapat mengunggah dan menimpa file
 -- tanpa memicu peringatan security 'Clients can list all files in this bucket'.
 DROP POLICY IF EXISTS "Public media access" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read objects" ON storage.objects;
 DROP POLICY IF EXISTS "Allow public uploads" ON storage.objects;
 DROP POLICY IF EXISTS "Allow public updates" ON storage.objects;
+
+CREATE POLICY "Allow public read objects" ON storage.objects
+FOR SELECT TO anon, authenticated
+USING (bucket_id = 'wedding-media');
 
 CREATE POLICY "Allow public uploads" ON storage.objects
 FOR INSERT TO anon, authenticated
@@ -246,3 +252,4 @@ CREATE POLICY "Allow public updates" ON storage.objects
 FOR UPDATE TO anon, authenticated
 USING (bucket_id = 'wedding-media')
 WITH CHECK (bucket_id = 'wedding-media');
+

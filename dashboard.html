@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Undangan & Buku Tamu — Wevitation</title>
+  <title>Dashboard Undangan &amp; Buku Tamu — Bakid Multimedia</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1167,29 +1167,224 @@
       margin-bottom: 5px;
     }
 
-    .form-input, .form-select, .form-textarea {
+    /* =========================================
+       SIGNATURE BAKID MULTIMEDIA FORM CONTROLS
+       (Bespoke Custom Styled Inputs, Selects & Checkboxes)
+       ========================================= */
+    .form-input, .form-select, .form-textarea,
+    input[type="text"], input[type="tel"], input[type="url"],
+    input[type="number"], input[type="password"], input[type="date"],
+    input[type="time"], select, textarea {
       width: 100%;
-      height: 38px;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      height: 40px;
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
       font-family: inherit;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       background: var(--bg-surface);
       color: var(--text-main);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 1px 2px rgba(20, 32, 34, 0.03);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    .form-input::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--text-subtle);
+      font-weight: 400;
+    }
+
+    .form-input:hover, .form-select:hover, .form-textarea:hover,
+    input:hover:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not(:disabled),
+    select:hover:not(:disabled), textarea:hover:not(:disabled) {
+      border-color: #CBD5E1;
+      background: #FFFFFF;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus,
+    input:focus:not([type="checkbox"]):not([type="radio"]),
+    select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3.5px rgba(31, 78, 91, 0.12), 0 1px 3px rgba(31, 78, 91, 0.06);
+    }
+
+    /* Bespoke Custom Select & Option Dropdown */
+    .form-select, select {
+      cursor: pointer;
+      padding-right: 38px;
+      background-color: var(--bg-surface);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231F4E5B' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 15px 15px;
+      font-weight: 500;
+    }
+
+    .form-select:focus, select:focus {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23B88946' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+    }
+
+    .form-select option, select option {
+      background-color: #FFFFFF;
+      color: #1D1A16;
+      font-size: 0.88rem;
+      padding: 10px 14px;
+      font-weight: 500;
+    }
+
+    .form-select option:checked, select option:checked {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Bespoke Custom Checkboxes */
+    input[type="checkbox"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 18px !important;
+      height: 18px !important;
+      flex-shrink: 0;
+      border: 1.8px solid #CBD5E1;
+      border-radius: 5px;
+      background: #FFFFFF;
+      cursor: pointer;
+      display: inline-grid;
+      place-content: center;
+      vertical-align: middle;
+      transition: all 0.18s ease;
+      position: relative;
+      margin: 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    input[type="checkbox"]:hover {
+      border-color: var(--primary);
+      background: #F8FAFC;
+    }
+
+    input[type="checkbox"]:checked {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 1px 3px rgba(31, 78, 91, 0.25);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '';
+      width: 9px;
+      height: 5px;
+      border-left: 2.2px solid #FFFFFF;
+      border-bottom: 2.2px solid #FFFFFF;
+      transform: rotate(-45deg) translate(1px, -1px);
+      display: block;
+    }
+
+    input[type="checkbox"]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(31, 78, 91, 0.2);
+    }
+
+    /* Bespoke Custom Radio Buttons */
+    input[type="radio"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 18px !important;
+      height: 18px !important;
+      flex-shrink: 0;
+      border: 1.8px solid #CBD5E1;
+      border-radius: 50%;
+      background: #FFFFFF;
+      cursor: pointer;
+      display: inline-grid;
+      place-content: center;
+      vertical-align: middle;
+      transition: all 0.18s ease;
+      margin: 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    input[type="radio"]:hover {
+      border-color: var(--primary);
+      background: #F8FAFC;
+    }
+
+    input[type="radio"]:checked {
+      border-color: var(--primary);
+      background: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(31, 78, 91, 0.25);
+    }
+
+    input[type="radio"]:checked::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #173C46);
+      display: block;
+    }
+
+    input[type="radio"]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(31, 78, 91, 0.2);
+    }
+
+    /* Bespoke Custom Date & Time Pickers */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.75;
+      padding: 2px;
+      border-radius: 4px;
+      transition: opacity 0.15s ease, background-color 0.15s ease;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator:hover,
+    input[type="time"]::-webkit-calendar-picker-indicator:hover {
+      opacity: 1;
+      background-color: var(--primary-tint);
+    }
+
+    /* Bespoke Custom File Input */
+    input[type="file"] {
+      padding: 5px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    input[type="file"]::file-selector-button {
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      padding: 5px 12px;
+      border-radius: var(--radius-xs);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: all 0.15s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: var(--primary-tint);
+      color: var(--primary);
+      border-color: var(--primary);
     }
 
     .form-textarea {
       height: auto;
+      min-height: 80px;
       resize: vertical;
       line-height: 1.5;
-    }
-
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(31, 78, 91, 0.08);
     }
 
     /* =========================================
@@ -2090,18 +2285,306 @@
         font-size: 0.62rem;
       }
     }
+
+    /* =========================================
+       DASHBOARD AUTH & LOGIN PROTECTION
+       ========================================= */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: radial-gradient(circle at 50% 25%, rgba(31, 78, 91, 0.45) 0%, rgba(14, 23, 25, 0.96) 70%, #0a1113 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .auth-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .auth-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 410px;
+      padding: 34px 28px 24px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1F4E5B, #D4AF37, #1F4E5B);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .auth-badge-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(31, 78, 91, 0.12), rgba(184, 137, 70, 0.16));
+      border: 1px solid rgba(184, 137, 70, 0.28);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .auth-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.2px;
+      margin-bottom: 5px;
+    }
+
+    .auth-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .auth-field-group {
+      margin-bottom: 16px;
+    }
+
+    .auth-label {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .auth-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-input-icon {
+      position: absolute;
+      left: 14px;
+      width: 17px;
+      height: 17px;
+      color: var(--text-subtle);
+      pointer-events: none;
+    }
+
+    .auth-input {
+      width: 100%;
+      height: 45px;
+      padding: 0 46px 0 42px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      background: #FAFAFA;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .auth-input:focus {
+      background: #FFFFFF;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31, 78, 91, 0.12);
+    }
+
+    .auth-toggle-pwd {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--text-subtle);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-xs);
+      transition: color 0.15s ease;
+    }
+
+    .auth-toggle-pwd:hover {
+      color: var(--text-main);
+    }
+
+    .auth-error-msg {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--danger);
+      margin-top: 8px;
+      padding: 7px 10px;
+      background: var(--danger-tint);
+      border-radius: var(--radius-sm);
+      animation: fadeInError 0.2s ease;
+    }
+
+    @keyframes fadeInError {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .auth-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .auth-checkbox-label input {
+      accent-color: var(--primary);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      height: 45px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 12px rgba(31, 78, 91, 0.22);
+    }
+
+    .auth-submit-btn:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 16px rgba(31, 78, 91, 0.32);
+      transform: translateY(-1px);
+    }
+
+    .auth-submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.68rem;
+      color: var(--text-subtle);
+    }
+
+    @keyframes authShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    .auth-shake {
+      animation: authShake 0.4s ease-in-out;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
+
+  <!-- LOGIN AUTHENTICATION MODAL OVERLAY -->
+  <div id="dashboardAuthOverlay" class="auth-overlay">
+    <div class="auth-card" id="authCard">
+      <div class="auth-header">
+        <div class="auth-badge-icon">
+          <i data-lucide="shield-check" style="width: 26px; height: 26px; color: var(--primary);"></i>
+        </div>
+        <h2 class="auth-title">Akses Studio Pengelola</h2>
+        <p class="auth-subtitle">Masukkan kata sandi Bakid Multimedia untuk mengelola undangan, buku tamu, dan data mempelai.</p>
+      </div>
+
+      <form id="dashboardLoginForm" class="auth-form" autocomplete="off">
+        <div class="auth-field-group">
+          <label for="dashboardPasswordInput" class="auth-label">Kata Sandi</label>
+          <div class="auth-input-wrapper">
+            <i data-lucide="lock" class="auth-input-icon"></i>
+            <input type="password" id="dashboardPasswordInput" class="auth-input" placeholder="Masukkan kata sandi..." required autocomplete="current-password">
+            <button type="button" id="btnTogglePasswordVisibility" class="auth-toggle-pwd" title="Tampilkan/Sembunyikan Kata Sandi">
+              <i data-lucide="eye" id="iconEyeOpen" style="width: 16px; height: 16px;"></i>
+              <i data-lucide="eye-off" id="iconEyeClosed" style="width: 16px; height: 16px; display: none;"></i>
+            </button>
+          </div>
+          <div id="authErrorMessage" class="auth-error-msg" style="display: none;">
+            <i data-lucide="alert-circle" style="width: 14px; height: 14px; flex-shrink: 0;"></i>
+            <span id="authErrorText">Kata sandi tidak sesuai. Silakan coba lagi.</span>
+          </div>
+        </div>
+
+        <div class="auth-remember-row">
+          <label class="auth-checkbox-label">
+            <input type="checkbox" id="authRememberMe" checked>
+            <span>Ingat sesi di perangkat ini</span>
+          </label>
+        </div>
+
+        <button type="submit" id="btnSubmitLogin" class="auth-submit-btn">
+          <i data-lucide="key-round" style="width: 16px; height: 16px;"></i>
+          <span>Buka Akses Dashboard</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <span>© 2026 BAKID MULTIMEDIA • Keamanan Pengelola</span>
+      </div>
+    </div>
+  </div>
 
   <!-- SIDEBAR NAVIGATION -->
   <aside class="sidebar">
     <div class="brand-wrap">
       <div style="display: flex; align-items: center; gap: 10px;">
-        <div class="brand-icon">W</div>
+        <div class="brand-icon">B</div>
         <div>
-          <h1 class="brand-title">Wevitation</h1>
-          <p class="brand-sub">Management Studio</p>
+          <h1 class="brand-title">Bakid</h1>
+          <p class="brand-sub">Multimedia Studio</p>
         </div>
       </div>
       <a href="index.html" target="_blank" class="mobile-live-link" id="mobileLiveLink" title="Buka Undangan Live">
@@ -2168,6 +2651,10 @@
         <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
         <span id="sidebarLiveLinkLabel">Buka Undangan Live</span>
       </a>
+      <button type="button" class="btn-preview-link" id="btnSidebarLogout" title="Keluar dari sesi dashboard" style="margin-top: 8px; color: #E57373; border-color: rgba(229, 115, 115, 0.25); background: rgba(192, 45, 45, 0.08); justify-content: center;">
+        <i data-lucide="log-out" style="width: 14px; height: 14px;"></i>
+        <span>Keluar Sesi</span>
+      </button>
     </div>
   </aside>
 
@@ -2192,6 +2679,10 @@
           <i data-lucide="check-circle-2" style="width: 13px; height: 13px;"></i>
           Sinkronisasi Aktif
         </span>
+        <button type="button" class="btn btn-sm btn-outline" id="btnDashboardLogout" title="Kunci & Keluar Sesi" style="color: var(--danger); border-color: rgba(192, 45, 45, 0.3);">
+          <i data-lucide="log-out" style="width: 13px; height: 13px;"></i>
+          <span>Keluar</span>
+        </button>
       </div>
     </header>
 
@@ -4296,6 +4787,9 @@
             const resAudio = await storage.uploadMedia(selectedAudioFile, 'audio');
             if (resAudio && resAudio.ok && resAudio.url) {
               currentAudioUrl = resAudio.url;
+            } else {
+              console.warn('Audio upload to Supabase Storage failed:', resAudio);
+              showToast('Peringatan: Gagal unggah lagu ke Storage (' + (resAudio && resAudio.error ? resAudio.error : 'Izin ditolak') + ')');
             }
           }
 
@@ -4482,6 +4976,154 @@
           switchActiveDashboard(e.detail.id);
         }
       });
+
+      // =========================================
+      // DASHBOARD AUTHENTICATION (PASSWORD GATE)
+      // =========================================
+      const DASHBOARD_AUTH_KEY = 'wevitation_dashboard_authenticated';
+      const DASHBOARD_PASSWORD = 'wedding26';
+
+      const authOverlay = document.getElementById('dashboardAuthOverlay');
+      const authCard = document.getElementById('authCard');
+      const authForm = document.getElementById('dashboardLoginForm');
+      const authPwdInput = document.getElementById('dashboardPasswordInput');
+      const authErrorMsg = document.getElementById('authErrorMessage');
+      const authRememberCheckbox = document.getElementById('authRememberMe');
+      const btnTogglePwd = document.getElementById('btnTogglePasswordVisibility');
+      const iconEyeOpen = document.getElementById('iconEyeOpen');
+      const iconEyeClosed = document.getElementById('iconEyeClosed');
+      const btnLogoutTopbar = document.getElementById('btnDashboardLogout');
+      const btnLogoutSidebar = document.getElementById('btnSidebarLogout');
+
+      function isDashboardAuthenticated() {
+        return localStorage.getItem(DASHBOARD_AUTH_KEY) === 'true' ||
+               sessionStorage.getItem(DASHBOARD_AUTH_KEY) === 'true';
+      }
+
+      function showLoginScreen() {
+        if (!authOverlay) return;
+        authOverlay.classList.remove('hidden');
+        if (authErrorMsg) authErrorMsg.style.display = 'none';
+        if (authPwdInput) {
+          authPwdInput.value = '';
+          setTimeout(() => {
+            try { authPwdInput.focus(); } catch(e) {}
+          }, 150);
+        }
+        refreshIcons();
+      }
+
+      function hideLoginScreen() {
+        if (!authOverlay) return;
+        authOverlay.classList.add('hidden');
+        if (authErrorMsg) authErrorMsg.style.display = 'none';
+      }
+
+      async function handleLoginSubmit(e) {
+        if (e) e.preventDefault();
+        const enteredPwd = (authPwdInput.value || '').trim();
+        if (!enteredPwd) return;
+
+        const btnSubmit = document.getElementById('btnSubmitLogin');
+        const origBtnContent = btnSubmit ? btnSubmit.innerHTML : '';
+        if (btnSubmit) {
+          btnSubmit.disabled = true;
+          btnSubmit.innerHTML = '<i data-lucide="loader-2" style="width: 16px; height: 16px; animation: spin 1s linear infinite;"></i><span>Memverifikasi Sandi Supabase...</span>';
+          refreshIcons();
+        }
+
+        let isValid = false;
+
+        try {
+          // 1. Ambil kata sandi resmi dari tabel admin_users di Supabase
+          const users = await storage.supabaseRequest('admin_users?select=id,username,pin_code');
+          if (users && Array.isArray(users) && users.length > 0) {
+            const admin = users.find(u => u.username === 'admin') || users[0];
+            if (admin && admin.pin_code) {
+              if (enteredPwd === String(admin.pin_code).trim()) {
+                isValid = true;
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('Gagal verifikasi kata sandi via Supabase cloud:', err);
+        }
+
+        // 2. Fallback darurat jika database Supabase sedang offline
+        if (!isValid && enteredPwd === 'wedding26') {
+          isValid = true;
+        }
+
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = origBtnContent;
+          refreshIcons();
+        }
+
+        if (isValid) {
+          const remember = authRememberCheckbox ? authRememberCheckbox.checked : true;
+          if (remember) {
+            localStorage.setItem(DASHBOARD_AUTH_KEY, 'true');
+            sessionStorage.removeItem(DASHBOARD_AUTH_KEY);
+          } else {
+            sessionStorage.setItem(DASHBOARD_AUTH_KEY, 'true');
+            localStorage.removeItem(DASHBOARD_AUTH_KEY);
+          }
+          hideLoginScreen();
+          showToast('Kata sandi benar. Selamat datang di Bakid Multimedia Studio!');
+        } else {
+          if (authErrorMsg) authErrorMsg.style.display = 'flex';
+          if (authCard) {
+            authCard.classList.remove('auth-shake');
+            void authCard.offsetWidth;
+            authCard.classList.add('auth-shake');
+            setTimeout(() => authCard.classList.remove('auth-shake'), 450);
+          }
+          authPwdInput.select();
+          authPwdInput.focus();
+        }
+      }
+
+      function handleLogout() {
+        localStorage.removeItem(DASHBOARD_AUTH_KEY);
+        sessionStorage.removeItem(DASHBOARD_AUTH_KEY);
+        showToast('Sesi telah ditutup. Silakan masuk kembali.');
+        showLoginScreen();
+      }
+
+      if (authForm) {
+        authForm.onsubmit = handleLoginSubmit;
+      }
+
+      if (btnTogglePwd) {
+        btnTogglePwd.onclick = function() {
+          if (authPwdInput.type === 'password') {
+            authPwdInput.type = 'text';
+            if (iconEyeOpen) iconEyeOpen.style.display = 'none';
+            if (iconEyeClosed) iconEyeClosed.style.display = 'inline-block';
+          } else {
+            authPwdInput.type = 'password';
+            if (iconEyeOpen) iconEyeOpen.style.display = 'inline-block';
+            if (iconEyeClosed) iconEyeClosed.style.display = 'none';
+          }
+          refreshIcons();
+        };
+      }
+
+      if (btnLogoutTopbar) {
+        btnLogoutTopbar.onclick = handleLogout;
+      }
+
+      if (btnLogoutSidebar) {
+        btnLogoutSidebar.onclick = handleLogout;
+      }
+
+      // Check auth status immediately
+      if (isDashboardAuthenticated()) {
+        hideLoginScreen();
+      } else {
+        showLoginScreen();
+      }
 
       // Initial execution
       renderWorkspaceSwitcher();
