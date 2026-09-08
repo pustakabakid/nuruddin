@@ -351,7 +351,10 @@
 
       // 3. Sync Wedding Info
       try {
-        const cloudInfo = await this.supabaseRequest('wedding_info?select=*&limit=1');
+        let cloudInfo = await this.supabaseRequest('wedding_info?id=eq.1');
+        if (!cloudInfo || cloudInfo.length === 0) {
+          cloudInfo = await this.supabaseRequest('wedding_info?select=*&order=id.asc&limit=1');
+        }
         if (cloudInfo && Array.isArray(cloudInfo) && cloudInfo.length > 0) {
           const info = cloudInfo[0];
           const currentWedding = this.getWeddingData();
