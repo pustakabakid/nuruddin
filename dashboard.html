@@ -1746,7 +1746,7 @@
                 <label class="form-label">Foto Profil Mempelai Pria (Avatar)</label>
                 <div class="avatar-upload-box">
                   <div class="avatar-preview-ring">
-                    <img id="groomAvatarPreview" src="/1.jpg" alt="Foto Profil Mempelai Pria" onerror="this.src='/1.jpg'">
+                    <img id="groomAvatarPreview" src="1.jpg" alt="Foto Profil Mempelai Pria" onerror="this.onerror=null; this.src='1.jpg';">
                   </div>
                   <div class="avatar-upload-ctrls">
                     <input type="file" id="groomAvatarFile" accept="image/*" style="display: none;">
@@ -1767,7 +1767,7 @@
                 <label class="form-label">Foto Utama Undangan Pria (Cover / Hero)</label>
                 <div class="cover-upload-box">
                   <div class="cover-preview-rect">
-                    <img id="groomCoverPreview" src="/bg.jpeg" alt="Foto Utama Undangan Pria" onerror="this.src='/bg.jpeg'">
+                    <img id="groomCoverPreview" src="bg.jpeg" alt="Foto Utama Undangan Pria" onerror="this.onerror=null; this.src='bg.jpeg';">
                   </div>
                   <div class="cover-upload-ctrls">
                     <input type="file" id="groomCoverFile" accept="image/*" style="display: none;">
@@ -1870,7 +1870,7 @@
                 <label class="form-label">Foto Profil Mempelai Wanita (Avatar)</label>
                 <div class="avatar-upload-box">
                   <div class="avatar-preview-ring">
-                    <img id="brideAvatarPreview" src="/2.jpg" alt="Foto Profil Mempelai Wanita" onerror="this.src='/2.jpg'">
+                    <img id="brideAvatarPreview" src="2.jpg" alt="Foto Profil Mempelai Wanita" onerror="this.onerror=null; this.src='2.jpg';">
                   </div>
                   <div class="avatar-upload-ctrls">
                     <input type="file" id="brideAvatarFile" accept="image/*" style="display: none;">
@@ -1891,7 +1891,7 @@
                 <label class="form-label">Foto Utama Undangan Wanita (Cover / Hero)</label>
                 <div class="cover-upload-box">
                   <div class="cover-preview-rect">
-                    <img id="brideCoverPreview" src="/bg.jpeg" alt="Foto Utama Undangan Wanita" onerror="this.src='/bg.jpeg'">
+                    <img id="brideCoverPreview" src="bg.jpeg" alt="Foto Utama Undangan Wanita" onerror="this.onerror=null; this.src='bg.jpeg';">
                   </div>
                   <div class="cover-upload-ctrls">
                     <input type="file" id="brideCoverFile" accept="image/*" style="display: none;">
@@ -2681,10 +2681,10 @@
       };
 
       // Couple Data Management & Image Compression
-      let currentGroomAvatar = (weddingData.couple && weddingData.couple.groom && weddingData.couple.groom.avatar) || '/1.jpg';
-      let currentBrideAvatar = (weddingData.couple && weddingData.couple.bride && weddingData.couple.bride.avatar) || '/2.jpg';
-      let currentGroomCover = weddingData.coverImagePria || '/bg.jpeg';
-      let currentBrideCover = weddingData.coverImageWanita || '/bg.jpeg';
+      let currentGroomAvatar = (weddingData.couple && weddingData.couple.groom && weddingData.couple.groom.avatar) || '1.jpg';
+      let currentBrideAvatar = (weddingData.couple && weddingData.couple.bride && weddingData.couple.bride.avatar) || '2.jpg';
+      let currentGroomCover = weddingData.coverImagePria || 'bg.jpeg';
+      let currentBrideCover = weddingData.coverImageWanita || 'bg.jpeg';
 
       function loadCoupleForm() {
         const wData = storage.getWeddingData();
@@ -2698,10 +2698,10 @@
         document.getElementById('inputGroomParents').value = groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';
         document.getElementById('inputGroomIg').value = groom.instagram || 'nuruddin_bin_aliman';
 
-        currentGroomAvatar = groom.avatar || '/1.jpg';
+        currentGroomAvatar = groom.avatar || '1.jpg';
         document.getElementById('groomAvatarPreview').src = currentGroomAvatar;
 
-        currentGroomCover = wData.coverImagePria || '/bg.jpeg';
+        currentGroomCover = wData.coverImagePria || 'bg.jpeg';
         document.getElementById('groomCoverPreview').src = currentGroomCover;
 
         document.getElementById('inputBrideName').value = bride.name || 'Silfiana';
@@ -2709,10 +2709,10 @@
         document.getElementById('inputBrideParents').value = bride.parents || 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah';
         document.getElementById('inputBrideIg').value = bride.instagram || 'chilpy04';
 
-        currentBrideAvatar = bride.avatar || '/2.jpg';
+        currentBrideAvatar = bride.avatar || '2.jpg';
         document.getElementById('brideAvatarPreview').src = currentBrideAvatar;
 
-        currentBrideCover = wData.coverImageWanita || '/bg.jpeg';
+        currentBrideCover = wData.coverImageWanita || 'bg.jpeg';
         document.getElementById('brideCoverPreview').src = currentBrideCover;
 
         document.getElementById('inputHostsPria').value = wData.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah';
@@ -2793,8 +2793,8 @@
         }
       };
       document.getElementById('btnResetGroomAvatar').onclick = function() {
-        currentGroomAvatar = '/1.jpg';
-        document.getElementById('groomAvatarPreview').src = '/1.jpg';
+        currentGroomAvatar = '1.jpg';
+        document.getElementById('groomAvatarPreview').src = '1.jpg';
         document.getElementById('groomAvatarFile').value = '';
         showToast('Foto profil mempelai pria direset ke bawaan');
       };
@@ -2818,8 +2818,8 @@
         }
       };
       document.getElementById('btnResetGroomCover').onclick = function() {
-        currentGroomCover = '/bg.jpeg';
-        document.getElementById('groomCoverPreview').src = '/bg.jpeg';
+        currentGroomCover = 'bg.jpeg';
+        document.getElementById('groomCoverPreview').src = 'bg.jpeg';
         document.getElementById('groomCoverFile').value = '';
         showToast('Foto utama undangan pria direset ke bawaan');
       };
@@ -2843,8 +2843,8 @@
         }
       };
       document.getElementById('btnResetBrideAvatar').onclick = function() {
-        currentBrideAvatar = '/2.jpg';
-        document.getElementById('brideAvatarPreview').src = '/2.jpg';
+        currentBrideAvatar = '2.jpg';
+        document.getElementById('brideAvatarPreview').src = '2.jpg';
         document.getElementById('brideAvatarFile').value = '';
         showToast('Foto profil mempelai wanita direset ke bawaan');
       };
@@ -2868,8 +2868,8 @@
         }
       };
       document.getElementById('btnResetBrideCover').onclick = function() {
-        currentBrideCover = '/bg.jpeg';
-        document.getElementById('brideCoverPreview').src = '/bg.jpeg';
+        currentBrideCover = 'bg.jpeg';
+        document.getElementById('brideCoverPreview').src = 'bg.jpeg';
         document.getElementById('brideCoverFile').value = '';
         showToast('Foto utama undangan wanita direset ke bawaan');
       };

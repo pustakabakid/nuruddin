@@ -122,7 +122,7 @@
       inset: 0;
       z-index: 9999;
       background: linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%),
-                  url('/bg.jpeg') center/cover no-repeat;
+                  url('bg.jpeg') center/cover no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -335,7 +335,7 @@
       position: absolute;
       inset: -35% -20%;
       background: linear-gradient(180deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.95) 100%),
-                  url('/bg.jpeg') center/cover no-repeat;
+                  url('bg.jpeg') center/cover no-repeat;
       z-index: 0;
       transform: translate3d(0, 0, 0);
       will-change: transform;
@@ -927,7 +927,7 @@
 <body>
 
   <!-- Background Audio Player -->
-  <audio id="bgAudio" src="/janjisuci.mp3" preload="auto" loop playsinline></audio>
+  <audio id="bgAudio" src="janjisuci.mp3" preload="auto" loop playsinline></audio>
 
   <!-- Toast Notification -->
   <div id="toastNotification">
@@ -1042,7 +1042,7 @@
       <div class="couple-card">
         <div class="couple-avatar-wrap">
           <div class="couple-avatar-ring"></div>
-          <img src="/1.jpg" id="groomAvatar" class="couple-avatar" alt="Groom" onerror="this.src='/1.jpg'">
+          <img src="1.jpg" id="groomAvatar" class="couple-avatar" alt="Groom" onerror="this.onerror=null; this.src='1.jpg';">
         </div>
         <h3 class="couple-name font-serif" id="groomName">Nuruddin</h3>
         <p class="couple-parents" id="groomParents">Putra Pertama dari Bpk. Misraji & Ibu Hasibah</p>
@@ -1058,7 +1058,7 @@
       <div class="couple-card">
         <div class="couple-avatar-wrap">
           <div class="couple-avatar-ring"></div>
-          <img src="/2.jpg" id="brideAvatar" class="couple-avatar" alt="Bride" onerror="this.src='/2.jpg'">
+          <img src="2.jpg" id="brideAvatar" class="couple-avatar" alt="Bride" onerror="this.onerror=null; this.src='2.jpg';">
         </div>
         <h3 class="couple-name font-serif" id="brideName">Silfiana</h3>
         <p class="couple-parents" id="brideParents">Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah</p>
@@ -1231,7 +1231,7 @@
           hostEl.textContent = weddingData.hostsTitle || 'Keluarga Bpk. Misraji & Ibu Hasibah';
         }
 
-        const coverImg = weddingData.coverImage || '/bg.jpeg';
+        const coverImg = weddingData.coverImage || 'bg.jpeg';
         if (gateCover && coverImg) {
           gateCover.style.backgroundImage = `linear-gradient(180deg, rgba(23, 36, 38, 0.7) 0%, rgba(23, 36, 38, 0.92) 100%), url('${coverImg}')`;
         }
@@ -1243,7 +1243,7 @@
         if (weddingData.couple.groom) {
           document.getElementById('groomName').textContent = weddingData.couple.groom.name || 'Nuruddin';
           document.getElementById('groomParents').textContent = weddingData.couple.groom.parents || 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah';
-          const gAvatar = (weddingData.couple.groom.avatar && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : '/1.jpg';
+          const gAvatar = (weddingData.couple.groom.avatar && !weddingData.couple.groom.avatar.includes('groom-andra')) ? weddingData.couple.groom.avatar : '1.jpg';
           document.getElementById('groomAvatar').src = gAvatar;
           document.getElementById('groomIgHandle').textContent = '@' + (weddingData.couple.groom.instagram || 'nuruddin_bin_aliman');
           document.getElementById('groomIgLink').href = weddingData.couple.groom.instagramUrl || 'https://instagram.com/nuruddin_bin_aliman';
@@ -1252,7 +1252,7 @@
         if (weddingData.couple.bride) {
           document.getElementById('brideName').textContent = weddingData.couple.bride.name || 'Silfiana';
           document.getElementById('brideParents').textContent = weddingData.couple.bride.parents || 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah';
-          const bAvatar = (weddingData.couple.bride.avatar && !weddingData.couple.bride.avatar.includes('bride-clara')) ? weddingData.couple.bride.avatar : '/2.jpg';
+          const bAvatar = (weddingData.couple.bride.avatar && !weddingData.couple.bride.avatar.includes('bride-clara')) ? weddingData.couple.bride.avatar : '2.jpg';
           document.getElementById('brideAvatar').src = bAvatar;
           document.getElementById('brideIgHandle').textContent = '@' + (weddingData.couple.bride.instagram || 'chilpy04');
           document.getElementById('brideIgLink').href = weddingData.couple.bride.instagramUrl || 'https://instagram.com/chilpy04';
@@ -1264,8 +1264,8 @@
           document.getElementById('quoteSource').textContent = weddingData.quote.source || '';
         }
 
-        const audioSrc = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : '/janjisuci.mp3';
-        if (!bgAudio.src || (!bgAudio.src.endsWith(audioSrc) && !bgAudio.src.endsWith('/janjisuci.mp3'))) {
+        const audioSrc = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : 'janjisuci.mp3';
+        if (!bgAudio.src || (!bgAudio.src.endsWith(audioSrc) && !bgAudio.src.endsWith('janjisuci.mp3'))) {
           bgAudio.src = audioSrc;
           bgAudio.load();
         }
@@ -1382,7 +1382,7 @@
         // Background Audio Playback
         if (bgAudio) {
           if (!bgAudio.src || bgAudio.src === '') {
-            bgAudio.src = '/janjisuci.mp3';
+            bgAudio.src = 'janjisuci.mp3';
             bgAudio.load();
           }
           const playPromise = bgAudio.play();
@@ -1533,7 +1533,7 @@
       audioToggleBtn.onclick = function() {
         if (bgAudio.paused) {
           if (!bgAudio.src || bgAudio.src === '') {
-            bgAudio.src = '/janjisuci.mp3';
+            bgAudio.src = 'janjisuci.mp3';
             bgAudio.load();
           }
           bgAudio.play().then(() => {

@@ -57,7 +57,7 @@
     dayName: 'Ahad',
     formattedDate: 'Ahad, 21 September 2026',
     formattedDateShort: '21 • 09 • 2026',
-    audioUrl: '/janjisuci.mp3',
+    audioUrl: 'janjisuci.mp3',
     quote: {
       arabic: 'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ',
       translation: '"Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."',
@@ -108,8 +108,8 @@
     ],
     hostsPria: 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hostsWanita: 'Keluarga Bpk. Paiman & Ibu Aliyah',
-    coverImagePria: '/bg.jpeg',
-    coverImageWanita: '/bg.jpeg',
+    coverImagePria: 'bg.jpeg',
+    coverImageWanita: 'bg.jpeg',
     loveStories: [
       {
         id: 'story-1',
@@ -294,7 +294,8 @@
           body: body ? JSON.stringify(body) : null
         });
         if (!res.ok) {
-          console.warn('Supabase request non-ok status:', res.status, endpoint);
+          const errDetail = await res.text().catch(() => '');
+          console.warn('Supabase request non-ok status:', res.status, endpoint, errDetail);
           return null;
         }
         if (res.status === 204) return true;
@@ -397,8 +398,8 @@
             ...currentWedding,
             hostsPria: info.hosts_pria || currentWedding.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
             hostsWanita: info.hosts_wanita || currentWedding.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-            coverImagePria: info.cover_image_pria || currentWedding.coverImagePria || '/bg.jpeg',
-            coverImageWanita: info.cover_image_wanita || currentWedding.coverImageWanita || '/bg.jpeg',
+            coverImagePria: info.cover_image_pria || currentWedding.coverImagePria || 'bg.jpeg',
+            coverImageWanita: info.cover_image_wanita || currentWedding.coverImageWanita || 'bg.jpeg',
             schedulesPria: sPria,
             schedulesWanita: sWanita,
             couple: {
@@ -456,7 +457,7 @@
           combinedTitle: 'Nuruddin & Silfiana',
           tagline: 'The Wedding of Nuruddin & Silfi',
           hostsTitle: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
-          coverImage: data.coverImagePria || '/bg.jpeg',
+          coverImage: data.coverImagePria || 'bg.jpeg',
           formattedDate: primary.date || data.formattedDate,
           dayName: primary.day || data.dayName || 'Ahad',
           schedules: normalized
@@ -474,7 +475,7 @@
           combinedTitle: 'Silfiana & Nuruddin',
           tagline: 'The Wedding of Silfi & Nuruddin',
           hostsTitle: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-          coverImage: data.coverImageWanita || '/bg.jpeg',
+          coverImage: data.coverImageWanita || 'bg.jpeg',
           formattedDate: primary.date || data.formattedDate,
           dayName: primary.day || data.dayName || 'Ahad',
           schedules: normalized
@@ -487,7 +488,7 @@
         combinedTitle: (data.couple && data.couple.combinedTitle) || 'Silfi & Nuruddin',
         tagline: (data.couple && data.couple.tagline) || 'The Wedding of Silfi & Nuruddin',
         hostsTitle: 'Keluarga Besar Kedua Mempelai',
-        coverImage: data.coverImagePria || '/bg.jpeg',
+        coverImage: data.coverImagePria || 'bg.jpeg',
         schedules: data.schedules
       };
     },
@@ -521,8 +522,8 @@
             wedding_date: data.weddingDate || '2026-09-21 08:00:00+07',
             hosts_pria: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
             hosts_wanita: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
-            cover_image_pria: data.coverImagePria || '/bg.jpeg',
-            cover_image_wanita: data.coverImageWanita || '/bg.jpeg',
+            cover_image_pria: data.coverImagePria || 'bg.jpeg',
+            cover_image_wanita: data.coverImageWanita || 'bg.jpeg',
             // Acara Pria
             event_type_pria: schedP.title || 'Resepsi Pernikahan (Walimatul \'Urs)',
             event_day_pria: schedP.day || 'Ahad',
