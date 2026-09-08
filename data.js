@@ -5,7 +5,8 @@
 
 (function(root, factory) {
   const exportsObj = factory();
-  if (typeof exports === 'object' && typeof module !== 'undefined') {
+  if (typeof module !== 'undefined' && module.exports) {
+    Object.assign(exports, exportsObj);
     module.exports = exportsObj;
   }
   if (typeof define === 'function' && define.amd) {
@@ -80,7 +81,9 @@
         id: 'resepsi-pria',
         title: 'Resepsi Pernikahan (Walimatul \'Urs)',
         badge: 'Walimatul \'Urs',
-        date: 'Ahad, 21 September 2026',
+        day: 'Ahad',
+        date: '21 September 2026',
+        fullDate: 'Ahad, 21 September 2026',
         time: '10:00 WIB s/d Selesai',
         venue: 'Kediaman Mempelai Pria',
         address: 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
@@ -93,7 +96,9 @@
         id: 'resepsi-wanita',
         title: 'Akad Nikah & Resepsi Pernikahan',
         badge: 'Akad & Resepsi',
-        date: 'Ahad, 21 September 2026',
+        day: 'Ahad',
+        date: '21 September 2026',
+        fullDate: 'Ahad, 21 September 2026',
         time: '08:00 WIB s/d Selesai',
         venue: 'Kediaman Mempelai Wanita',
         address: 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
@@ -349,12 +354,53 @@
         if (cloudInfo && Array.isArray(cloudInfo) && cloudInfo.length > 0) {
           const info = cloudInfo[0];
           const currentWedding = this.getWeddingData();
+
+          let sPria = currentWedding.schedulesPria;
+          if (info.schedules_pria && Array.isArray(info.schedules_pria) && info.schedules_pria.length > 0) {
+            sPria = info.schedules_pria;
+          } else if (info.event_venue_pria) {
+            sPria = [{
+              id: 'resepsi-pria',
+              title: info.event_type_pria || 'Resepsi Pernikahan (Walimatul \'Urs)',
+              badge: info.event_badge_pria || 'Walimatul \'Urs',
+              day: info.event_day_pria || 'Ahad',
+              date: info.event_date_pria || '21 September 2026',
+              fullDate: (info.event_day_pria && info.event_date_pria) ? `${info.event_day_pria}, ${info.event_date_pria}` : (info.event_date_pria || 'Ahad, 21 September 2026'),
+              time: info.event_time_pria || '10:00 WIB s/d Selesai',
+              venue: info.event_venue_pria || 'Kediaman Mempelai Pria',
+              address: info.event_address_pria || '',
+              mapsUrl: info.event_maps_pria || '',
+              calendarUrl: (currentWedding.schedulesPria && currentWedding.schedulesPria[0] && currentWedding.schedulesPria[0].calendarUrl) || '#'
+            }];
+          }
+
+          let sWanita = currentWedding.schedulesWanita;
+          if (info.schedules_wanita && Array.isArray(info.schedules_wanita) && info.schedules_wanita.length > 0) {
+            sWanita = info.schedules_wanita;
+          } else if (info.event_venue_wanita) {
+            sWanita = [{
+              id: 'resepsi-wanita',
+              title: info.event_type_wanita || 'Akad Nikah & Resepsi Pernikahan',
+              badge: info.event_badge_wanita || 'Akad & Resepsi',
+              day: info.event_day_wanita || 'Ahad',
+              date: info.event_date_wanita || '21 September 2026',
+              fullDate: (info.event_day_wanita && info.event_date_wanita) ? `${info.event_day_wanita}, ${info.event_date_wanita}` : (info.event_date_wanita || 'Ahad, 21 September 2026'),
+              time: info.event_time_wanita || '08:00 WIB s/d Selesai',
+              venue: info.event_venue_wanita || 'Kediaman Mempelai Wanita',
+              address: info.event_address_wanita || '',
+              mapsUrl: info.event_maps_wanita || '',
+              calendarUrl: (currentWedding.schedulesWanita && currentWedding.schedulesWanita[0] && currentWedding.schedulesWanita[0].calendarUrl) || '#'
+            }];
+          }
+
           const merged = {
             ...currentWedding,
             hostsPria: info.hosts_pria || currentWedding.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
             hostsWanita: info.hosts_wanita || currentWedding.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
             coverImagePria: info.cover_image_pria || currentWedding.coverImagePria || '/bg.jpeg',
             coverImageWanita: info.cover_image_wanita || currentWedding.coverImageWanita || '/bg.jpeg',
+            schedulesPria: sPria,
+            schedulesWanita: sWanita,
             couple: {
               ...currentWedding.couple,
               groom: {
@@ -398,6 +444,12 @@
 
       const activeSide = (side === 'pria' || side === 'wanita') ? side : '';
       if (activeSide === 'pria') {
+        const rawList = (data.schedulesPria && data.schedulesPria.length > 0) ? data.schedulesPria : data.schedules;
+        const normalized = (rawList || []).map(s => {
+          const dateStr = s.fullDate || (s.day && s.date ? `${s.day}, ${s.date}` : s.date) || 'Ahad, 21 September 2026';
+          return { ...s, date: dateStr };
+        });
+        const primary = normalized[0] || {};
         return {
           ...data,
           activeSide: 'pria',
@@ -405,9 +457,17 @@
           tagline: 'The Wedding of Nuruddin & Silfi',
           hostsTitle: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
           coverImage: data.coverImagePria || '/bg.jpeg',
-          schedules: (data.schedulesPria && data.schedulesPria.length > 0) ? data.schedulesPria : data.schedules
+          formattedDate: primary.date || data.formattedDate,
+          dayName: primary.day || data.dayName || 'Ahad',
+          schedules: normalized
         };
       } else if (activeSide === 'wanita') {
+        const rawList = (data.schedulesWanita && data.schedulesWanita.length > 0) ? data.schedulesWanita : data.schedules;
+        const normalized = (rawList || []).map(s => {
+          const dateStr = s.fullDate || (s.day && s.date ? `${s.day}, ${s.date}` : s.date) || 'Ahad, 21 September 2026';
+          return { ...s, date: dateStr };
+        });
+        const primary = normalized[0] || {};
         return {
           ...data,
           activeSide: 'wanita',
@@ -415,7 +475,9 @@
           tagline: 'The Wedding of Silfi & Nuruddin',
           hostsTitle: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
           coverImage: data.coverImageWanita || '/bg.jpeg',
-          schedules: (data.schedulesWanita && data.schedulesWanita.length > 0) ? data.schedulesWanita : data.schedules
+          formattedDate: primary.date || data.formattedDate,
+          dayName: primary.day || data.dayName || 'Ahad',
+          schedules: normalized
         };
       }
 
@@ -441,6 +503,9 @@
 
         // Push to Supabase table wedding_info
         if (data && data.couple) {
+          const schedP = (data.schedulesPria && data.schedulesPria[0]) || {};
+          const schedW = (data.schedulesWanita && data.schedulesWanita[0]) || {};
+
           const payload = {
             groom_name: (data.couple.groom && data.couple.groom.name) || 'Nuruddin',
             groom_nickname: (data.couple.groom && data.couple.groom.nickname) || 'Nuruddin',
@@ -457,12 +522,30 @@
             hosts_pria: data.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
             hosts_wanita: data.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
             cover_image_pria: data.coverImagePria || '/bg.jpeg',
-            cover_image_wanita: data.coverImageWanita || '/bg.jpeg'
+            cover_image_wanita: data.coverImageWanita || '/bg.jpeg',
+            // Acara Pria
+            event_type_pria: schedP.title || 'Resepsi Pernikahan (Walimatul \'Urs)',
+            event_day_pria: schedP.day || 'Ahad',
+            event_date_pria: schedP.date || '21 September 2026',
+            event_time_pria: schedP.time || '10:00 WIB s/d Selesai',
+            event_venue_pria: schedP.venue || 'Kediaman Mempelai Pria',
+            event_address_pria: schedP.address || '',
+            event_maps_pria: schedP.mapsUrl || '',
+            schedules_pria: data.schedulesPria || [],
+            // Acara Wanita
+            event_type_wanita: schedW.title || 'Akad Nikah & Resepsi Pernikahan',
+            event_day_wanita: schedW.day || 'Ahad',
+            event_date_wanita: schedW.date || '21 September 2026',
+            event_time_wanita: schedW.time || '08:00 WIB s/d Selesai',
+            event_venue_wanita: schedW.venue || 'Kediaman Mempelai Wanita',
+            event_address_wanita: schedW.address || '',
+            event_maps_wanita: schedW.mapsUrl || '',
+            schedules_wanita: data.schedulesWanita || []
           };
           this.supabaseRequest('wedding_info?id=eq.1', 'PATCH', payload)
             .then(res => {
               if (!res) {
-                // Retry without new hosts / cover columns in case remote DB hasn't run schema migration yet
+                // Retry without new hosts / cover / event columns in case remote DB hasn't run schema migration yet
                 const fallbackPayload = {
                   groom_name: payload.groom_name,
                   groom_nickname: payload.groom_nickname,

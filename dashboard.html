@@ -512,6 +512,29 @@
       border: 1px solid rgba(190, 18, 60, 0.2);
     }
 
+    .couple-event-box {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .couple-event-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 4px;
+    }
+
+    .couple-event-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.2px;
+    }
+
     .couple-save-bar {
       position: sticky;
       bottom: 12px;
@@ -1782,6 +1805,55 @@
                   <input type="text" id="inputGroomIg" class="form-input" style="padding-left: 28px;" placeholder="nuruddin_bin_aliman">
                 </div>
               </div>
+
+              <!-- 3. Jadwal & Lokasi Acara Pihak Pria -->
+              <div class="couple-event-box">
+                <div class="couple-event-header">
+                  <i data-lucide="calendar" style="width: 15px; height: 15px; color: var(--primary);"></i>
+                  <span class="couple-event-title">Jadwal & Lokasi Acara (Pria)</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputPriaEventType">Jenis Acara (Opsional)</label>
+                  <input type="text" id="inputPriaEventType" class="form-input" placeholder="Contoh: Resepsi Pernikahan (Walimatul 'Urs)">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputPriaEventBadge">Label Badge Acara</label>
+                  <input type="text" id="inputPriaEventBadge" class="form-input" placeholder="Contoh: Walimatul 'Urs">
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="inputPriaEventDay">Hari Acara</label>
+                    <input type="text" id="inputPriaEventDay" class="form-input" placeholder="Contoh: Ahad">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="inputPriaEventDate">Tanggal Acara</label>
+                    <input type="text" id="inputPriaEventDate" class="form-input" placeholder="Contoh: 21 September 2026">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputPriaEventTime">Waktu / Jam Pelaksanaan</label>
+                  <input type="text" id="inputPriaEventTime" class="form-input" placeholder="Contoh: 10:00 WIB s/d Selesai">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputPriaEventVenue">Nama Lokasi / Tempat (Venue)</label>
+                  <input type="text" id="inputPriaEventVenue" class="form-input" placeholder="Contoh: Kediaman Mempelai Pria">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputPriaEventAddress">Alamat Lokasi Lengkap</label>
+                  <textarea id="inputPriaEventAddress" class="form-input" rows="2" style="min-height: 60px; resize: vertical; padding: 8px 12px; font-size: 0.85rem;" placeholder="Contoh: Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="inputPriaEventMaps">Link Google Maps (Opsional)</label>
+                  <input type="url" id="inputPriaEventMaps" class="form-input" placeholder="https://maps.app.goo.gl/...">
+                </div>
+              </div>
             </div>
 
             <!-- 2. KARTU MEMPELAI WANITA -->
@@ -1855,6 +1927,55 @@
                 <div style="position: relative;">
                   <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-subtle); font-weight: 600;">@</span>
                   <input type="text" id="inputBrideIg" class="form-input" style="padding-left: 28px;" placeholder="chilpy04">
+                </div>
+              </div>
+
+              <!-- 3. Jadwal & Lokasi Acara Pihak Wanita -->
+              <div class="couple-event-box">
+                <div class="couple-event-header">
+                  <i data-lucide="calendar" style="width: 15px; height: 15px; color: #BE123C;"></i>
+                  <span class="couple-event-title">Jadwal & Lokasi Acara (Wanita)</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputWanitaEventType">Jenis Acara (Opsional)</label>
+                  <input type="text" id="inputWanitaEventType" class="form-input" placeholder="Contoh: Akad Nikah & Resepsi Pernikahan">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputWanitaEventBadge">Label Badge Acara</label>
+                  <input type="text" id="inputWanitaEventBadge" class="form-input" placeholder="Contoh: Akad & Resepsi">
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="inputWanitaEventDay">Hari Acara</label>
+                    <input type="text" id="inputWanitaEventDay" class="form-input" placeholder="Contoh: Ahad">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="inputWanitaEventDate">Tanggal Acara</label>
+                    <input type="text" id="inputWanitaEventDate" class="form-input" placeholder="Contoh: 21 September 2026">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputWanitaEventTime">Waktu / Jam Pelaksanaan</label>
+                  <input type="text" id="inputWanitaEventTime" class="form-input" placeholder="Contoh: 08:00 WIB s/d Selesai">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputWanitaEventVenue">Nama Lokasi / Tempat (Venue)</label>
+                  <input type="text" id="inputWanitaEventVenue" class="form-input" placeholder="Contoh: Kediaman Mempelai Wanita">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inputWanitaEventAddress">Alamat Lokasi Lengkap</label>
+                  <textarea id="inputWanitaEventAddress" class="form-input" rows="2" style="min-height: 60px; resize: vertical; padding: 8px 12px; font-size: 0.85rem;" placeholder="Contoh: Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="inputWanitaEventMaps">Link Google Maps (Opsional)</label>
+                  <input type="url" id="inputWanitaEventMaps" class="form-input" placeholder="https://maps.app.goo.gl/...">
                 </div>
               </div>
             </div>
@@ -2596,6 +2717,28 @@
 
         document.getElementById('inputHostsPria').value = wData.hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah';
         document.getElementById('inputHostsWanita').value = wData.hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah';
+
+        // Jadwal & Lokasi Acara Pihak Pria
+        const schedPria = (wData.schedulesPria && wData.schedulesPria[0]) || {};
+        document.getElementById('inputPriaEventType').value = schedPria.title || 'Resepsi Pernikahan (Walimatul \'Urs)';
+        document.getElementById('inputPriaEventBadge').value = schedPria.badge || 'Walimatul \'Urs';
+        document.getElementById('inputPriaEventDay').value = schedPria.day || 'Ahad';
+        document.getElementById('inputPriaEventDate').value = schedPria.date || '21 September 2026';
+        document.getElementById('inputPriaEventTime').value = schedPria.time || '10:00 WIB s/d Selesai';
+        document.getElementById('inputPriaEventVenue').value = schedPria.venue || 'Kediaman Mempelai Pria';
+        document.getElementById('inputPriaEventAddress').value = schedPria.address || 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur';
+        document.getElementById('inputPriaEventMaps').value = schedPria.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
+
+        // Jadwal & Lokasi Acara Pihak Wanita
+        const schedWanita = (wData.schedulesWanita && wData.schedulesWanita[0]) || {};
+        document.getElementById('inputWanitaEventType').value = schedWanita.title || 'Akad Nikah & Resepsi Pernikahan';
+        document.getElementById('inputWanitaEventBadge').value = schedWanita.badge || 'Akad & Resepsi';
+        document.getElementById('inputWanitaEventDay').value = schedWanita.day || 'Ahad';
+        document.getElementById('inputWanitaEventDate').value = schedWanita.date || '21 September 2026';
+        document.getElementById('inputWanitaEventTime').value = schedWanita.time || '08:00 WIB s/d Selesai';
+        document.getElementById('inputWanitaEventVenue').value = schedWanita.venue || 'Kediaman Mempelai Wanita';
+        document.getElementById('inputWanitaEventAddress').value = schedWanita.address || 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)';
+        document.getElementById('inputWanitaEventMaps').value = schedWanita.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
       }
 
       // High-performance canvas-based client compression for mobile devices
@@ -2748,18 +2891,77 @@
         const hostsPria = document.getElementById('inputHostsPria').value.trim();
         const hostsWanita = document.getElementById('inputHostsWanita').value.trim();
 
+        // Data Acara Pihak Pria
+        const priaTitle = document.getElementById('inputPriaEventType').value.trim() || 'Resepsi Pernikahan (Walimatul \'Urs)';
+        const priaBadge = document.getElementById('inputPriaEventBadge').value.trim() || 'Walimatul \'Urs';
+        const priaDay = document.getElementById('inputPriaEventDay').value.trim() || 'Ahad';
+        const priaDate = document.getElementById('inputPriaEventDate').value.trim() || '21 September 2026';
+        const priaTime = document.getElementById('inputPriaEventTime').value.trim() || '10:00 WIB s/d Selesai';
+        const priaVenue = document.getElementById('inputPriaEventVenue').value.trim() || 'Kediaman Mempelai Pria';
+        const priaAddress = document.getElementById('inputPriaEventAddress').value.trim();
+        const priaMaps = document.getElementById('inputPriaEventMaps').value.trim();
+
+        // Data Acara Pihak Wanita
+        const wanitaTitle = document.getElementById('inputWanitaEventType').value.trim() || 'Akad Nikah & Resepsi Pernikahan';
+        const wanitaBadge = document.getElementById('inputWanitaEventBadge').value.trim() || 'Akad & Resepsi';
+        const wanitaDay = document.getElementById('inputWanitaEventDay').value.trim() || 'Ahad';
+        const wanitaDate = document.getElementById('inputWanitaEventDate').value.trim() || '21 September 2026';
+        const wanitaTime = document.getElementById('inputWanitaEventTime').value.trim() || '08:00 WIB s/d Selesai';
+        const wanitaVenue = document.getElementById('inputWanitaEventVenue').value.trim() || 'Kediaman Mempelai Wanita';
+        const wanitaAddress = document.getElementById('inputWanitaEventAddress').value.trim();
+        const wanitaMaps = document.getElementById('inputWanitaEventMaps').value.trim();
+
         if (!groomName || !brideName) {
           showToast('Nama mempelai pria dan wanita wajib diisi');
           return;
         }
 
         const currentW = storage.getWeddingData();
+        const existingPriaSched = (currentW.schedulesPria && currentW.schedulesPria[0]) || {};
+        const existingWanitaSched = (currentW.schedulesWanita && currentW.schedulesWanita[0]) || {};
+
+        const updatedSchedulesPria = [
+          {
+            ...existingPriaSched,
+            id: existingPriaSched.id || 'resepsi-pria',
+            title: priaTitle,
+            badge: priaBadge,
+            day: priaDay,
+            date: priaDate,
+            fullDate: (priaDay && priaDate) ? `${priaDay}, ${priaDate}` : (priaDate || 'Ahad, 21 September 2026'),
+            time: priaTime,
+            venue: priaVenue,
+            address: priaAddress || 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
+            mapsUrl: priaMaps || existingPriaSched.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+            calendarUrl: existingPriaSched.calendarUrl || '#'
+          }
+        ];
+
+        const updatedSchedulesWanita = [
+          {
+            ...existingWanitaSched,
+            id: existingWanitaSched.id || 'resepsi-wanita',
+            title: wanitaTitle,
+            badge: wanitaBadge,
+            day: wanitaDay,
+            date: wanitaDate,
+            fullDate: (wanitaDay && wanitaDate) ? `${wanitaDay}, ${wanitaDate}` : (wanitaDate || 'Ahad, 21 September 2026'),
+            time: wanitaTime,
+            venue: wanitaVenue,
+            address: wanitaAddress || 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
+            mapsUrl: wanitaMaps || existingWanitaSched.mapsUrl || 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
+            calendarUrl: existingWanitaSched.calendarUrl || '#'
+          }
+        ];
+
         const updatedWeddingData = {
           ...currentW,
           hostsPria: hostsPria || 'Keluarga Bpk. Misraji & Ibu Hasibah',
           hostsWanita: hostsWanita || 'Keluarga Bpk. Paiman & Ibu Aliyah',
           coverImagePria: currentGroomCover,
           coverImageWanita: currentBrideCover,
+          schedulesPria: updatedSchedulesPria,
+          schedulesWanita: updatedSchedulesWanita,
           couple: {
             ...currentW.couple,
             groom: {
@@ -2785,7 +2987,7 @@
 
         storage.saveWeddingData(updatedWeddingData);
         weddingData = updatedWeddingData;
-        showToast('Data & foto kedua mempelai berhasil disimpan!');
+        showToast('Data, foto, dan jadwal acara kedua mempelai berhasil disimpan!');
       };
 
       // Real-time Event Listeners
