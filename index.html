@@ -927,9 +927,7 @@
 <body>
 
   <!-- Background Audio Player -->
-  <audio id="bgAudio" preload="auto" loop>
-    <source src="/janjisuci.mp3" type="audio/mp3">
-  </audio>
+  <audio id="bgAudio" src="/janjisuci.mp3" preload="auto" loop playsinline></audio>
 
   <!-- Toast Notification -->
   <div id="toastNotification">
@@ -1046,7 +1044,7 @@
         <h3 class="couple-name font-serif" id="groomName">Nuruddin</h3>
         <p class="couple-parents" id="groomParents">Putra Pertama dari Bpk. Misraji & Ibu Hasibah</p>
         <a href="https://instagram.com/nuruddin_bin_aliman" target="_blank" class="btn-ig" id="groomIgLink">
-          <i data-lucide="instagram" style="width: 16px; height: 16px; color: #E1306C;"></i>
+          <svg style="width: 16px; height: 16px; fill: none; stroke: #E1306C; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           <span id="groomIgHandle">@nuruddin_bin_aliman</span>
         </a>
       </div>
@@ -1062,7 +1060,7 @@
         <h3 class="couple-name font-serif" id="brideName">Silfiana</h3>
         <p class="couple-parents" id="brideParents">Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah</p>
         <a href="https://instagram.com/chilpy04" target="_blank" class="btn-ig" id="brideIgLink">
-          <i data-lucide="instagram" style="width: 16px; height: 16px; color: #E1306C;"></i>
+          <svg style="width: 16px; height: 16px; fill: none; stroke: #E1306C; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           <span id="brideIgHandle">@chilpy04</span>
         </a>
       </div>
@@ -1236,7 +1234,10 @@
         }
 
         const audioSrc = (weddingData.audioUrl && !weddingData.audioUrl.includes('romantic-wedding-soundtrack')) ? weddingData.audioUrl : '/janjisuci.mp3';
-        bgAudio.src = audioSrc;
+        if (!bgAudio.src || (!bgAudio.src.endsWith(audioSrc) && !bgAudio.src.endsWith('/janjisuci.mp3'))) {
+          bgAudio.src = audioSrc;
+          bgAudio.load();
+        }
 
         // Schedules
         const schedContainer = document.getElementById('scheduleContainer');
@@ -1349,11 +1350,27 @@
         
         // Background Audio Playback
         if (bgAudio) {
-          bgAudio.play().then(() => {
-            audioToggleBtn.classList.add('rotating');
-          }).catch(err => {
-            console.log('Audio autoplay prevented or audio file not reachable:', err);
-          });
+          if (!bgAudio.src || bgAudio.src === '') {
+            bgAudio.src = '/janjisuci.mp3';
+            bgAudio.load();
+          }
+          const playPromise = bgAudio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              audioToggleBtn.classList.add('rotating');
+            }).catch(err => {
+              console.warn('Audio autoplay waiting for user tap/click:', err);
+              const unlockAudio = function() {
+                bgAudio.play().then(() => {
+                  audioToggleBtn.classList.add('rotating');
+                }).catch(() => {});
+                document.removeEventListener('click', unlockAudio);
+                document.removeEventListener('touchstart', unlockAudio);
+              };
+              document.addEventListener('click', unlockAudio, { once: true });
+              document.addEventListener('touchstart', unlockAudio, { once: true });
+            });
+          }
         }
 
         // Confetti burst
@@ -1484,11 +1501,15 @@
       // Audio Toggle Action
       audioToggleBtn.onclick = function() {
         if (bgAudio.paused) {
+          if (!bgAudio.src || bgAudio.src === '') {
+            bgAudio.src = '/janjisuci.mp3';
+            bgAudio.load();
+          }
           bgAudio.play().then(() => {
             audioToggleBtn.classList.add('rotating');
             showToast('Musik diputar');
           }).catch(err => {
-            showToast('Memutar musik...');
+            showToast('Ketuk layar untuk memutar musik');
           });
         } else {
           bgAudio.pause();
