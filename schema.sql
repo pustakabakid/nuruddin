@@ -50,29 +50,29 @@ CREATE TABLE IF NOT EXISTS wedding_info (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Migrasi jika tabel wedding_info sudah pernah dibuat di database:
--- ALTER TABLE wedding_info ALTER COLUMN groom_avatar TYPE TEXT;
--- ALTER TABLE wedding_info ALTER COLUMN bride_avatar TYPE TEXT;
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_pria TEXT DEFAULT 'bg.jpeg';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_wanita TEXT DEFAULT 'bg.jpeg';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_type_pria VARCHAR(150) DEFAULT 'Resepsi Pernikahan (Walimatul ''Urs)';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_day_pria VARCHAR(50) DEFAULT 'Ahad';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_date_pria VARCHAR(100) DEFAULT '21 September 2026';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_time_pria VARCHAR(100) DEFAULT '10:00 WIB s/d Selesai';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_venue_pria VARCHAR(200) DEFAULT 'Kediaman Mempelai Pria';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_address_pria TEXT DEFAULT 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_maps_pria TEXT DEFAULT 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS schedules_pria JSONB;
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_type_wanita VARCHAR(150) DEFAULT 'Akad Nikah & Resepsi Pernikahan';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_day_wanita VARCHAR(50) DEFAULT 'Ahad';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_date_wanita VARCHAR(100) DEFAULT '21 September 2026';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_time_wanita VARCHAR(100) DEFAULT '08:00 WIB s/d Selesai';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_venue_wanita VARCHAR(200) DEFAULT 'Kediaman Mempelai Wanita';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_address_wanita TEXT DEFAULT 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_maps_wanita TEXT DEFAULT 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
--- ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS schedules_wanita JSONB;
+-- Pastikan kolom baru selalu ditambahkan jika tabel wedding_info sudah ada sebelumnya:
+ALTER TABLE wedding_info ALTER COLUMN groom_avatar TYPE TEXT;
+ALTER TABLE wedding_info ALTER COLUMN bride_avatar TYPE TEXT;
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_pria VARCHAR(255) DEFAULT 'Keluarga Bpk. Misraji & Ibu Hasibah';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS hosts_wanita VARCHAR(255) DEFAULT 'Keluarga Bpk. Paiman & Ibu Aliyah';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_pria TEXT DEFAULT 'bg.jpeg';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS cover_image_wanita TEXT DEFAULT 'bg.jpeg';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_type_pria VARCHAR(150) DEFAULT 'Resepsi Pernikahan (Walimatul ''Urs)';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_day_pria VARCHAR(50) DEFAULT 'Ahad';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_date_pria VARCHAR(100) DEFAULT '21 September 2026';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_time_pria VARCHAR(100) DEFAULT '10:00 WIB s/d Selesai';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_venue_pria VARCHAR(200) DEFAULT 'Kediaman Mempelai Pria';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_address_pria TEXT DEFAULT 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_maps_pria TEXT DEFAULT 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS schedules_pria JSONB;
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_type_wanita VARCHAR(150) DEFAULT 'Akad Nikah & Resepsi Pernikahan';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_day_wanita VARCHAR(50) DEFAULT 'Ahad';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_date_wanita VARCHAR(100) DEFAULT '21 September 2026';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_time_wanita VARCHAR(100) DEFAULT '08:00 WIB s/d Selesai';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_venue_wanita VARCHAR(200) DEFAULT 'Kediaman Mempelai Wanita';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_address_wanita TEXT DEFAULT 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS event_maps_wanita TEXT DEFAULT 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8';
+ALTER TABLE wedding_info ADD COLUMN IF NOT EXISTS schedules_wanita JSONB;
 
 -- ----------------------------------------------------------
 -- 2. TABEL: DAFTAR TAMU PENERIMA UNDANGAN (GUESTS)
@@ -92,10 +92,8 @@ CREATE TABLE IF NOT EXISTS guests (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Migrasi (jika tabel guests sudah pernah dibuat di database):
--- ALTER TABLE guests ADD COLUMN IF NOT EXISTS side VARCHAR(20) DEFAULT 'pria';
--- ALTER TABLE guests DROP COLUMN IF EXISTS category;
--- ALTER TABLE guests DROP COLUMN IF EXISTS table_seat;
+-- Pastikan kolom side selalu ada jika tabel guests sudah dibuat sebelumnya:
+ALTER TABLE guests ADD COLUMN IF NOT EXISTS side VARCHAR(20) DEFAULT 'pria';
 
 CREATE INDEX IF NOT EXISTS idx_guests_phone ON guests (phone);
 CREATE INDEX IF NOT EXISTS idx_guests_side ON guests (side);
@@ -158,7 +156,25 @@ INSERT INTO wedding_info (
     'Kediaman Mempelai Pria', 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur', 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
     'Resepsi Pernikahan (Walimatul ''Urs)', 'Ahad', '21 September 2026', '10:00 WIB s/d Selesai', 'Kediaman Mempelai Pria', 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur', 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8',
     'Akad Nikah & Resepsi Pernikahan', 'Ahad', '21 September 2026', '08:00 WIB s/d Selesai', 'Kediaman Mempelai Wanita', 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)', 'https://maps.app.goo.gl/eXsw8jBtcK1uvuib8'
-) ON CONFLICT (id) DO NOTHING;
+) ON CONFLICT (id) DO UPDATE SET
+    hosts_pria = EXCLUDED.hosts_pria,
+    hosts_wanita = EXCLUDED.hosts_wanita,
+    cover_image_pria = EXCLUDED.cover_image_pria,
+    cover_image_wanita = EXCLUDED.cover_image_wanita,
+    event_type_pria = EXCLUDED.event_type_pria,
+    event_day_pria = EXCLUDED.event_day_pria,
+    event_date_pria = EXCLUDED.event_date_pria,
+    event_time_pria = EXCLUDED.event_time_pria,
+    event_venue_pria = EXCLUDED.event_venue_pria,
+    event_address_pria = EXCLUDED.event_address_pria,
+    event_maps_pria = EXCLUDED.event_maps_pria,
+    event_type_wanita = EXCLUDED.event_type_wanita,
+    event_day_wanita = EXCLUDED.event_day_wanita,
+    event_date_wanita = EXCLUDED.event_date_wanita,
+    event_time_wanita = EXCLUDED.event_time_wanita,
+    event_venue_wanita = EXCLUDED.event_venue_wanita,
+    event_address_wanita = EXCLUDED.event_address_wanita,
+    event_maps_wanita = EXCLUDED.event_maps_wanita;
 
 -- 2. Seed Data Tamu Contoh
 INSERT INTO guests (id, name, phone, pax, side, status, checked_in, created_at) VALUES
