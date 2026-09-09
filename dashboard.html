@@ -4048,7 +4048,8 @@
           const w = wishes.find(item => item.id === id);
           if (w) {
             document.getElementById('wishDetailSenderName').textContent = w.name;
-            document.getElementById('wishDetailTimestamp').textContent = w.timestamp || 'Waktu tidak tercatat';
+            const displayTs = (window.WeddingStorage && WeddingStorage.formatWishTimestamp) ? WeddingStorage.formatWishTimestamp(w.timestamp) : (w.timestamp || 'Waktu tidak tercatat');
+            document.getElementById('wishDetailTimestamp').textContent = displayTs || 'Waktu tidak tercatat';
             document.getElementById('wishDetailAttendanceBadge').innerHTML = `<span class="status-badge ${w.attendance}">${formatStatus(w.attendance)}</span>`;
             document.getElementById('wishDetailMessage').textContent = w.message;
             document.getElementById('wishDetailModal').classList.add('open');
@@ -4363,7 +4364,10 @@
 
             if (this.classList.contains('ev-input-title')) targetList[idx].title = this.value;
             if (this.classList.contains('ev-input-badge')) targetList[idx].badge = this.value;
-            if (this.classList.contains('ev-input-day')) targetList[idx].day = this.value;
+            if (this.classList.contains('ev-input-day')) {
+              targetList[idx].day = this.value;
+              targetList[idx].fullDate = (this.value && targetList[idx].date) ? `${this.value}, ${targetList[idx].date}` : (targetList[idx].date || this.value);
+            }
             if (this.classList.contains('ev-input-date')) {
               targetList[idx].date = this.value;
               targetList[idx].fullDate = (targetList[idx].day && this.value) ? `${targetList[idx].day}, ${this.value}` : this.value;

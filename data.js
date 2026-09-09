@@ -69,7 +69,7 @@
         name: 'Nuruddin',
         nickname: 'Nuruddin',
         parents: 'Putra Pertama dari Bpk. Misraji & Ibu Hasibah',
-        avatar: 'avatar-empty.svg',
+        avatar: '1.jpg',
         instagram: 'nuruddin_bin_aliman',
         instagramUrl: 'https://instagram.com/nuruddin_bin_aliman'
       },
@@ -77,7 +77,7 @@
         name: 'Silfiana',
         nickname: 'Silfi',
         parents: 'Putri ke-Dua dari Bpk. Paiman & Ibu Aliyah',
-        avatar: 'avatar-empty.svg',
+        avatar: '2.jpg',
         instagram: 'chilpy04',
         instagramUrl: 'https://instagram.com/chilpy04'
       },
@@ -85,8 +85,8 @@
       tagline: 'The Wedding of Silfi & Nuruddin'
     },
     weddingDate: '2026-09-21T08:00:00+07:00',
-    dayName: 'Ahad',
-    formattedDate: 'Ahad, 21 September 2026',
+    dayName: 'Senin',
+    formattedDate: 'Senin, 21 September 2026',
     formattedDateShort: '21 • 09 • 2026',
     audioUrl: 'janjisuci.mp3',
     quote: {
@@ -99,7 +99,9 @@
         id: 'resepsi',
         title: 'Resepsi Pernikahan (Walimatul \'Urs)',
         badge: 'Walimatul \'Urs',
-        date: 'Ahad, 21 September 2026',
+        day: 'Senin',
+        date: '21 September 2026',
+        fullDate: 'Senin, 21 September 2026',
         time: '10:00 WIB s/d Selesai',
         venue: 'Kediaman Mempelai Pria',
         address: 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
@@ -112,9 +114,9 @@
         id: 'resepsi-pria',
         title: 'Resepsi Pernikahan (Walimatul \'Urs)',
         badge: 'Walimatul \'Urs',
-        day: 'Ahad',
+        day: 'Senin',
         date: '21 September 2026',
-        fullDate: 'Ahad, 21 September 2026',
+        fullDate: 'Senin, 21 September 2026',
         time: '10:00 WIB s/d Selesai',
         venue: 'Kediaman Mempelai Pria',
         address: 'Tawonsongo, Kec. Pasrujambe, Kab. Lumajang, Jawa Timur',
@@ -127,9 +129,9 @@
         id: 'akad-wanita',
         title: 'Akad Nikah',
         badge: 'Akad Nikah',
-        day: 'Sabtu',
+        day: 'Ahad',
         date: '20 September 2026',
-        fullDate: 'Sabtu, 20 September 2026',
+        fullDate: 'Ahad, 20 September 2026',
         time: '08:00 WIB s/d 10:00 WIB',
         venue: 'Kediaman Mempelai Wanita',
         address: 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
@@ -140,9 +142,9 @@
         id: 'resepsi-wanita',
         title: 'Resepsi Pernikahan',
         badge: 'Resepsi',
-        day: 'Ahad',
+        day: 'Senin',
         date: '21 September 2026',
-        fullDate: 'Ahad, 21 September 2026',
+        fullDate: 'Senin, 21 September 2026',
         time: '10:00 WIB s/d Selesai',
         venue: 'Kediaman Mempelai Wanita',
         address: 'Kediaman Mempelai Wanita (Keluarga Bpk. Paiman & Ibu Aliyah)',
@@ -152,8 +154,8 @@
     ],
     hostsPria: 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hostsWanita: 'Keluarga Bpk. Paiman & Ibu Aliyah',
-    coverImagePria: '',
-    coverImageWanita: '',
+    coverImagePria: 'bb.jpg',
+    coverImageWanita: 'bb.jpg',
     loveStories: [
       {
         id: 'story-1',
@@ -275,7 +277,7 @@
       attendance: 'hadir',
       pax: 2,
       message: 'Selamat untuk kedua mempelai Silfi & Nuruddin, semoga rukun bahagia selalu sampai kakek nenek.',
-      timestamp: 'Senin, 01 September 2026 10:15 WIB',
+      timestamp: 'Senin, 01 Sep 2026 10:15 WIB',
       likes: 4
     },
     {
@@ -284,7 +286,7 @@
       attendance: 'hadir',
       pax: 2,
       message: 'Selamat menempuh hidup baru bro Nuruddin & Mbak Silfi! Lancar acaranya ya, nanti kita kumpul seru!',
-      timestamp: 'Selasa, 02 September 2026 11:32 WIB',
+      timestamp: 'Selasa, 02 Sep 2026 11:32 WIB',
       likes: 2
     },
     {
@@ -293,7 +295,7 @@
       attendance: 'ragu',
       pax: 1,
       message: 'Happy wedding Silfi cantik & Mas Nuruddin! Semoga menjadi keluarga yang sakinah mawaddah warahmah. Aamiin ya rabbal alamin.',
-      timestamp: 'Rabu, 03 September 2026 16:05 WIB',
+      timestamp: 'Rabu, 03 Sep 2026 16:05 WIB',
       likes: 5
     },
     {
@@ -302,7 +304,7 @@
       attendance: 'tidak_hadir',
       pax: 0,
       message: 'Selamat Mas Nuruddin & Mbak Silfi! Mohon maaf belum bisa hadir langsung karena dinas luar kota, doa terbaik untuk kalian berdua.',
-      timestamp: 'Jumat, 05 September 2026 14:22 WIB',
+      timestamp: 'Jumat, 05 Sep 2026 14:22 WIB',
       likes: 1
     }
   ];
@@ -444,14 +446,7 @@
             attendance: this.normalizeStatus(w.attendance),
             pax: w.pax || 1,
             message: w.message || '',
-            timestamp: w.created_at ? new Date(w.created_at).toLocaleString('id-ID', {
-              weekday: 'long',
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            }) + ' WIB' : '',
+            timestamp: this.formatWishTimestamp(w.created_at || new Date()),
             likes: w.likes_count || 0
           }));
           this.saveWishes(mappedW);
@@ -582,7 +577,7 @@
           id: s.id || `acara-${idx + 1}`,
           title: s.title || `Acara ${idx + 1}`,
           badge: s.badge || (idx === 0 ? 'Utama' : 'Acara'),
-          day: s.day || 'Ahad',
+          day: s.day || (dateStr.includes('20') ? 'Ahad' : 'Senin'),
           date: s.date || '21 September 2026',
           fullDate: dateStr,
           time: s.time || '10:00 WIB s/d Selesai',
@@ -596,18 +591,24 @@
 
     formatScheduleDateSummary(normalizedList) {
       if (!normalizedList || normalizedList.length === 0) {
-        return { formattedDate: '21 September 2026', dayName: 'Ahad' };
+        return { formattedDate: 'Senin, 21 September 2026', dayName: 'Senin' };
       }
       if (normalizedList.length === 1) {
+        const item = normalizedList[0];
+        const day = item.day || (item.date && item.date.includes('20') ? 'Ahad' : 'Senin');
+        let fDate = item.fullDate || item.date || '21 September 2026';
+        if (day && !fDate.toLowerCase().includes(day.toLowerCase())) {
+          fDate = `${day}, ${fDate}`;
+        }
         return {
-          formattedDate: normalizedList[0].fullDate || normalizedList[0].date || '21 September 2026',
-          dayName: normalizedList[0].day || 'Ahad'
+          formattedDate: fDate,
+          dayName: day
         };
       }
       const uniqueDays = [...new Set(normalizedList.map(s => s.day).filter(Boolean))];
       const uniqueDates = [...new Set(normalizedList.map(s => s.date).filter(Boolean))];
       
-      const daySummary = uniqueDays.join(' & ') || normalizedList[0].day || 'Ahad';
+      const daySummary = uniqueDays.join(' & ') || normalizedList[0].day || 'Ahad & Senin';
       let dateSummary = normalizedList[0].date;
       if (uniqueDates.length > 1) {
         const dayNums = uniqueDates.map(d => {
@@ -621,8 +622,9 @@
           dateSummary = uniqueDates.join(' & ');
         }
       }
+      const finalFormatted = daySummary ? `${daySummary}, ${dateSummary}` : dateSummary;
       return {
-        formattedDate: dateSummary,
+        formattedDate: finalFormatted,
         dayName: daySummary
       };
     },
@@ -640,8 +642,8 @@
 
       const rawGroomAvatar = (data.couple && data.couple.groom && data.couple.groom.avatar) || '';
       const rawBrideAvatar = (data.couple && data.couple.bride && data.couple.bride.avatar) || '';
-      const cleanGroomAvatar = (rawGroomAvatar && rawGroomAvatar !== '1.jpg' && !rawGroomAvatar.includes('groom-andra')) ? rawGroomAvatar : 'avatar-empty.svg';
-      const cleanBrideAvatar = (rawBrideAvatar && rawBrideAvatar !== '2.jpg' && !rawBrideAvatar.includes('bride-clara')) ? rawBrideAvatar : 'avatar-empty.svg';
+      const cleanGroomAvatar = (rawGroomAvatar && !rawGroomAvatar.includes('groom-andra')) ? rawGroomAvatar : '1.jpg';
+      const cleanBrideAvatar = (rawBrideAvatar && !rawBrideAvatar.includes('bride-clara')) ? rawBrideAvatar : '2.jpg';
 
       const normalizedCouple = {
         ...data.couple,
@@ -670,9 +672,9 @@
           combinedTitle: combined,
           tagline: tag,
           hostsTitle: data.hostsPria || 'Keluarga Besar Pria',
-          coverImage: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : '',
+          coverImage: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : 'bb.jpg',
           formattedDate: dateSum.formattedDate || data.formattedDate,
-          dayName: dateSum.dayName || data.dayName || 'Ahad',
+          dayName: dateSum.dayName || data.dayName || 'Senin',
           schedules: normalized
         };
       } else if (activeSide === 'wanita') {
@@ -690,9 +692,9 @@
           combinedTitle: combined,
           tagline: tag,
           hostsTitle: data.hostsWanita || 'Keluarga Besar Wanita',
-          coverImage: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : '',
+          coverImage: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : 'bb.jpg',
           formattedDate: dateSum.formattedDate || data.formattedDate,
-          dayName: dateSum.dayName || data.dayName || 'Ahad',
+          dayName: dateSum.dayName || data.dayName || 'Ahad & Senin',
           schedules: normalized
         };
       } else if (activeSide && activeSide !== 'default') {
@@ -937,13 +939,58 @@
       return true;
     },
 
+    formatWishTimestamp(input) {
+      if (!input) return '';
+      let str = '';
+      if (input instanceof Date || (typeof input === 'string' && /^\d{4}-\d{2}-\d{2}/.test(input))) {
+        const d = new Date(input);
+        if (!isNaN(d.getTime())) {
+          str = d.toLocaleString('id-ID', {
+            weekday: 'long',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }) + ' WIB';
+        }
+      }
+      if (!str) str = String(input);
+      // Ganti nama bulan lengkap Indonesia menjadi singkatan 3 huruf (September -> Sep, dll.)
+      const monthMap = {
+        'Januari': 'Jan',
+        'Februari': 'Feb',
+        'Maret': 'Mar',
+        'April': 'Apr',
+        'Mei': 'Mei',
+        'Juni': 'Jun',
+        'Juli': 'Jul',
+        'Agustus': 'Agu',
+        'September': 'Sep',
+        'Oktober': 'Okt',
+        'November': 'Nov',
+        'Desember': 'Des'
+      };
+      for (const [fullM, shortM] of Object.entries(monthMap)) {
+        if (str.includes(fullM)) {
+          str = str.replace(new RegExp(fullM, 'g'), shortM);
+        }
+      }
+      return str;
+    },
+
     getWishes() {
+      let list = DEFAULT_WISHES;
       try {
         const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.WISHES) : null;
-        return stored ? JSON.parse(stored) : DEFAULT_WISHES;
+        list = stored ? JSON.parse(stored) : DEFAULT_WISHES;
       } catch (e) {
-        return DEFAULT_WISHES;
+        list = DEFAULT_WISHES;
       }
+      return list.map(w => ({
+        ...w,
+        timestamp: this.formatWishTimestamp(w.timestamp)
+      }));
     },
 
     saveWishes(wishes) {
@@ -968,14 +1015,7 @@
         attendance: this.normalizeStatus(wish.attendance || 'hadir'),
         pax: parseInt(wish.pax, 10) || 1,
         message: (wish.message || '').trim(),
-        timestamp: new Date().toLocaleString('id-ID', {
-          weekday: 'long',
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        }) + ' WIB',
+        timestamp: this.formatWishTimestamp(new Date()),
         likes: 0
       };
       wishes.unshift(newWish);
