@@ -154,8 +154,8 @@
     ],
     hostsPria: 'Keluarga Bpk. Misraji & Ibu Hasibah',
     hostsWanita: 'Keluarga Bpk. Paiman & Ibu Aliyah',
-    coverImagePria: 'bb.jpg',
-    coverImageWanita: 'bb.jpg',
+    coverImagePria: '',
+    coverImageWanita: '',
     loveStories: [
       {
         id: 'story-1',
@@ -672,7 +672,7 @@
           combinedTitle: combined,
           tagline: tag,
           hostsTitle: data.hostsPria || 'Keluarga Besar Pria',
-          coverImage: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : 'bb.jpg',
+          coverImage: (data.coverImagePria && data.coverImagePria !== 'bg.jpeg') ? data.coverImagePria : '',
           formattedDate: dateSum.formattedDate || data.formattedDate,
           dayName: dateSum.dayName || data.dayName || 'Senin',
           schedules: normalized
@@ -692,7 +692,7 @@
           combinedTitle: combined,
           tagline: tag,
           hostsTitle: data.hostsWanita || 'Keluarga Besar Wanita',
-          coverImage: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : 'bb.jpg',
+          coverImage: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : '',
           formattedDate: dateSum.formattedDate || data.formattedDate,
           dayName: dateSum.dayName || data.dayName || 'Ahad & Senin',
           schedules: normalized
