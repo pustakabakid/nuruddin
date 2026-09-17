@@ -4312,11 +4312,11 @@
               <div class="form-grid-2">
                 <div class="form-group" style="margin-bottom: 0;">
                   <label class="form-label">Hari Acara</label>
-                  <input type="text" class="form-input ev-input-day" data-side="${side}" data-idx="${idx}" value="${ev.day || 'Senin'}" placeholder="Contoh: Senin">
+                  <input type="text" class="form-input ev-input-day" data-side="${side}" data-idx="${idx}" value="${ev.day !== undefined ? ev.day : (side === 'wanita' && idx === 0 ? 'Ahad' : 'Senin')}" placeholder="Contoh: Senin / Ahad">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                   <label class="form-label">Tanggal Acara</label>
-                  <input type="text" class="form-input ev-input-date" data-side="${side}" data-idx="${idx}" value="${ev.date || '21 September 2026'}" placeholder="Contoh: 21 September 2026">
+                  <input type="text" class="form-input ev-input-date" data-side="${side}" data-idx="${idx}" value="${ev.date || (side === 'wanita' && idx === 0 ? '20 September 2026' : '21 September 2026')}" placeholder="Contoh: 21 September 2026">
                 </div>
               </div>
 
@@ -4475,13 +4475,15 @@
       if (btnAddPria) {
         btnAddPria.onclick = function() {
           const baseEvent = currentPriaSchedules[0] || {};
+          const dayVal = baseEvent.day || 'Senin';
+          const dateVal = baseEvent.date || '21 September 2026';
           currentPriaSchedules.push({
             id: 'pria-acara-' + Date.now(),
             title: 'Resepsi Pernikahan',
             badge: 'Resepsi',
-            day: baseEvent.day || 'Senin',
-            date: baseEvent.date || '21 September 2026',
-            fullDate: baseEvent.fullDate || 'Senin, 21 September 2026',
+            day: dayVal,
+            date: dateVal,
+            fullDate: `${dayVal}, ${dateVal}`,
             time: '13:00 WIB s/d Selesai',
             venue: baseEvent.venue || 'Kediaman Mempelai Pria',
             address: baseEvent.address || '',
@@ -4497,13 +4499,15 @@
       if (btnAddWanita) {
         btnAddWanita.onclick = function() {
           const baseEvent = currentWanitaSchedules[0] || {};
+          const dayVal = baseEvent.day || 'Senin';
+          const dateVal = baseEvent.date || '21 September 2026';
           currentWanitaSchedules.push({
             id: 'wanita-acara-' + Date.now(),
             title: 'Resepsi Pernikahan',
             badge: 'Resepsi',
-            day: 'Senin',
-            date: '21 September 2026',
-            fullDate: 'Senin, 21 September 2026',
+            day: dayVal,
+            date: dateVal,
+            fullDate: `${dayVal}, ${dateVal}`,
             time: '10:00 WIB s/d Selesai',
             venue: baseEvent.venue || 'Kediaman Mempelai Wanita',
             address: baseEvent.address || '',

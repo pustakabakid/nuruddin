@@ -467,13 +467,16 @@
           if (info.schedules_pria && Array.isArray(info.schedules_pria) && info.schedules_pria.length > 0) {
             sPria = info.schedules_pria;
           } else if (info.event_venue_pria) {
+            const fallbackPriaDay = (currentWedding.schedulesPria && currentWedding.schedulesPria[0] && currentWedding.schedulesPria[0].day) || 'Senin';
+            const dayPria = info.event_day_pria || fallbackPriaDay;
+            const datePria = info.event_date_pria || '21 September 2026';
             sPria = [{
               id: 'resepsi-pria',
               title: info.event_type_pria || 'Resepsi Pernikahan (Walimatul \'Urs)',
               badge: info.event_badge_pria || 'Walimatul \'Urs',
-              day: info.event_day_pria || 'Ahad',
-              date: info.event_date_pria || '21 September 2026',
-              fullDate: (info.event_day_pria && info.event_date_pria) ? `${info.event_day_pria}, ${info.event_date_pria}` : (info.event_date_pria || 'Ahad, 21 September 2026'),
+              day: dayPria,
+              date: datePria,
+              fullDate: `${dayPria}, ${datePria}`,
               time: info.event_time_pria || '10:00 WIB s/d Selesai',
               venue: info.event_venue_pria || 'Kediaman Mempelai Pria',
               address: info.event_address_pria || '',
@@ -486,13 +489,16 @@
           if (info.schedules_wanita && Array.isArray(info.schedules_wanita) && info.schedules_wanita.length > 0) {
             sWanita = info.schedules_wanita;
           } else if (info.event_venue_wanita) {
+            const fallbackWanitaDay = (currentWedding.schedulesWanita && currentWedding.schedulesWanita[0] && currentWedding.schedulesWanita[0].day) || 'Ahad';
+            const dayWanita = info.event_day_wanita || fallbackWanitaDay;
+            const dateWanita = info.event_date_wanita || '20 September 2026';
             sWanita = [{
               id: 'resepsi-wanita',
               title: info.event_type_wanita || 'Akad Nikah & Resepsi Pernikahan',
               badge: info.event_badge_wanita || 'Akad & Resepsi',
-              day: info.event_day_wanita || 'Ahad',
-              date: info.event_date_wanita || '21 September 2026',
-              fullDate: (info.event_day_wanita && info.event_date_wanita) ? `${info.event_day_wanita}, ${info.event_date_wanita}` : (info.event_date_wanita || 'Ahad, 21 September 2026'),
+              day: dayWanita,
+              date: dateWanita,
+              fullDate: `${dayWanita}, ${dateWanita}`,
               time: info.event_time_wanita || '08:00 WIB s/d Selesai',
               venue: info.event_venue_wanita || 'Kediaman Mempelai Wanita',
               address: info.event_address_wanita || '',
@@ -549,9 +555,9 @@
             id: 'acara-1',
             title: defaultTitle,
             badge: 'Acara',
-            day: 'Ahad',
+            day: 'Senin',
             date: '21 September 2026',
-            fullDate: 'Ahad, 21 September 2026',
+            fullDate: 'Senin, 21 September 2026',
             time: '10:00 WIB s/d Selesai',
             venue: 'Kediaman',
             address: 'Lumajang, Jawa Timur',
@@ -562,7 +568,21 @@
       }
 
       return rawList.map((s, idx) => {
-        const dateStr = s.fullDate || (s.day && s.date ? `${s.day}, ${s.date}` : s.date) || '21 September 2026';
+        // Ekstrak hari: utamakan properti s.day yang telah diedit pengguna. Jika belum ada, coba ambil kata pertama dari s.fullDate jika berformat "Hari, Tanggal".
+        let dayVal = (s.day && typeof s.day === 'string' && s.day.trim()) ? s.day.trim() : '';
+        if (!dayVal && s.fullDate && s.fullDate.includes(',')) {
+          const parts = s.fullDate.split(',');
+          if (parts[0] && parts[0].trim()) {
+            dayVal = parts[0].trim();
+          }
+        }
+        if (!dayVal) {
+          dayVal = 'Senin';
+        }
+
+        const dateVal = (s.date && typeof s.date === 'string' && s.date.trim()) ? s.date.trim() : '21 September 2026';
+        const dateStr = (dayVal && dateVal) ? `${dayVal}, ${dateVal}` : (s.fullDate || dateVal);
+
         let calUrl = s.calendarUrl;
         if (!calUrl || calUrl === '#') {
           const detailStr = `${s.venue || ''} - ${s.address || ''}`.trim();
@@ -577,8 +597,8 @@
           id: s.id || `acara-${idx + 1}`,
           title: s.title || `Acara ${idx + 1}`,
           badge: s.badge || (idx === 0 ? 'Utama' : 'Acara'),
-          day: s.day || (dateStr.includes('20') ? 'Ahad' : 'Senin'),
-          date: s.date || '21 September 2026',
+          day: dayVal,
+          date: dateVal,
           fullDate: dateStr,
           time: s.time || '10:00 WIB s/d Selesai',
           venue: s.venue || 'Kediaman',
@@ -595,10 +615,11 @@
       }
       if (normalizedList.length === 1) {
         const item = normalizedList[0];
-        const day = item.day || (item.date && item.date.includes('20') ? 'Ahad' : 'Senin');
-        let fDate = item.fullDate || item.date || '21 September 2026';
+        const day = item.day || 'Senin';
+        const datePart = item.date || '21 September 2026';
+        let fDate = item.fullDate || (day ? `${day}, ${datePart}` : datePart);
         if (day && !fDate.toLowerCase().includes(day.toLowerCase())) {
-          fDate = `${day}, ${fDate}`;
+          fDate = `${day}, ${datePart}`;
         }
         return {
           formattedDate: fDate,
@@ -608,7 +629,7 @@
       const uniqueDays = [...new Set(normalizedList.map(s => s.day).filter(Boolean))];
       const uniqueDates = [...new Set(normalizedList.map(s => s.date).filter(Boolean))];
       
-      const daySummary = uniqueDays.join(' & ') || normalizedList[0].day || 'Ahad & Senin';
+      const daySummary = uniqueDays.join(' & ') || normalizedList[0].day || 'Senin';
       let dateSummary = normalizedList[0].date;
       if (uniqueDates.length > 1) {
         const dayNums = uniqueDates.map(d => {
@@ -694,7 +715,7 @@
           hostsTitle: data.hostsWanita || 'Keluarga Besar Wanita',
           coverImage: (data.coverImageWanita && data.coverImageWanita !== 'bg.jpeg') ? data.coverImageWanita : '',
           formattedDate: dateSum.formattedDate || data.formattedDate,
-          dayName: dateSum.dayName || data.dayName || 'Ahad & Senin',
+          dayName: dateSum.dayName || data.dayName || 'Ahad',
           schedules: normalized
         };
       } else if (activeSide && activeSide !== 'default') {
@@ -716,7 +737,7 @@
             hostsTitle: customDash.hostsTitle || (isGroomBase ? (data.hostsPria || 'Keluarga Besar Pria') : (data.hostsWanita || 'Keluarga Besar Wanita')),
             coverImage: customCover,
             formattedDate: dateSum.formattedDate || data.formattedDate,
-            dayName: dateSum.dayName || data.dayName || 'Ahad',
+            dayName: dateSum.dayName || data.dayName || '',
             schedules: normalized
           };
         }
@@ -768,7 +789,7 @@
             audio_url: data.audioUrl || 'janjisuci.mp3',
             // Acara Pria
             event_type_pria: schedP.title || 'Resepsi Pernikahan (Walimatul \'Urs)',
-            event_day_pria: schedP.day || 'Ahad',
+            event_day_pria: schedP.day || 'Senin',
             event_date_pria: schedP.date || '21 September 2026',
             event_time_pria: schedP.time || '10:00 WIB s/d Selesai',
             event_venue_pria: schedP.venue || 'Kediaman Mempelai Pria',
@@ -778,7 +799,7 @@
             // Acara Wanita
             event_type_wanita: schedW.title || 'Akad Nikah & Resepsi Pernikahan',
             event_day_wanita: schedW.day || 'Ahad',
-            event_date_wanita: schedW.date || '21 September 2026',
+            event_date_wanita: schedW.date || '20 September 2026',
             event_time_wanita: schedW.time || '08:00 WIB s/d Selesai',
             event_venue_wanita: schedW.venue || 'Kediaman Mempelai Wanita',
             event_address_wanita: schedW.address || '',
