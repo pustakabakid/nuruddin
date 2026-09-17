@@ -4312,7 +4312,7 @@
               <div class="form-grid-2">
                 <div class="form-group" style="margin-bottom: 0;">
                   <label class="form-label">Hari Acara</label>
-                  <input type="text" class="form-input ev-input-day" data-side="${side}" data-idx="${idx}" value="${ev.day || 'Ahad'}" placeholder="Contoh: Ahad">
+                  <input type="text" class="form-input ev-input-day" data-side="${side}" data-idx="${idx}" value="${ev.day || 'Senin'}" placeholder="Contoh: Senin">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                   <label class="form-label">Tanggal Acara</label>
@@ -4479,9 +4479,9 @@
             id: 'pria-acara-' + Date.now(),
             title: 'Resepsi Pernikahan',
             badge: 'Resepsi',
-            day: baseEvent.day || 'Ahad',
+            day: baseEvent.day || 'Senin',
             date: baseEvent.date || '21 September 2026',
-            fullDate: baseEvent.fullDate || 'Ahad, 21 September 2026',
+            fullDate: baseEvent.fullDate || 'Senin, 21 September 2026',
             time: '13:00 WIB s/d Selesai',
             venue: baseEvent.venue || 'Kediaman Mempelai Pria',
             address: baseEvent.address || '',
@@ -4501,9 +4501,9 @@
             id: 'wanita-acara-' + Date.now(),
             title: 'Resepsi Pernikahan',
             badge: 'Resepsi',
-            day: 'Ahad',
+            day: 'Senin',
             date: '21 September 2026',
-            fullDate: 'Ahad, 21 September 2026',
+            fullDate: 'Senin, 21 September 2026',
             time: '10:00 WIB s/d Selesai',
             venue: baseEvent.venue || 'Kediaman Mempelai Wanita',
             address: baseEvent.address || '',
